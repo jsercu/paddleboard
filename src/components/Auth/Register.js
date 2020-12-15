@@ -75,7 +75,7 @@ const Register = ({ history }) => {
           <div className={`mt-8`}>
             <Button text="Sign Up" type="submit" color="primary" fullWidth>
               <LockIcon
-                className={`h-5 w-5 text-indigo-600 group-hover:text-indigo-600 transition ease-in-out duration-150`}
+                className={`h-5 w-5 text-blue-600 group-hover:text-blue-600 transition ease-in-out duration-150`}
                 title="lock-icon"
               />
             </Button>
@@ -94,10 +94,10 @@ const Register = ({ history }) => {
         </div>
         <div className={`py-8`}>
           <div className="flex flex-row justify-center space-x-4">
-            <Link to="/login" className={`font-medium text-sm text-indigo-600 hover:text-indigo-500`}>
+            <Link to="/login" className={`font-medium text-sm text-blue-600 hover:text-blue-500`}>
               Already have an account?
             </Link>
-            <Link to="/" className={`font-medium text-sm text-indigo-600 hover:text-indigo-500`}>
+            <Link to="/" className={`font-medium text-sm text-blue-600 hover:text-blue-500`}>
               Password Reset
             </Link>
           </div>

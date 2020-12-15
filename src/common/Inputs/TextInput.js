@@ -5,7 +5,7 @@ const TextInput = ({ labelText, ariaLabel, name, type, isRequired, changeHandler
     switch (inputStyle) {
       case 'fullWidth':
       default:
-        return `mt-1 block w-full rounded-sm bg-gray-50 sm:bg-white border-gray-300 shadow-sm focus:border-indigo-700 focus:bg-white`;
+        return `mt-1 block w-full rounded-sm bg-gray-50 sm:bg-white border-gray-300 shadow-sm focus:border-blue-700 focus:bg-white`;
     }
   };
 

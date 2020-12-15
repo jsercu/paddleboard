@@ -6,15 +6,14 @@ import Register from './Auth/Register';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ProvideAuth } from '../hooks/useAuth';
 import PrivateRoute from './Auth/PrivateRoute';
-
 function App(props) {
   return (
     <ProvideAuth>
       <Router>
         <Switch>
-          <PrivateRoute exact path="/" component={Main} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <PrivateRoute exact path="/*" component={Main} />
           <Route path="*" component={Login} />
         </Switch>
       </Router>

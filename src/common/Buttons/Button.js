@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({ action, type, children, text, color, rounded, size, fullWidth }) => {
   const getButtonClasses = () => {
-    const baseStyles = `group items-center justify-center leading-6 font-medium focus:outline-none focus:ring transition duration-150 ease-in-out shadow-md`;
+    const baseStyles = `group items-center justify-center leading-6 font-medium focus:outline-none focus:ring transition duration-150 ease-in-out shadow-lg`;
     return baseStyles + ` ` + getSizeStyles() + ` ` + getColorStyles() + ` ` + getRoundedStyles();
   };
 
@@ -32,11 +32,13 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth 
 
   const getColorStyles = () => {
     switch (color) {
-      case `tertiary`:
-        return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-indigo-400`;
+      case 'tertiary':
+        return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-blue-400`;
+      case 'secondary':
+        return `border border-transparent bg-pink-600 text-white hover:bg-pink-500 focus:ring-pink-400`;
       case 'primary':
       default:
-        return `border border-transparent bg-indigo-700 text-white hover:bg-indigo-600 focus:ring-indigo-400`;
+        return `border border-transparent bg-blue-700 text-white hover:bg-blue-600 focus:ring-blue-400`;
     }
   };
 

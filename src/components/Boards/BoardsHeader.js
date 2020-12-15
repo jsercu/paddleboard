@@ -7,7 +7,7 @@ const BoardsHeader = () => {
   return (
     <div className={`flex items-center justify-between pt-24 pb-8`}>
       <div className={`flex-auto min-w-0`}>
-        <h2 className={`text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate`}>Boards</h2>
+        <h2 className={`text-3xl font-bold leading-7 text-gray-900 sm:truncate`}>Boards</h2>
       </div>
       <div className={`flex flex-auto justify-end lg:ml-4`}>
         <span className="hidden sm:block">

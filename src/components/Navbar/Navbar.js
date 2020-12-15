@@ -14,7 +14,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <>
-        <nav className={`bg-indigo-800 w-full fixed z-10`}>
+        <nav className={`bg-gray-900 w-full fixed z-10 shadow-md`}>
           <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
             <div className={`flex items-center justify-between h-16`}>
               <div className={`flex items-center`}>
@@ -40,7 +40,7 @@ class Navbar extends React.Component {
                 <div className={`md:hidden mr-2`}>
                   {/* Mobile menu button */}
                   <button
-                    className={`inline-flex items-center justify-center p-2 rounded-md text-indigo-300 hover:text-indigo-200 hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-400`}>
+                    className={`inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-gray-200 hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-400`}>
                     {/* Heroicon: menu  -- Menu open: "hidden", Menu closed: "block" */}
                     <MenuIcon className={`h-6 w-6 block`} />
                     {/* Heroicon: x -- Menu open: "block", Menu closed: "hidden" */}
@@ -48,7 +48,7 @@ class Navbar extends React.Component {
                   </button>
                 </div>
                 <button
-                  className={`px-3 py-2 rounded-md text-sm font-medium text-white bg-indigo-800 hover:bg-indigo-700 focus:outline-none focus:text-white`}
+                  className={`px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:text-white`}
                   onClick={this.handleSignOut}>
                   Sign Out
                 </button>

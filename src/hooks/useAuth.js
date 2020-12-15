@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import firebase from '../firebase';
 import 'firebase/auth';
-import { Result } from 'postcss';
 
 const authContext = createContext();
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
 export function ProvideAuth({ children }) {
+  debugger;
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
@@ -20,8 +21,10 @@ export function useAuth() {
 
 // Provider hook that creates auth object and handles state
 export function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  debugger;
+  const [user, setUser] = useLocalStorage('user', null);
 
+  debugger;
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
   const signin = (email, password) => {
@@ -36,7 +39,13 @@ export function useProvideAuth() {
 
   const signinWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return firebase.auth().signInWithPopup(provider);
+    return firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((response) => {
+        setUser(response.user);
+        return response.user;
+      });
   };
 
   const signup = (email, password) => {
@@ -54,7 +63,7 @@ export function useProvideAuth() {
       .auth()
       .signOut()
       .then(() => {
-        setUser(false);
+        setUser(null);
       });
   };
 
@@ -85,10 +94,10 @@ export function useProvideAuth() {
       if (user) {
         setUser(user);
       } else {
-        setUser(false);
+        setUser(null);
       }
     });
-
+    debugger;
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
