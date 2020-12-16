@@ -8,7 +8,6 @@ const authContext = createContext();
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
 export function ProvideAuth({ children }) {
-  debugger;
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
@@ -21,10 +20,8 @@ export function useAuth() {
 
 // Provider hook that creates auth object and handles state
 export function useProvideAuth() {
-  debugger;
   const [user, setUser] = useLocalStorage('user', null);
 
-  debugger;
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
   const signin = (email, password) => {
@@ -97,7 +94,6 @@ export function useProvideAuth() {
         setUser(null);
       }
     });
-    debugger;
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);

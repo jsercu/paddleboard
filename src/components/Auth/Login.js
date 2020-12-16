@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 import Button from '../../common/Buttons/Button';
-import TextInput from '../../common/Inputs/TextInput';
+import Input from '../../common/Inputs/Input';
 import Logo from '../../common/Logo';
 
 import { ReactComponent as LockIcon } from '../../assets/img/icons/lock.svg';
@@ -44,8 +44,7 @@ const Login = ({ history, ...props }) => {
   );
 
   return (
-    <div
-      className={`flex min-h-screen justify-center sm:items-center bg-white sm:bg-gray-100 px-6 sm:px-6 lg:px-8 py-24`}>
+    <div className={`flex min-h-screen justify-center sm:items-center bg-gray-50 px-6 sm:px-6 lg:px-8 py-24`}>
       <div className={`max-w-lg w-full mx-auto`}>
         <Logo size="large" color="gray" />
         <h2 className={`mt-4 text-center text-sm font-semibold text-gray-500 uppercase tracking-wider`}>
@@ -53,7 +52,7 @@ const Login = ({ history, ...props }) => {
         </h2>
         <form className={`mt-4`} onSubmit={handleLogin}>
           <div className={`grid grid-cols-1 gap-4`}>
-            <TextInput
+            <Input
               labelText="Email"
               ariaLabel="Email address"
               name="email"
@@ -62,7 +61,7 @@ const Login = ({ history, ...props }) => {
               changeHandler={handleInputChange}
               inputStyle="fullWidth"
             />
-            <TextInput
+            <Input
               labelText="Password"
               ariaLabel="Password"
               name="password"
@@ -73,9 +72,9 @@ const Login = ({ history, ...props }) => {
             />
           </div>
           <div className={`mt-8`}>
-            <Button text="Sign In" type="submit" color="primary" fullWidth rounded="small">
+            <Button text="Sign In" type="submit" color="primary" fullWidth hasIcon rounded="small">
               <LockIcon
-                className={`h-5 w-5 text-blue-600 group-hover:text-blue-600 transition ease-in-out duration-150`}
+                className={`h-5 w-5 text-blue-500 group-hover:text-blue-500 transition ease-in-out duration-150`}
                 title="lock-icon"
               />
             </Button>
@@ -84,7 +83,7 @@ const Login = ({ history, ...props }) => {
         <div className={`py-4 mt-3 mb-1`}>
           <div className={`w-full border-b border-gray-300`}></div>
           <div className={`text-center -mt-3`}>
-            <span className={`px-6 bg-white sm:bg-gray-100 text-sm font-light text-gray-500`}>Or continue with</span>
+            <span className={`px-6 bg-gray-50 text-sm font-light text-gray-500`}>Or continue with</span>
           </div>
         </div>
         <div className={`flex`}>
@@ -94,6 +93,7 @@ const Login = ({ history, ...props }) => {
             action={handleGoogleLogin}
             color="tertiary"
             fullWidth
+            hasIcon
             rounded="small">
             <GoogleIcon className={`h-5 w-5 ml-1`} title="google-icon" />
           </Button>

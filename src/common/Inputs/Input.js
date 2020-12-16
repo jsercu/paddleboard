@@ -1,21 +1,19 @@
 import React from 'react';
 
-const TextInput = ({ labelText, ariaLabel, name, type, isRequired, changeHandler, inputStyle }) => {
+const Input = ({ labelText, ariaLabel, name, value, type, isRequired, changeHandler }) => {
   const getInputClasses = () => {
-    switch (inputStyle) {
-      case 'fullWidth':
-      default:
-        return `mt-1 block w-full rounded-sm bg-gray-50 sm:bg-white border-gray-300 shadow-sm focus:border-blue-700 focus:bg-white`;
-    }
+    const baseStyles = `mt-1 block w-full rounded-sm bg-white border-gray-300 shadow-sm focus:border-blue-700 focus:bg-white`;
+    return baseStyles;
   };
 
   return (
     <div>
       <label htmlFor={name} className={`block`}>
-        <span className={`text-gray-700`}>{labelText}:</span>
+        <span className={`text-gray-700 mb-1 block text-sm leading-5 font-medium`}>{labelText}:</span>
         <input
           aria-label={ariaLabel}
           name={name}
+          value={value}
           type={type}
           required={isRequired ? true : false}
           onChange={changeHandler}
@@ -26,4 +24,4 @@ const TextInput = ({ labelText, ariaLabel, name, type, isRequired, changeHandler
   );
 };
 
-export default TextInput;
+export default Input;

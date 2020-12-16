@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -11,5 +12,23 @@ const config = {
 };
 
 firebase.initializeApp(config);
+export const db = firebase.firestore();
+
+// Firestore Methods
+export const createBoard = async (name, description) => {
+  try {
+    return await db.collection('boards').add({
+      name: name,
+      description: description,
+      columnOrder: [],
+      // created: firebase.firestore.FieldValue.serverTimestamp(),
+      // author: firebase.auth().currentUser.displayName,
+      // author_id: firebase.auth().currentUser.uid,
+      deleteStatus: false,
+    });
+  } catch (exception) {
+    console.error(exception.toString());
+  }
+};
 
 export default firebase;
