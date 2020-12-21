@@ -10,7 +10,7 @@ import Logo from '../../common/Logo';
 import { ReactComponent as LockIcon } from '../../assets/img/icons/lock.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/img/icons/google-icon.svg';
 
-const Login = ({ history, ...props }) => {
+const Login = ({ history }) => {
   const auth = useAuth();
   const [values, setValues] = useState();
 

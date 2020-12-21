@@ -4,6 +4,7 @@ import PrivateRoute from '../Auth/PrivateRoute';
 import Navbar from '../Navbar/Navbar';
 import Dashboard from '../Dashboard/Dashboard';
 import Boards from '../Boards/Boards';
+import BoardDetail from '../Boards/BoardDetail';
 
 class Main extends Component {
   render() {
@@ -12,8 +13,8 @@ class Main extends Component {
         <div className={`bg-gray-50 h-screen`}>
           <Navbar className={`sticky top-0`} />
           <Switch>
-            <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
-            <PrivateRoute exact path="/boards" component={Boards}></PrivateRoute>
+            <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
+            <PrivateRoute path="/boards" component={Boards}></PrivateRoute>
             <PrivateRoute path="*" component={Boards}></PrivateRoute>
           </Switch>
         </div>

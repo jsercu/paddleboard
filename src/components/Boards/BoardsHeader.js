@@ -22,9 +22,7 @@ const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) =>
             <PlusIcon className={`h-5 w-5 mr-2 text-white transition ease-in-out duration-150`} title="plus-icon" />
           </Button>
           {isShowCreateBoard && (
-            <CreateBoardSlideOver
-              toggleShowCreateBoard={toggleShowCreateBoard}
-              addBoard={addBoard}></CreateBoardSlideOver>
+            <CreateBoardSlideOver toggleShowCreateBoard={toggleShowCreateBoard} addBoard={addBoard} />
           )}
         </span>
 
@@ -38,7 +36,10 @@ const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) =>
             id="mobile-menu"
             aria-haspopup="true"
             hasIcon>
-            <ChevronDownIcon className={`h-5 w-5 mr-2 text-gray-500 transition ease-in-out duration-150`} />
+            <ChevronDownIcon
+              className={`h-5 w-5 mr-2 text-gray-500 transition ease-in-out duration-150`}
+              title="chevron-down-icon"
+            />
           </Button>
           <div
             className={`absolute right-0 w-48 py-1 mt-2 -mr-1 bg-white shadow-lg origin-top-right rounded-md ring-1 ring-black ring-opacity-5`}

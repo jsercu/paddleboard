@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useEffect, useContext, createContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import firebase from '../firebase';
 import 'firebase/auth';

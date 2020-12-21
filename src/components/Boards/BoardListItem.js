@@ -1,15 +1,18 @@
 import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
-const BoardListItem = () => {
+const BoardListItem = ({ name, description, id }) => {
+  let { path, url } = useRouteMatch();
+
   return (
-    <tr className={`divide-x divide-gray-100`}>
-      <td className={`px-6 py-3 whitespace-nowrap`}>
-        <div className={`flex-col items-center`}>
+    <tr>
+      <td className="px-6 py-3 whitespace-nowrap">
+        <div className="flex-col items-center">
           <div className={`flex flex-row items-center`}>
-            <div className={`text-sm font-medium text-gray-800 mr-2`}>Jane Cooper</div>
+            <div className={`text-sm font-medium text-gray-800 mr-2`}>{name}</div>
             <span className={`px-2 text-xs font-semibold text-green-800 bg-green-100 rounded-full`}>Active</span>
           </div>
-          <div className={`text-sm text-gray-500`}>jane.cooper@example.com</div>
+          <div className={`text-sm text-gray-500`}>{description}</div>
         </div>
       </td>
       <td className={`px-6 py-3 whitespace-nowrap`}>
@@ -31,11 +34,11 @@ const BoardListItem = () => {
           />
         </div>
       </td>
-      <td className={`px-6 py-3 text-sm text-gray-500 whitespace-nowrap`}>10:12pm EST on December 14, 2020</td>
+      <td className={`px-6 py-3 text-sm text-gray-500 whitespace-nowrap`}></td>
       <td className={`px-6 py-3 text-sm font-medium text-center whitespace-nowrap`}>
-        <a href="#" className={`font-medium text-sm text-blue-600 hover:text-blue-500`}>
-          Edit
-        </a>
+        <Link to={`${url}/${id}`} className={`font-medium text-sm text-blue-600 hover:text-blue-500`}>
+          View
+        </Link>
       </td>
     </tr>
   );

@@ -11,24 +11,10 @@ const config = {
   appId: process.env.REACT_APP_APP_ID,
 };
 
-firebase.initializeApp(config);
-export const db = firebase.firestore();
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
 
-// Firestore Methods
-export const createBoard = async (name, description) => {
-  try {
-    return await db.collection('boards').add({
-      name: name,
-      description: description,
-      columnOrder: [],
-      // created: firebase.firestore.FieldValue.serverTimestamp(),
-      // author: firebase.auth().currentUser.displayName,
-      // author_id: firebase.auth().currentUser.uid,
-      deleteStatus: false,
-    });
-  } catch (exception) {
-    console.error(exception.toString());
-  }
-};
+export const firestore = firebase.firestore();
 
 export default firebase;
