@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import firebase, { firestore } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 import Container from '../../common/Container';
-import BoardsHeader from './BoardsHeader';
-import BoardList from './BoardList';
-import BoardDetail from './BoardDetail';
+import BoardsHeader from './BoardList/BoardsHeader';
+import BoardList from './BoardList/BoardList';
+import BoardDetail from './BoardDetail/BoardDetail';
 import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-router-dom';
 
 const Boards = ({ match }) => {
@@ -49,21 +49,21 @@ const Boards = ({ match }) => {
   };
 
   return (
-    <Container>
-      <Switch>
-        <Route exact path={match.url}>
+    <Switch>
+      <Route exact path={match.url}>
+        <Container>
           <BoardsHeader
             isShowCreateBoard={isShowCreateBoard}
             toggleShowCreateBoard={toggleShowCreateBoard}
             addBoard={addBoard}
           />
           <BoardList boards={boards} isLoading={isLoading} />
-        </Route>
-        <Route exact path={match.url + '/:boardId'}>
-          <BoardDetail />
-        </Route>
-      </Switch>
-    </Container>
+        </Container>
+      </Route>
+      <Route exact path={match.url + '/:boardId'}>
+        <BoardDetail />
+      </Route>
+    </Switch>
   );
 };
 

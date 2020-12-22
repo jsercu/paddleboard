@@ -4,7 +4,7 @@ import PrivateRoute from '../Auth/PrivateRoute';
 import Navbar from '../Navbar/Navbar';
 import Dashboard from '../Dashboard/Dashboard';
 import Boards from '../Boards/Boards';
-import BoardDetail from '../Boards/BoardDetail';
+import BoardDetail from '../Boards/BoardDetail/BoardDetail';
 
 class Main extends Component {
   render() {

@@ -34,6 +34,8 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
 
   const getColorStyles = () => {
     switch (color) {
+      case 'transparent':
+        return `bg-gray-600 bg-opacity-50 text-white hover:bg-gray-500 hover:bg-opacity-25 focus:ring-gray-300`;
       case 'tertiary':
         return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-blue-400`;
       case 'secondary':

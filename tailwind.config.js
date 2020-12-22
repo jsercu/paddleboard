@@ -147,6 +147,8 @@ module.exports = {
       auto: 'auto',
       default: 'default',
       pointer: 'pointer',
+      grab: 'grab',
+      grabbing: 'grabbing',
       wait: 'wait',
       text: 'text',
       move: 'move',

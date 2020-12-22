@@ -15,7 +15,7 @@ const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowPanel }
       <section className={`absolute inset-y-0 right-0 pl-10 max-w-full flex`}>
         <div className={`relative w-screen max-w-md`}>
           <div className={`absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4`}>
-            <IconButton ariaLabel="Close Panel" action={handleClick}>
+            <IconButton ariaLabel="Close Panel" action={handleClick} backgroundType="modalBackdrop">
               <XIcon title="x-icon" className={`h-6 w-6`} />
             </IconButton>
           </div>
