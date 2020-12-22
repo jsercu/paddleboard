@@ -3,7 +3,6 @@ import Container from '../../../common/Container';
 import BoardDetailHeader from './BoardDetailHeader';
 import Column from './Column/Column';
 import { useParams } from 'react-router-dom';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus.svg';
 
 const BoardDetail = () => {
   let { boardId } = useParams();
@@ -16,18 +15,24 @@ const BoardDetail = () => {
         {
           id: 1,
           name: 'Add discount code to checkout page',
+          category: 'Feature Request',
+          created: 'Dec 12 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
         {
           id: 2,
           name: 'Provide documentation on integrations',
+          category: 'Product Documentation',
+          created: 'Nov 28 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
         {
           id: 3,
           name: 'Design shopping cart dropdown',
+          category: 'Design',
+          created: 'Oct 03 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
@@ -40,18 +45,24 @@ const BoardDetail = () => {
         {
           id: 1,
           name: 'Add discount code to checkout page',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-          id: 2,
-          name: 'Provide documentation on integrations',
+          category: 'Feature Request',
+          created: 'Dec 12 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
         {
           id: 3,
           name: 'Design shopping cart dropdown',
+          category: 'Design',
+          created: 'Oct 03 2020',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        },
+        {
+          id: 2,
+          name: 'Provide documentation on integrations',
+          category: 'Product Documentation',
+          created: 'Nov 28 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
@@ -63,19 +74,33 @@ const BoardDetail = () => {
       tasks: [
         {
           id: 1,
-          name: 'Add discount code to checkout page',
+          name: 'Provide documentation on integrations',
+          category: 'Product Documentation',
+          created: 'Nov 28 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
         {
           id: 2,
-          name: 'Provide documentation on integrations',
+          name: 'Design shopping cart dropdown',
+          category: 'Design',
+          created: 'Oct 03 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },
         {
           id: 3,
-          name: 'Design shopping cart dropdown',
+          name: 'Add discount code to checkout page',
+          category: 'Feature Request',
+          created: 'Dec 12 2020',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        },
+        {
+          id: 4,
+          name: 'Implement End-to-End Encryption',
+          category: 'Backend',
+          created: 'Oct 03 2020',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         },

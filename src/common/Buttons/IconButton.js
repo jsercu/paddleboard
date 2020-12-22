@@ -1,18 +1,37 @@
 import React from 'react';
 
-const IconButton = ({ children, ariaLabel, action, backgroundType }) => {
-  const getStyles = () => {
+const IconButton = ({ children, ariaLabel, action, backgroundType, size }) => {
+  const getButtonClasses = () => {
+    const baseStyles = 'group items-center justify-center transition duration-150 ease-in-out';
+    return baseStyles + ' ' + getSizeStyles() + ' ' + getColorStyles();
+  };
+
+  const getColorStyles = () => {
     switch (backgroundType) {
+      case 'darkGray':
+        return 'bg-gray-600 bg-opacity-50 text-white hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none focus:ring transition focus:ring-gray-300 rounded-md';
       case 'modalBackdrop':
-        return 'text-gray-300 hover:text-white transition ease-in-out duration-150';
+        return 'text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50 rounded-sm';
+      case 'white':
+        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 focus:bg-blue-100 focus:text-blue-500';
       case 'offWhite':
       default:
-        return `text-gray-400 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 focus:bg-blue-100 focus:text-blue-500 rounded-full transition ease-in-out duration-150'`;
+        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 focus:bg-blue-100 focus:text-blue-500 rounded-sm';
+    }
+  };
+
+  const getSizeStyles = () => {
+    switch (size) {
+      case 'medium':
+        return 'h-10 w-10';
+      case 'small':
+      default:
+        return 'h-6 w-6';
     }
   };
 
   return (
-    <button aria-label={ariaLabel} className={getStyles()} onClick={action}>
+    <button aria-label={ariaLabel} className={getButtonClasses()} onClick={action}>
       {children}
     </button>
   );

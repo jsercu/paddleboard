@@ -25,7 +25,7 @@ const Register = ({ history }) => {
       const { email, password } = values;
       try {
         await auth.signup(email, password);
-        history.push('/');
+        history.push('/boards');
       } catch (err) {
         console.error(err.toString());
       }
@@ -37,7 +37,7 @@ const Register = ({ history }) => {
     event.preventDefault();
     try {
       await auth.signinWithGoogle();
-      history.push('/');
+      history.push('/boards');
     } catch (error) {
       alert(error);
     }

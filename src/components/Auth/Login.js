@@ -23,7 +23,7 @@ const Login = ({ history }) => {
     event.preventDefault();
     try {
       await auth.signinWithGoogle();
-      history.push('/');
+      history.push('/boards');
     } catch (error) {
       alert(error);
     }
@@ -35,7 +35,7 @@ const Login = ({ history }) => {
       const { email, password } = values;
       try {
         await auth.signin(email, password);
-        history.push('/');
+        history.push('/boards');
       } catch (error) {
         alert(error);
       }

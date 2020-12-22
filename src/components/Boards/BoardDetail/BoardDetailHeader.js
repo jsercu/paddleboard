@@ -1,13 +1,14 @@
 import React from 'react';
 import Button from '../../../common/Buttons/Button';
 import Container from '../../../common/Container';
-import BgPattern from '../../../common/BgPattern/BgPattern';
+import IconButton from '../../../common/Buttons/IconButton';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus.svg';
 import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down.svg';
+import { ReactComponent as CogIcon } from '../../../assets/img/icons/cog.svg';
 
-const BoardDetailHeader = (props) => {
+const BoardDetailHeader = () => {
   return (
-    <div className={`pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800`}>
+    <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
       <Container>
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-between">
@@ -30,17 +31,28 @@ const BoardDetailHeader = (props) => {
               </div>
             </div>
           </div>
-          <div className={`flex flex-auto justify-end lg:ml-4`}>
-            <span className="hidden mr-2 sm:block">
+          <div className="flex lg:ml-4">
+            <span className="hidden sm:block space-x-2">
+              <IconButton backgroundType="darkGray" size="medium">
+                <CogIcon
+                  className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
+                  title="settings-icon"
+                />
+              </IconButton>
               <Button text="Create Column" type="button" color="transparent" size="medium" hasIcon>
-                <PlusIcon className={`h-5 w-5 mr-2 text-white transition ease-in-out duration-150`} title="plus-icon" />
+                <PlusIcon
+                  className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}
+                  title="plus-icon"
+                />
               </Button>
-            </span>
-            <span className="hidden sm:block">
               <Button text="Create Task" type="button" color="transparent" size="medium" hasIcon>
-                <PlusIcon className={`h-5 w-5 mr-2 text-white transition ease-in-out duration-150`} title="plus-icon" />
+                <PlusIcon
+                  className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}
+                  title="plus-icon"
+                />
               </Button>
             </span>
+
             {/* <!-- Dropdown --> */}
             <span className={`relative ml-3 sm:hidden`}>
               <Button
