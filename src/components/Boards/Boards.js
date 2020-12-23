@@ -1,69 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import firebase, { firestore } from '../../firebase';
-import { useAuth } from '../../hooks/useAuth';
-import Container from '../../common/Container';
-import BoardsHeader from './BoardList/BoardsHeader';
-import BoardList from './BoardList/BoardList';
+import React from 'react';
+import BoardList from './BoardsList/BoardList';
 import BoardDetail from './BoardDetail/BoardDetail';
-import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 const Boards = ({ match }) => {
-  const [isShowCreateBoard, setIsShowCreateBoard] = useState(false);
-  const [boards, setBoards] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const auth = useAuth();
-
-  useEffect(() => {
-    const unsubscribe = firestore.collection('boards').onSnapshot((snapshot) => {
-      const newBoards = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setBoards(newBoards);
-      setIsLoading(false);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  const toggleShowCreateBoard = () => {
-    setIsShowCreateBoard(!isShowCreateBoard);
-  };
-
-  const addBoard = async (boardValues) => {
-    const { name, description } = boardValues;
-    try {
-      await firestore.collection('boards').add({
-        name: name,
-        description: description,
-        columnOrder: [],
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        author: auth.user.displayName,
-        author_id: auth.user.uid,
-        deleteStatus: false,
-      });
-    } catch (exception) {
-      console.error(exception.toString());
-    }
-    if (isShowCreateBoard) {
-      toggleShowCreateBoard();
-    }
-  };
-
   return (
-    <Switch>
-      <Route exact path={match.url}>
-        <Container>
-          <BoardsHeader
-            isShowCreateBoard={isShowCreateBoard}
-            toggleShowCreateBoard={toggleShowCreateBoard}
-            addBoard={addBoard}
-          />
-          <BoardList boards={boards} isLoading={isLoading} />
-        </Container>
-      </Route>
-      <Route exact path={match.url + '/:boardId'}>
-        <BoardDetail />
-      </Route>
-    </Switch>
+    <div className="h-screen">
+      <Switch>
+        <Route exact path={match.url}>
+          <BoardList />
+        </Route>
+        <Route exact path={match.url + '/:boardId'}>
+          <BoardDetail />
+        </Route>
+      </Switch>
+    </div>
   );
 };
 

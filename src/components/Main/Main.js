@@ -10,7 +10,7 @@ class Main extends Component {
   render() {
     return (
       <Router>
-        <div className={`bg-gray-50 h-screen`}>
+        <div className={`bg-gray-100 h-screen`}>
           <Navbar className={`sticky top-0`} />
           <Switch>
             <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>

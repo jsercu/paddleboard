@@ -39,10 +39,10 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
       case 'tertiary':
         return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-blue-400`;
       case 'secondary':
-        return `border border-transparent bg-pink-600 text-white hover:bg-pink-500 focus:ring-pink-400`;
+        return `border border-transparent bg-lightblue-600 text-white hover:bg-lightblue-500 focus:ring-lightblue-400`;
       case 'primary':
       default:
-        return `border border-transparent bg-blue-600 text-white hover:bg-blue-500 focus:ring-blue-400`;
+        return `border border-transparent bg-pink-600 text-white hover:bg-pink-500 focus:ring-pink-400`;
     }
   };
 

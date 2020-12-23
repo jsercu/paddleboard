@@ -1,9 +1,19 @@
 import React from 'react';
 
-const TextArea = ({ labelText, ariaLabel, name, value, isRequired, rows, changeHandler }) => {
+const TextArea = ({ labelText, ariaLabel, name, value, isRequired, rows, changeHandler, color }) => {
   const getInputClasses = () => {
-    const baseStyles = `mt-1 block w-full rounded-sm bg-white border-gray-300 shadow-sm focus:border-blue-700 focus:bg-white`;
-    return baseStyles;
+    const baseStyles = `mt-1 block w-full rounded-sm shadow-sm`;
+    return baseStyles + ' ' + getColorStyles(color);
+  };
+
+  const getColorStyles = () => {
+    switch (color) {
+      case 'white':
+        return 'bg-white border-gray-300 focus:border-transparent focus:ring-2 focus:ring-pink-500';
+      case 'offWhite':
+      default:
+        return 'bg-gray-50 border-gray-300 focus:bg-white focus:border-transparent focus:ring-2 focus:ring-pink-500';
+    }
   };
 
   return (

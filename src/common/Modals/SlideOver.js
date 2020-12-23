@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from './Backdrop';
+import BgPattern from '../BgPattern/BgPattern';
 import { ReactComponent as XIcon } from '../../assets/img/icons/x.svg';
 
 import IconButton from '../Buttons/IconButton';
@@ -19,11 +20,13 @@ const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowPanel }
               <XIcon title="x-icon" className={`h-6 w-6`} />
             </IconButton>
           </div>
-          <div className={`h-full flex flex-col space-y-6 bg-gray-50 shadow-xl overflow-y-scroll`}>
-            <header className={`px-4 py-6 sm:px-6 bg-blue-700`}>
-              <h2 className={`mb-1 text-xl leading-7 font-normal text-white`}>{panelTitle}</h2>
-              <h5 className={`text-sm leading-normal font-light text-blue-400`}>{panelSecondaryText}</h5>
-            </header>
+          <div className={`h-full flex flex-col space-y-6 bg-gray-100 shadow-xl overflow-y-scroll`}>
+            <BgPattern pattern="thinDiagonalLines" bgColor="bg-pink-600">
+              <header className={`px-4 py-6 sm:px-6`}>
+                <h2 className={`mb-1 text-xl leading-6 font-normal text-white`}>{panelTitle}</h2>
+                <h5 className={`text-sm leading-snug font-light text-pink-200`}>{panelSecondaryText}</h5>
+              </header>
+            </BgPattern>
             <div className={`relative flex-1 px-4 sm:px-6`}>{children}</div>
           </div>
         </div>
