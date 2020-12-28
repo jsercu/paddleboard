@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../../../common/Buttons/Button';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
 
 const BoardListEmptyState = () => {
   return (

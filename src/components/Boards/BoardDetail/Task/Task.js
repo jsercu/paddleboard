@@ -1,6 +1,6 @@
 import React from 'react';
 import IconButton from '../../../../common/Buttons/IconButton';
-import { ReactComponent as ThreeDots } from '../../../../assets/img/icons/three-dots.svg';
+import { ReactComponent as ThreeDots } from '../../../../assets/img/icons/three-dots-24.svg';
 
 const Task = ({ name, description, category }) => {
   const getCategoryStyles = () => {

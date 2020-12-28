@@ -3,9 +3,9 @@ import Container from '../../../common/Container';
 import CreateBoardSlideOver from './CreateBoardSlideOver';
 import Button from '../../../common/Buttons/Button';
 import IconButton from '../../../common/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus.svg';
-import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down.svg';
-import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
+import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down-24.svg';
+import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter-20.svg';
 
 const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import Task from '../Task/Task';
 import IconButton from '../../../../common/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus.svg';
+import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 
 const Column = ({ name, tasks }) => {
   return (

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '../../../common/Container';
 import BoardDetailHeader from './BoardDetailHeader';
 import Column from './Column/Column';
 import { useParams } from 'react-router-dom';
 
 const BoardDetail = () => {
-  let { boardId } = useParams();
+  let { boardId: id } = useParams();
 
   const columns = [
     {
@@ -110,7 +110,7 @@ const BoardDetail = () => {
 
   return (
     <div className="w-full h-full bg-gray-200">
-      <BoardDetailHeader />
+      <BoardDetailHeader id={id} />
       <Container>
         <div className="-mt-32 grid grid-cols-3 gap-8">
           {columns && columns.map(({ name, id, tasks }) => <Column key={id} name={name} tasks={tasks} />)}

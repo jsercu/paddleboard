@@ -2,7 +2,7 @@ import React from 'react';
 
 const IconButton = ({ children, ariaLabel, action, backgroundType, size }) => {
   const getButtonClasses = () => {
-    const baseStyles = 'group items-center justify-center transition duration-150 ease-in-out';
+    const baseStyles = 'group relative items-center justify-center transition duration-150 ease-in-out';
     return baseStyles + ' ' + getSizeStyles() + ' ' + getColorStyles();
   };
 

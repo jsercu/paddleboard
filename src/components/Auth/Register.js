@@ -7,7 +7,7 @@ import Logo from '../../common/Logo';
 import Button from '../../common/Buttons/Button';
 import Input from '../../common/Inputs/Input';
 
-import { ReactComponent as LockIcon } from '../../assets/img/icons/lock.svg';
+import { ReactComponent as LockIcon } from '../../assets/img/icons/lock-20.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/img/icons/google-icon.svg';
 
 const Register = ({ history }) => {

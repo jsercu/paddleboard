@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from './Backdrop';
 import BgPattern from '../BgPattern/BgPattern';
-import { ReactComponent as XIcon } from '../../assets/img/icons/x.svg';
-
+import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
 import IconButton from '../Buttons/IconButton';
 
 const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowPanel }) => {

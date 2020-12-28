@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as PaddleboardIcon } from '../assets/img/icons/map.svg';
+import { ReactComponent as PaddleboardIcon } from '../assets/img/icons/map-24.svg';
 
 const Logo = ({ size, color }) => {
   const getLogoColor = () => {

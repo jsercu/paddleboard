@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BoardSettings from './BoardSettings/BoardSettings';
 import Button from '../../../common/Buttons/Button';
 import Container from '../../../common/Container';
 import IconButton from '../../../common/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus.svg';
-import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down.svg';
-import { ReactComponent as CogIcon } from '../../../assets/img/icons/cog.svg';
+import Dropdown from '../../../common/Dropdown/Dropdown';
+import DropdownItem from '../../../common/Dropdown/DropdownItem';
+import { ReactComponent as AddColumnIcon } from '../../../assets/img/icons/view-grid-add-20.svg';
+import { ReactComponent as UsersIcon } from '../../../assets/img/icons/users-20.svg';
+import { ReactComponent as TrashIcon } from '../../../assets/img/icons/trash-20.svg';
+import { ReactComponent as CogIcon } from '../../../assets/img/icons/cog-20.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
+import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down-24.svg';
+import { ReactComponent as ThreeDots } from '../../../assets/img/icons/three-dots-24.svg';
 
-const BoardDetailHeader = () => {
+const BoardDetailHeader = ({ id }) => {
+  const [isShowOptionsDropdown, setIsShowOptionsDropdown] = useState(false);
+  const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
+
+  const toggleShowOptionsDropdown = () => {
+    setIsShowOptionsDropdown(!isShowOptionsDropdown);
+  };
+
+  const toggleShowBoardSettings = () => {
+    setIsShowBoardSettings(!isShowBoardSettings);
+  };
+
   return (
     <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
       <Container>
@@ -18,7 +36,7 @@ const BoardDetailHeader = () => {
             <div className="ml-4">
               <div className="flex flex-row items-center text-2xl font-bold">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
-                  Board Name
+                  Board {id}
                 </span>
                 <span className={`px-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full ml-2 mt-1`}>
                   Active
@@ -32,19 +50,25 @@ const BoardDetailHeader = () => {
             </div>
           </div>
           <div className="flex lg:ml-4">
-            <span className="hidden sm:block space-x-2">
-              <IconButton backgroundType="darkGray" size="medium">
-                <CogIcon
-                  className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
-                  title="settings-icon"
-                />
-              </IconButton>
-              <Button text="Create Column" type="button" color="transparent" size="medium" hasIcon>
-                <PlusIcon
-                  className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}
-                  title="plus-icon"
-                />
-              </Button>
+            <IconButton backgroundType="darkGray" size="medium" action={toggleShowOptionsDropdown}>
+              <ThreeDots className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150" title="menu-icon" />
+              {!!isShowOptionsDropdown && (
+                <Dropdown toggleShowDropdown={toggleShowOptionsDropdown}>
+                  <span className="block md:hidden">
+                    <DropdownItem text="Create Task" icon={<PlusIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                  </span>
+                  <DropdownItem text="Add Column" icon={<AddColumnIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                  <DropdownItem text="Edit Participants" icon={<UsersIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                  <DropdownItem
+                    text="Board Settings"
+                    icon={<CogIcon className="w-5 h-5 mr-2 text-gray-500" />}
+                    action={toggleShowBoardSettings}
+                  />
+                  <DropdownItem text="Delete Board" icon={<TrashIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                </Dropdown>
+              )}
+            </IconButton>
+            <span className="hidden md:block md:ml-2">
               <Button text="Create Task" type="button" color="transparent" size="medium" hasIcon>
                 <PlusIcon
                   className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}
@@ -52,34 +76,7 @@ const BoardDetailHeader = () => {
                 />
               </Button>
             </span>
-
-            {/* <!-- Dropdown --> */}
-            <span className={`relative ml-3 sm:hidden`}>
-              <Button
-                type="button"
-                text="More"
-                size="medium"
-                color="transparent"
-                id="mobile-menu"
-                aria-haspopup="true"
-                hasIcon>
-                <ChevronDownIcon
-                  className={`h-5 w-5 mr-2 text-gray-400 transition ease-in-out duration-150`}
-                  title="chevron-down-icon"
-                />
-              </Button>
-              <div
-                className={`absolute right-0 w-48 py-1 mt-2 -mr-1 bg-white shadow-lg origin-top-right rounded-md ring-1 ring-black ring-opacity-5`}
-                aria-labelledby="mobile-menu"
-                role="menu">
-                <a href="#" className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`} role="menuitem">
-                  Edit
-                </a>
-                <a href="#" className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`} role="menuitem">
-                  View
-                </a>
-              </div>
-            </span>
+            {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
           </div>
         </div>
       </Container>
