@@ -36,13 +36,15 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
     switch (color) {
       case 'transparent':
         return `bg-gray-600 bg-opacity-50 text-white hover:bg-gray-500 hover:bg-opacity-25 focus:ring-gray-300`;
+      case 'danger':
+        return `bg-red-600 bg-opacity-90 text-white hover:bg-red-500 focus:ring-red-300`;
       case 'tertiary':
-        return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-blue-400`;
+        return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-gray-300`;
       case 'secondary':
         return `border border-transparent bg-rose-600 text-white hover:bg-rose-500 focus:ring-rose-400`;
       case 'primary':
       default:
-        return `border border-transparent bg-purple-700 text-white hover:bg-purple-600 focus:ring-purple-400`;
+        return `border border-transparent bg-indigo-700 text-white hover:bg-indigo-600 focus:ring-indigo-400`;
     }
   };
 

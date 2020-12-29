@@ -20,9 +20,9 @@ const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowPanel }
             </IconButton>
           </div>
           <div className={`h-full flex flex-col space-y-6 bg-gray-100 shadow-xl overflow-y-scroll`}>
-            <header className={`px-4 py-6 sm:px-6 bg-purple-800`}>
+            <header className={`px-4 py-6 sm:px-6 bg-indigo-800`}>
               <h2 className={`mb-1 text-xl leading-6 font-medium text-purple-50`}>{panelTitle}</h2>
-              <h5 className={`text-sm leading-snug font-light text-purple-300`}>{panelSecondaryText}</h5>
+              <h5 className={`text-sm leading-snug font-light text-purple-200`}>{panelSecondaryText}</h5>
             </header>
 
             <div className={`relative flex-1 px-4 sm:px-6`}>{children}</div>

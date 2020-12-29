@@ -6,6 +6,7 @@ import Dropdown from '../../../common/Dropdown/Dropdown';
 import DropdownItem from '../../../common/Dropdown/DropdownItem';
 import BoardSettings from './BoardSettings/BoardSettings';
 import CreateColumnModal from './Column/CreateColumnModal';
+import DeleteBoardModal from './DeleteBoardModal';
 import { ReactComponent as AddColumnIcon } from '../../../assets/img/icons/view-grid-add-20.svg';
 import { ReactComponent as UsersIcon } from '../../../assets/img/icons/users-20.svg';
 import { ReactComponent as TrashIcon } from '../../../assets/img/icons/trash-20.svg';
@@ -17,6 +18,7 @@ const BoardDetailHeader = ({ id }) => {
   const [isShowOptionsDropdown, setIsShowOptionsDropdown] = useState(false);
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
   const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
+  const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
 
   const toggleShowOptionsDropdown = () => {
     setIsShowOptionsDropdown(!isShowOptionsDropdown);
@@ -28,6 +30,10 @@ const BoardDetailHeader = ({ id }) => {
 
   const toggleShowCreateColumnModal = () => {
     setIsShowCreateColumnModal(!isShowCreateColumnModal);
+  };
+
+  const toggleShowDeleteBoardModal = () => {
+    setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
   };
 
   return (
@@ -73,7 +79,11 @@ const BoardDetailHeader = ({ id }) => {
                     icon={<CogIcon className="w-5 h-5 mr-2 text-gray-500" />}
                     action={toggleShowBoardSettings}
                   />
-                  <DropdownItem text="Delete Board" icon={<TrashIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                  <DropdownItem
+                    text="Delete Board"
+                    icon={<TrashIcon className="w-5 h-5 mr-2 text-gray-500" />}
+                    action={toggleShowDeleteBoardModal}
+                  />
                 </Dropdown>
               )}
             </IconButton>
@@ -88,6 +98,7 @@ const BoardDetailHeader = ({ id }) => {
             {!!isShowCreateColumnModal && (
               <CreateColumnModal toggleShowCreateColumnModal={toggleShowCreateColumnModal} />
             )}
+            {!!isShowDeleteBoardModal && <DeleteBoardModal toggleShowDeleteBoardModal={toggleShowDeleteBoardModal} />}
             {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
           </div>
         </div>
