@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import BoardSettings from './BoardSettings/BoardSettings';
 import Button from '../../../common/Buttons/Button';
 import Container from '../../../common/Container';
 import IconButton from '../../../common/Buttons/IconButton';
 import Dropdown from '../../../common/Dropdown/Dropdown';
 import DropdownItem from '../../../common/Dropdown/DropdownItem';
+import BoardSettings from './BoardSettings/BoardSettings';
+import CreateColumnModal from './Column/CreateColumnModal';
 import { ReactComponent as AddColumnIcon } from '../../../assets/img/icons/view-grid-add-20.svg';
 import { ReactComponent as UsersIcon } from '../../../assets/img/icons/users-20.svg';
 import { ReactComponent as TrashIcon } from '../../../assets/img/icons/trash-20.svg';
 import { ReactComponent as CogIcon } from '../../../assets/img/icons/cog-20.svg';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
-import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down-24.svg';
 import { ReactComponent as ThreeDots } from '../../../assets/img/icons/three-dots-24.svg';
 
 const BoardDetailHeader = ({ id }) => {
   const [isShowOptionsDropdown, setIsShowOptionsDropdown] = useState(false);
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
+  const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
 
   const toggleShowOptionsDropdown = () => {
     setIsShowOptionsDropdown(!isShowOptionsDropdown);
@@ -23,6 +24,10 @@ const BoardDetailHeader = ({ id }) => {
 
   const toggleShowBoardSettings = () => {
     setIsShowBoardSettings(!isShowBoardSettings);
+  };
+
+  const toggleShowCreateColumnModal = () => {
+    setIsShowCreateColumnModal(!isShowCreateColumnModal);
   };
 
   return (
@@ -38,7 +43,7 @@ const BoardDetailHeader = ({ id }) => {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
                   Board {id}
                 </span>
-                <span className={`px-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full ml-2 mt-1`}>
+                <span className="px-2 mt-1 ml-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full">
                   Active
                 </span>
               </div>
@@ -57,7 +62,11 @@ const BoardDetailHeader = ({ id }) => {
                   <span className="block md:hidden">
                     <DropdownItem text="Create Task" icon={<PlusIcon className="w-5 h-5 mr-2 text-gray-500" />} />
                   </span>
-                  <DropdownItem text="Add Column" icon={<AddColumnIcon className="w-5 h-5 mr-2 text-gray-500" />} />
+                  <DropdownItem
+                    text="Create Column"
+                    icon={<AddColumnIcon className="w-5 h-5 mr-2 text-gray-500" />}
+                    action={toggleShowCreateColumnModal}
+                  />
                   <DropdownItem text="Edit Participants" icon={<UsersIcon className="w-5 h-5 mr-2 text-gray-500" />} />
                   <DropdownItem
                     text="Board Settings"
@@ -71,11 +80,14 @@ const BoardDetailHeader = ({ id }) => {
             <span className="hidden md:block md:ml-2">
               <Button text="Create Task" type="button" color="transparent" size="medium" hasIcon>
                 <PlusIcon
-                  className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}
+                  className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
                   title="plus-icon"
                 />
               </Button>
             </span>
+            {!!isShowCreateColumnModal && (
+              <CreateColumnModal toggleShowCreateColumnModal={toggleShowCreateColumnModal} />
+            )}
             {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
           </div>
         </div>

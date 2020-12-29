@@ -55,8 +55,8 @@ const CreateBoardSlideOver = ({ toggleShowCreateBoard, addBoard }) => {
           />
         </div>
         <div className={`flex flex-row-reverse space-x-4 space-x-reverse`}>
-          <Button type="submit" color="primary" size="small" text="Create Board" />
-          <Button type="button" action={toggleShowCreateBoard} color="tertiary" size="small" text="Cancel" />
+          <Button type="submit" color="primary" size="medium" text="Create Board" />
+          <Button type="button" action={toggleShowCreateBoard} color="tertiary" size="medium" text="Cancel" />
         </div>
       </form>
     </SlideOver>

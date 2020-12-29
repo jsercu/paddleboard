@@ -13,10 +13,10 @@ const IconButton = ({ children, ariaLabel, action, backgroundType, size }) => {
       case 'modalBackdrop':
         return 'text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50 rounded-sm';
       case 'white':
-        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 focus:bg-blue-100 focus:text-blue-500';
+        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:bg-gray-100 focus:text-gray-500';
       case 'offWhite':
       default:
-        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 focus:bg-blue-100 focus:text-blue-500 rounded-sm';
+        return 'text-gray-300 hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:bg-gray-200 focus:text-gray-500 rounded-sm';
     }
   };
 

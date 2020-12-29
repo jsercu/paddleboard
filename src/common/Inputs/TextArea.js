@@ -9,10 +9,10 @@ const TextArea = ({ labelText, ariaLabel, name, value, isRequired, rows, changeH
   const getColorStyles = () => {
     switch (color) {
       case 'white':
-        return 'bg-white border-gray-300 focus:border-transparent focus:ring-2 focus:ring-pink-500';
+        return 'bg-white border-gray-300 focus:border-transparent focus:ring-2 focus:ring-purple-500';
       case 'offWhite':
       default:
-        return 'bg-gray-50 border-gray-300 focus:bg-white focus:border-transparent focus:ring-2 focus:ring-pink-500';
+        return 'bg-gray-50 border-gray-300 focus:bg-white focus:border-transparent focus:ring-2 focus:ring-purple-500';
     }
   };
 

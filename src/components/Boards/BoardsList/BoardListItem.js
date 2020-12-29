@@ -5,7 +5,7 @@ const BoardListItem = ({ name, description, id }) => {
   let { path, url } = useRouteMatch();
 
   return (
-    <div className="flex items-center justify-between group hover:bg-lightblue-50 transition duration-150 ease-in-out">
+    <div className="flex items-center justify-between cursor-pointer group bg-gradient-to-r from-white to-white hover:from-gray-50 transition duration-150 ease-in-out">
       <div className="w-full px-6 py-3 whitespace-nowrap">
         <div className="flex-col items-center">
           <div className="mr-2 text-sm font-medium text-gray-800">{name}</div>

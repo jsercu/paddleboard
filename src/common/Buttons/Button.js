@@ -39,17 +39,17 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
       case 'tertiary':
         return `border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:ring-blue-400`;
       case 'secondary':
-        return `border border-transparent bg-lightblue-600 text-white hover:bg-lightblue-500 focus:ring-lightblue-400`;
+        return `border border-transparent bg-rose-600 text-white hover:bg-rose-500 focus:ring-rose-400`;
       case 'primary':
       default:
-        return `border border-transparent bg-pink-600 text-white hover:bg-pink-500 focus:ring-pink-400`;
+        return `border border-transparent bg-purple-700 text-white hover:bg-purple-600 focus:ring-purple-400`;
     }
   };
 
   if (fullWidth) {
     return (
       <button type={type} className={`relative w-full font-medium ` + getButtonClasses()} onClick={action}>
-        {!!hasIcon && <span className={`absolute left-0 inset-y-0 flex items-center pl-3 mr-2`}>{children}</span>}
+        {!!hasIcon && <span className="absolute inset-y-0 left-0 flex items-center pl-3 mr-2">{children}</span>}
         {text}
       </button>
     );
@@ -57,7 +57,7 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
 
   return (
     <button type={type} onClick={action} className={`inline-flex ` + getButtonClasses()}>
-      {!!hasIcon && <span className={`w-5 h-5 mr-2 -ml-1`}>{children}</span>}
+      {!!hasIcon && <span className="w-5 h-5 mr-2 -ml-1">{children}</span>}
       {text}
     </button>
   );

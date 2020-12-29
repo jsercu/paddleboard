@@ -10,7 +10,7 @@ const Column = ({ name, tasks }) => {
         <div className="flex justify-between">
           <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{name}</h3>
           <IconButton backgroundType="offWhite">
-            <PlusIcon title="x-icon" className={`h-6 w-6`} />
+            <PlusIcon title="x-icon" className="w-6 h-6" />
           </IconButton>
         </div>
         {tasks.length > 0 &&
