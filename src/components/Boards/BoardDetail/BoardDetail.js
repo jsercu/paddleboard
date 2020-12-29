@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Container from '../../../common/Container';
-import BoardDetailHeader from './BoardDetailHeader';
+import BoardDetailHeader from './BoardDetailHeader/BoardDetailHeader';
 import Column from './Column/Column';
 import { useParams } from 'react-router-dom';
 

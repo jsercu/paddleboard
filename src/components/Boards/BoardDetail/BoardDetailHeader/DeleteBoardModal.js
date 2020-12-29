@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../../common/Modals/Modal';
-import Button from '../../../common/Buttons/Button';
-import IconButton from '../../../common/Buttons/IconButton';
-import BgPattern from '../../../common/BgPattern/BgPattern';
-import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
+import Modal from '../../../../common/Modals/Modal';
+import Button from '../../../../common/Buttons/Button';
+import IconButton from '../../../../common/Buttons/IconButton';
+import BgPattern from '../../../../common/BgPattern/BgPattern';
+import { ReactComponent as XIcon } from '../../../../assets/img/icons/x-24.svg';
 
 const DeleteBoardModal = ({ toggleShowDeleteBoardModal }) => {
   return (
@@ -17,8 +17,8 @@ const DeleteBoardModal = ({ toggleShowDeleteBoardModal }) => {
         <BgPattern pattern="diagonalStripes" bgColor="bg-red-500">
           <div className="px-10 py-8 text-left sm:mt-0">
             <h3 className="text-2xl font-semibold text-red-50 leading-6">Delete this board?</h3>
-            <div class="mt-3">
-              <p class="text-sm text-white font-base leading-6">
+            <div className="mt-3">
+              <p className="text-sm text-white font-base leading-6">
                 Are you sure you want to delete this board? All of the data for this board will be permanently removed.
                 This action cannot be undone.
               </p>

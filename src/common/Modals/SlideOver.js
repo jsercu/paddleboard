@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Transition } from '@headlessui/react';
 import Backdrop from './Backdrop';
-import BgPattern from '../BgPattern/BgPattern';
 import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
 import IconButton from '../Buttons/IconButton';
 
-const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowPanel }) => {
+const SlideOver = ({ children, panelTitle, panelSecondaryText, toggleShowSlideOver }) => {
   const handleClick = () => {
-    toggleShowPanel();
+    toggleShowSlideOver();
   };
 
   return ReactDOM.createPortal(
-    <Backdrop toggleShowModal={toggleShowPanel}>
+    <Backdrop toggleShowModal={toggleShowSlideOver}>
       <section className="absolute inset-y-0 right-0 flex max-w-full pl-10">
         <div className={`relative w-screen max-w-md`}>
           <div className={`absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4`}>
