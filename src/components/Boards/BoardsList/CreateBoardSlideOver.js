@@ -29,7 +29,7 @@ const CreateBoardSlideOver = ({ toggleShowCreateBoard, addBoard }) => {
     <SlideOver
       panelTitle={'Create New Board'}
       panelSecondaryText={'Get started by filling in the information below to create your new board.'}
-      toggleShowPanel={toggleShowCreateBoard}>
+      toggleShowSlideOver={toggleShowCreateBoard}>
       <form className={`h-full flex flex-col space-y-6`} onSubmit={handleSubmit}>
         <div>
           <Input

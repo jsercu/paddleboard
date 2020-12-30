@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-const BoardListItem = ({ name, description, id }) => {
+const BoardsTableRow = ({ name, description, id }) => {
   let { path, url } = useRouteMatch();
 
   return (
@@ -47,4 +47,4 @@ const BoardListItem = ({ name, description, id }) => {
   );
 };
 
-export default BoardListItem;
+export default BoardsTableRow;

@@ -5,7 +5,11 @@ import IconButton from '../../../../common/Buttons/IconButton';
 import BgPattern from '../../../../common/BgPattern/BgPattern';
 import { ReactComponent as XIcon } from '../../../../assets/img/icons/x-24.svg';
 
-const DeleteBoardModal = ({ toggleShowDeleteBoardModal }) => {
+const DeleteBoardModal = ({ toggleShowDeleteBoardModal, deleteBoard, id: boardId }) => {
+  const handleDelete = () => {
+    deleteBoard(boardId);
+  };
+
   return (
     <Modal toggleShowModal={toggleShowDeleteBoardModal}>
       <div className="relative bg-white">
@@ -27,7 +31,7 @@ const DeleteBoardModal = ({ toggleShowDeleteBoardModal }) => {
         </BgPattern>
       </div>
       <div className="px-4 py-4 bg-gray-50 space-x-2 space-x-reverse sm:px-10 sm:flex sm:flex-row-reverse">
-        <Button text="Delete Board" type="button" color="danger" size="small"></Button>
+        <Button text="Delete Board" type="button" color="danger" size="small" action={handleDelete}></Button>
         <Button text="Cancel" type="button" color="tertiary" size="small" action={toggleShowDeleteBoardModal}></Button>
       </div>
     </Modal>

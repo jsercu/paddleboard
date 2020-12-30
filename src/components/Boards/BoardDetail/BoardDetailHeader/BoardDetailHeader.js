@@ -2,34 +2,9 @@ import React, { useState } from 'react';
 import Button from '../../../../common/Buttons/Button';
 import Container from '../../../../common/Container';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
-import BoardSettings from './BoardSettings';
-import CreateColumnModal from '../Column/CreateColumnModal';
-import DeleteBoardModal from './DeleteBoardModal';
-import CreateTaskSlideOver from '../Task/CreateTaskSlideOver';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 
-const BoardDetailHeader = ({ id }) => {
-  const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
-  const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
-  const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
-  const [isShowCreateTaskSlideOver, setIsShowCreateTaskSlideOver] = useState(false);
-
-  const toggleShowBoardSettings = () => {
-    setIsShowBoardSettings(!isShowBoardSettings);
-  };
-
-  const toggleShowCreateColumnModal = () => {
-    setIsShowCreateColumnModal(!isShowCreateColumnModal);
-  };
-
-  const toggleShowDeleteBoardModal = () => {
-    setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
-  };
-
-  const toggleShowCreateTaskSlideOver = () => {
-    setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
-  };
-
+const BoardDetailHeader = (props) => {
   return (
     <>
       <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
@@ -42,7 +17,7 @@ const BoardDetailHeader = ({ id }) => {
               <div className="ml-4">
                 <div className="flex flex-row items-center text-2xl font-bold">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
-                    Board {id}
+                    Board {props.id}
                   </span>
                   <span className="px-2 mt-1 ml-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full">
                     Active
@@ -57,10 +32,10 @@ const BoardDetailHeader = ({ id }) => {
             </div>
             <div className="flex lg:ml-4 space-x-2">
               <BoardDetailHeaderDropdown
-                toggleShowBoardSettings={toggleShowBoardSettings}
-                toggleShowCreateColumnModal={toggleShowCreateColumnModal}
-                toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
-                toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
+                toggleShowBoardSettings={props.toggleShowBoardSettings}
+                toggleShowCreateColumnModal={props.toggleShowCreateColumnModal}
+                toggleShowDeleteBoardModal={props.toggleShowDeleteBoardModal}
+                toggleShowCreateTaskSlideOver={props.toggleShowCreateTaskSlideOver}
               />
               <Button
                 text="Create Task"
@@ -68,7 +43,7 @@ const BoardDetailHeader = ({ id }) => {
                 color="transparent"
                 size="medium"
                 hasIcon
-                action={toggleShowCreateTaskSlideOver}>
+                action={props.toggleShowCreateTaskSlideOver}>
                 <PlusIcon
                   className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
                   title="plus-icon"
@@ -78,12 +53,6 @@ const BoardDetailHeader = ({ id }) => {
           </div>
         </Container>
       </div>
-      {!!isShowCreateColumnModal && <CreateColumnModal toggleShowCreateColumnModal={toggleShowCreateColumnModal} />}
-      {!!isShowDeleteBoardModal && <DeleteBoardModal toggleShowDeleteBoardModal={toggleShowDeleteBoardModal} />}
-      {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
-      {!!isShowCreateTaskSlideOver && (
-        <CreateTaskSlideOver toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver} />
-      )}
     </>
   );
 };
