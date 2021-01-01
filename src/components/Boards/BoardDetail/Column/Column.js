@@ -1,25 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { firestore } from '../../../../firebase';
 import Task from '../Task/Task';
-import IconButton from '../../../../common/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
+import ColumnDropdown from './ColumnDropdown';
+import { useParams } from 'react-router-dom';
 
-const Column = ({ name, tasks }) => {
-  return (
-    <div className="flex bg-gray-100 rounded-sm shadow-xl">
-      <div className="w-full p-4">
-        <div className="flex justify-between">
-          <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{name}</h3>
-          <IconButton backgroundType="offWhite">
-            <PlusIcon title="x-icon" className="w-6 h-6" />
-          </IconButton>
+const Column = ({ id: columnId, deleteColumn, deleteTask }) => {
+  let { boardId } = useParams();
+  const [column, setColumn] = useState();
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection('boards')
+      .doc(boardId)
+      .collection('columns')
+      .doc(columnId)
+      .onSnapshot((doc) => {
+        const newColumn = doc.data();
+        setColumn(newColumn);
+        setIsLoading(false);
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection('tasks')
+      .where('boardId', '==', boardId)
+      .where('columnId', '==', columnId)
+      .onSnapshot((snapshot) => {
+        const newTasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setTasks(newTasks);
+        setIsLoading(false);
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  if (isLoading) {
+    return <></>;
+  }
+
+  if (column) {
+    return (
+      <div className="flex bg-gray-100 rounded-sm shadow-xl h-96">
+        <div className="w-full p-4">
+          <div className="flex items-center justify-between">
+            <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{column.name}</h3>
+            <ColumnDropdown id={columnId} deleteColumn={deleteColumn} />
+          </div>
+          {!!tasks && tasks.length > 0 ? (
+            tasks.map(({ name, id, description }) => (
+              <Task
+                key={id}
+                name={name}
+                id={id}
+                description={description}
+                deleteTask={deleteTask}
+                columnId={columnId}
+              />
+            ))
+          ) : (
+            <></>
+          )}
         </div>
-        {tasks.length > 0 &&
-          tasks.map(({ name, id, created, category, description }) => (
-            <Task name={name} key={id} category={category} created={created} description={description} />
-          ))}
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <></>;
 };
 
 export default Column;

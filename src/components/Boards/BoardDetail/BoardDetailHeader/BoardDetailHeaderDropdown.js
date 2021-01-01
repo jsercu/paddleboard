@@ -4,7 +4,7 @@ import { ReactComponent as AddColumnIcon } from '../../../../assets/img/icons/vi
 import { ReactComponent as UsersIcon } from '../../../../assets/img/icons/users-20.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
 import { ReactComponent as CogIcon } from '../../../../assets/img/icons/cog-20.svg';
-import { ReactComponent as ThreeDots } from '../../../../assets/img/icons/three-dots-24.svg';
+import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
 
 const BoardDetailHeaderDropdown = ({
   toggleShowBoardSettings,
@@ -17,7 +17,10 @@ const BoardDetailHeaderDropdown = ({
         {({ open }) => (
           <>
             <Menu.Button className="w-10 h-10 text-white bg-gray-600 bg-opacity-50 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none focus:ring transition focus:ring-gray-300 rounded-md">
-              <ThreeDots className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150" title="menu-icon" />
+              <ThreeDotsIcon
+                className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
+                title="menu-icon"
+              />
             </Menu.Button>
 
             <Transition

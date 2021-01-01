@@ -1,8 +1,7 @@
 import React from 'react';
-import IconButton from '../../../../common/Buttons/IconButton';
-import { ReactComponent as ThreeDots } from '../../../../assets/img/icons/three-dots-24.svg';
+import TaskDropdown from './TaskDropdown';
 
-const Task = ({ name, description, category }) => {
+const Task = ({ name, id, description, deleteTask, columnId }) => {
   const getCategoryStyles = () => {
     switch (category) {
       case 'Product Documentation':
@@ -22,9 +21,7 @@ const Task = ({ name, description, category }) => {
       <div className="flex flex-col">
         <div className="flex flex-row items-end justify-between">
           <p className="text-sm font-medium text-gray-700">{name}</p>
-          <IconButton backgroundType="white">
-            <ThreeDots title="menu-icon" className="w-5 h-5 mx-auto" />
-          </IconButton>
+          <TaskDropdown id={id} deleteTask={deleteTask} columnId={columnId} />
         </div>
         <div className="mr-8">
           <p className="text-xs font-light text-gray-400 leading-4">{description}</p>
@@ -35,7 +32,7 @@ const Task = ({ name, description, category }) => {
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt=""
           />
-          <span className={`px-2 text-xs font-semibold rounded-full ` + getCategoryStyles()}>{category}</span>
+          {/* <span className={`px-2 text-xs font-semibold rounded-full ` + getCategoryStyles()}>{category}</span> */}
         </div>
       </div>
     </div>

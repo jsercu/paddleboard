@@ -4,7 +4,13 @@ import Container from '../../../../common/Container';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 
-const BoardDetailHeader = (props) => {
+const BoardDetailHeader = ({
+  id,
+  toggleShowBoardSettings,
+  toggleShowCreateColumnModal,
+  toggleShowDeleteBoardModal,
+  toggleShowCreateTaskSlideOver,
+}) => {
   return (
     <>
       <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
@@ -17,7 +23,7 @@ const BoardDetailHeader = (props) => {
               <div className="ml-4">
                 <div className="flex flex-row items-center text-2xl font-bold">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
-                    Board {props.id}
+                    Board {id}
                   </span>
                   <span className="px-2 mt-1 ml-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full">
                     Active
@@ -32,10 +38,10 @@ const BoardDetailHeader = (props) => {
             </div>
             <div className="flex lg:ml-4 space-x-2">
               <BoardDetailHeaderDropdown
-                toggleShowBoardSettings={props.toggleShowBoardSettings}
-                toggleShowCreateColumnModal={props.toggleShowCreateColumnModal}
-                toggleShowDeleteBoardModal={props.toggleShowDeleteBoardModal}
-                toggleShowCreateTaskSlideOver={props.toggleShowCreateTaskSlideOver}
+                toggleShowBoardSettings={toggleShowBoardSettings}
+                toggleShowCreateColumnModal={toggleShowCreateColumnModal}
+                toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
+                toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
               />
               <Button
                 text="Create Task"
@@ -43,7 +49,7 @@ const BoardDetailHeader = (props) => {
                 color="transparent"
                 size="medium"
                 hasIcon
-                action={props.toggleShowCreateTaskSlideOver}>
+                action={toggleShowCreateTaskSlideOver}>
                 <PlusIcon
                   className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
                   title="plus-icon"

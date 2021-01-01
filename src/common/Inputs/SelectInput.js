@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { ReactComponent as SelectorIcon } from '../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../assets/img/icons/check-20.svg';
 
-const SelectInput = ({ labelText, placeholderText, options }) => {
+const SelectInput = ({ name, labelText, placeholderText, options, handleSelectInputChange }) => {
   const [selectedOption, setSelectedOption] = useState(false);
+
+  useEffect(() => {
+    handleSelectInputChange(name, selectedOption);
+  }, [selectedOption]);
 
   return (
     <Listbox as="div" className="space-y-1" value={selectedOption} onChange={setSelectedOption}>
@@ -34,14 +38,14 @@ const SelectInput = ({ labelText, placeholderText, options }) => {
               <Listbox.Options
                 static
                 className="py-1 overflow-auto text-base max-h-60 rounded-md leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5">
-                {options.map((option) => (
-                  <Listbox.Option key={option} value={option}>
+                {options.map(({ name, id }, index) => (
+                  <Listbox.Option key={id ? id : index} value={name}>
                     {({ selected, active }) => (
                       <div
                         className={`${
                           active ? 'text-white bg-indigo-600' : 'text-gray-900'
                         } cursor-default select-none relative py-2 pl-8 pr-4`}>
-                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>{option}</span>
+                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>{name}</span>
                         {selected && (
                           <span
                             className={`${

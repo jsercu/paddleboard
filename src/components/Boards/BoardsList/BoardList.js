@@ -12,11 +12,14 @@ const BoardList = () => {
   const auth = useAuth();
 
   useEffect(() => {
-    const unsubscribe = firestore.collection('boards').onSnapshot((snapshot) => {
-      const newBoards = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setBoards(newBoards);
-      setIsLoading(false);
-    });
+    const unsubscribe = firestore
+      .collection('boards')
+      .where('deleteStatus', '==', false)
+      .onSnapshot((snapshot) => {
+        const newBoards = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setBoards(newBoards);
+        setIsLoading(false);
+      });
     return () => {
       unsubscribe();
     };
@@ -35,7 +38,7 @@ const BoardList = () => {
         columnOrder: [],
         created: firebase.firestore.FieldValue.serverTimestamp(),
         author: auth.user.displayName,
-        author_id: auth.user.uid,
+        authorId: auth.user.uid,
         deleteStatus: false,
       });
     } catch (exception) {
@@ -73,5 +76,3 @@ const BoardList = () => {
 };
 
 export default BoardList;
-
-// px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase
