@@ -72,6 +72,7 @@ module.exports = {
       72: '18rem',
       80: '20rem',
       96: '24rem',
+      100: '25rem',
     },
     animation: {
       none: 'none',
@@ -808,7 +809,7 @@ module.exports = {
     lineHeight: ['responsive'],
     listStylePosition: ['responsive'],
     listStyleType: ['responsive'],
-    margin: ['responsive'],
+    margin: ['responsive', 'last'],
     maxHeight: ['responsive'],
     maxWidth: ['responsive'],
     minHeight: ['responsive'],
