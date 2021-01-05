@@ -8,10 +8,14 @@ import SelectInput from '../../../../common/Inputs/SelectInput';
 import Button from '../../../../common/Buttons/Button';
 import { useParams } from 'react-router-dom';
 
-const CreateTaskSlideOver = ({ toggleShowCreateTaskSlideOver, addTask }) => {
+const CreateTaskSlideOver = ({ toggleShowCreateTaskSlideOver, addTask, columnId }) => {
   let { boardId } = useParams();
   let auth = useAuth();
-  const [values, setValues] = useState({ name: '', description: '', columnName: '' });
+  const [values, setValues] = useState({
+    name: '',
+    description: '',
+    columnName: '',
+  });
   const [columns, setColumns] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,11 +55,17 @@ const CreateTaskSlideOver = ({ toggleShowCreateTaskSlideOver, addTask }) => {
       deleteStatus: false,
     };
     addTask(taskValues);
+    toggleShowCreateTaskSlideOver();
   };
 
   const lookupColumnId = (columnName) => {
     let matchedColumn = columns.find((column) => column.name === columnName);
     return matchedColumn.id;
+  };
+
+  const lookupColumnName = (columnId) => {
+    let matchedColumn = columns.find((column) => column.id === columnId);
+    return matchedColumn.name;
   };
 
   // const participants = [
@@ -118,6 +128,7 @@ const CreateTaskSlideOver = ({ toggleShowCreateTaskSlideOver, addTask }) => {
           name="columnName"
           labelText="Column"
           options={columns}
+          initialValue={columnId ? lookupColumnName(columnId) : null}
           handleSelectInputChange={handleSelectInputChange}
         />
         <div className="flex flex-row-reverse space-x-4 space-x-reverse">

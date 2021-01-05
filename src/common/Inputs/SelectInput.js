@@ -3,8 +3,8 @@ import { Listbox, Transition } from '@headlessui/react';
 import { ReactComponent as SelectorIcon } from '../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../assets/img/icons/check-20.svg';
 
-const SelectInput = ({ name, labelText, placeholderText, options, handleSelectInputChange }) => {
-  const [selectedOption, setSelectedOption] = useState(false);
+const SelectInput = ({ name, labelText, placeholderText, options, handleSelectInputChange, initialValue }) => {
+  const [selectedOption, setSelectedOption] = useState(initialValue);
 
   useEffect(() => {
     handleSelectInputChange(name, selectedOption);

@@ -69,9 +69,6 @@ const BoardDetail = () => {
     } catch (exception) {
       console.error(exception.toString());
     }
-    if (isShowCreateColumnModal) {
-      toggleShowCreateColumnModal();
-    }
   };
 
   // TODO -> batch api calls
@@ -104,40 +101,29 @@ const BoardDetail = () => {
     } catch (exception) {
       console.error(exception.toString());
     }
-    if (isShowCreateTaskSlideOver) {
-      toggleShowCreateTaskSlideOver();
-    }
   };
 
   const deleteTask = async (taskId, columnId) => {
     try {
-      await firestore.collection('tasks').doc(taskId).delete();
       await firestore
         .collection('boards')
         .doc(boardId)
         .collection('columns')
         .doc(columnId)
         .update({ taskIds: firebase.firestore.FieldValue.arrayRemove(taskId) });
+      await firestore.collection('tasks').doc(taskId).delete();
     } catch (exception) {
       console.error(exception.toString());
     }
   };
 
-  const toggleShowBoardSettings = () => {
-    setIsShowBoardSettings(!isShowBoardSettings);
-  };
+  const toggleShowBoardSettings = () => setIsShowBoardSettings(!isShowBoardSettings);
 
-  const toggleShowCreateColumnModal = () => {
-    setIsShowCreateColumnModal(!isShowCreateColumnModal);
-  };
+  const toggleShowCreateColumnModal = () => setIsShowCreateColumnModal(!isShowCreateColumnModal);
 
-  const toggleShowDeleteBoardModal = () => {
-    setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
-  };
+  const toggleShowDeleteBoardModal = () => setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
 
-  const toggleShowCreateTaskSlideOver = () => {
-    setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
-  };
+  const toggleShowCreateTaskSlideOver = () => setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
 
   if (isLoading) {
     return <></>;
@@ -157,7 +143,7 @@ const BoardDetail = () => {
           <div className="-mt-32 grid grid-cols-3 gap-8">
             {!!board && board.columnOrder.length ? (
               board.columnOrder.map((colId) => (
-                <Column key={colId} id={colId} deleteColumn={deleteColumn} deleteTask={deleteTask} />
+                <Column key={colId} id={colId} deleteColumn={deleteColumn} addTask={addTask} deleteTask={deleteTask} />
               ))
             ) : (
               <ColumnEmptyState />

@@ -18,6 +18,7 @@ const CreateColumnModal = ({ toggleShowCreateColumnModal, addColumn }) => {
       event.preventDefault();
     }
     addColumn(values);
+    toggleShowCreateColumnModal();
   };
   return (
     <Modal toggleShowModal={toggleShowCreateColumnModal}>
