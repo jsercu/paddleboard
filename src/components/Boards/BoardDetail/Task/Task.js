@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskDropdown from './TaskDropdown';
 
-const Task = ({ name, id, description, deleteTask, columnId }) => {
+const Task = ({ name, id, columnId, description, deleteTask }) => {
   const getCategoryStyles = () => {
     switch (category) {
       case 'Product Documentation':

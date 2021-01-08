@@ -6,7 +6,7 @@ import ColumnDropdown from './ColumnDropdown';
 import { useParams } from 'react-router-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Column = ({ id: columnId, columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
+const Column = ({ columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
   let { boardId } = useParams();
   // const [column, setColumn] = useState();
   // const [taskIds, setTaskIds] = useState([]);
@@ -73,7 +73,7 @@ const Column = ({ id: columnId, columnValues, tasks, deleteColumn, addTask, dele
                   <div className="flex items-center justify-between">
                     <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{columnValues.name}</h3>
                     <ColumnDropdown
-                      id={columnId}
+                      id={columnValues.id}
                       deleteColumn={deleteColumn}
                       toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
                     />
@@ -91,9 +91,9 @@ const Column = ({ id: columnId, columnValues, tasks, deleteColumn, addTask, dele
                               key={id}
                               name={name}
                               id={id}
+                              columnId={columnValues.id}
                               description={description}
                               deleteTask={deleteTask}
-                              columnId={columnId}
                             />
                           </div>
                         )}
@@ -112,7 +112,7 @@ const Column = ({ id: columnId, columnValues, tasks, deleteColumn, addTask, dele
           <CreateTaskSlideOver
             toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
             addTask={addTask}
-            columnId={columnId}
+            columnId={columnValues.id}
           />
         )}
       </>

@@ -30,8 +30,10 @@ const BoardDetail = () => {
     isTasksLoading: true,
   });
   const isInitialMount = useRef(true);
-  const [columnIdToUpdate, setColumnIdToUpdate] = useState(null);
-  const [columnRequiresUpdate, setColumnRequiresUpdate] = useState(null);
+  const [sourceColIdToUpdate, setSourceColIdToUpdate] = useState(null);
+  const [destinationColIdToUpdate, setDestinationColIdToUpdate] = useState(null);
+  const [reorderedTaskId, setReorderedTaskId] = useState(null);
+  const [movedTaskId, setMovedTaskId] = useState(null);
 
   useEffect(() => {
     const unsubscribe = firestore
@@ -71,7 +73,11 @@ const BoardDetail = () => {
       .collection('tasks')
       .where('boardId', '==', boardId)
       .onSnapshot((snapshot) => {
-        const newTasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const newTasksArr = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const newTasks = {};
+        newTasksArr.forEach((task) => {
+          newTasks[task.id] = { ...task };
+        });
         setTasks(newTasks);
         setIsLoadingValues((prevState) => ({ ...prevState, isTasksLoading: false }));
       });
@@ -89,16 +95,74 @@ const BoardDetail = () => {
   }, [board.columnOrder]);
 
   useEffect(() => {
-    if (columnRequiresUpdate && columnIdToUpdate) {
+    if (reorderedTaskId && sourceColIdToUpdate) {
       firestore
         .collection('boards')
         .doc(boardId)
         .collection('columns')
-        .doc(columnIdToUpdate)
-        .update({ taskIds: columns[columnIdToUpdate].taskIds });
-      setColumnToUpdate(false);
+        .doc(sourceColIdToUpdate)
+        .update({ taskIds: columns[sourceColIdToUpdate].taskIds });
+      setSourceColIdToUpdate(false);
+      setReorderedTaskId(false);
     }
-  }, [columnRequiresUpdate, columnIdToUpdate]);
+  }, [reorderedTaskId, sourceColIdToUpdate]);
+
+  useEffect(() => {
+    if (movedTaskId && sourceColIdToUpdate && destinationColIdToUpdate) {
+      firestore
+        .collection('boards')
+        .doc(boardId)
+        .collection('columns')
+        .doc(sourceColIdToUpdate)
+        .update({ taskIds: columns[sourceColIdToUpdate].taskIds });
+      setSourceColIdToUpdate(false);
+      firestore
+        .collection('boards')
+        .doc(boardId)
+        .collection('columns')
+        .doc(destinationColIdToUpdate)
+        .update({ taskIds: columns[destinationColIdToUpdate].taskIds });
+      setDestinationColIdToUpdate(false);
+      firestore.collection('tasks').doc(movedTaskId).update({ columnId: destinationColIdToUpdate });
+      setMovedTaskId(false);
+    }
+  }, [movedTaskId, sourceColIdToUpdate]);
+
+  // TODO -> This deleteBoard function does NOT yet handle deleting the columns subCollection
+  const deleteBoard = async (boardId) => {
+    try {
+      await firestore
+        .collection('boards')
+        .doc(boardId)
+        .update({ deleteStatus: true })
+        .then(() => {
+          toggleShowDeleteBoardModal();
+          history.push('/boards');
+        });
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
+
+  // TODO -> batch api calls
+  const addColumn = async (columnValues) => {
+    const { name } = columnValues;
+    let columnId;
+    try {
+      await firestore
+        .collection(`boards/${boardId}/columns`)
+        .add({ name, taskIds: [] })
+        .then((doc) => {
+          columnId = doc.id;
+        });
+      await firestore
+        .collection('boards')
+        .doc(boardId)
+        .update({ columnOrder: firebase.firestore.FieldValue.arrayUnion(columnId) });
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
 
   // TODO -> batch api calls
   const deleteColumn = async (columnId) => {
@@ -133,6 +197,7 @@ const BoardDetail = () => {
   };
 
   const deleteTask = async (taskId, columnId) => {
+    debugger;
     try {
       await firestore
         .collection('boards')
@@ -148,9 +213,8 @@ const BoardDetail = () => {
 
   // React-Beautiful-DnD onDragEnd callback (required)
   const onDragEnd = (result) => {
-    const { source, destination, type } = result;
+    const { source, destination, type, draggableId } = result;
     if (!destination) {
-      console.log('no destination for drop');
       return;
     }
     if (type === 'column') {
@@ -160,18 +224,31 @@ const BoardDetail = () => {
     }
     if (type === 'task') {
       if (source.droppableId === destination.droppableId) {
-        console.log('task moved within same column.');
         const sourceColumn = columns[source.droppableId];
         const newTaskIds = reorder(sourceColumn.taskIds, source.index, destination.index);
         const newColumn = { ...sourceColumn, taskIds: newTaskIds };
         setColumns((prevColumns) => ({ ...prevColumns, [newColumn.id]: newColumn }));
-        setColumnIdToUpdate(newColumn.id);
-        setColumnRequiresUpdate(true);
+        setSourceColIdToUpdate(newColumn.id);
+        setReorderedTaskId(draggableId);
       } else {
-        console.log('task moved between columns');
-        // 1) Remove task from source column's taskIds array
-        // 2) Add task at appropriate position in destination column's taskIds array
-        // 3) update task document's columnId with id of destination column
+        const sourceColumn = columns[source.droppableId];
+        const destinationColumn = columns[destination.droppableId];
+        const moveResult = move(sourceColumn.taskIds, destinationColumn.taskIds, source, destination);
+        const newSourceColumnTaskIds = moveResult[source.droppableId];
+        const newSourceColumn = { ...sourceColumn, taskIds: newSourceColumnTaskIds };
+        const newDestinationColumnTaskIds = moveResult[destination.droppableId];
+        const newDestinationColumn = { ...destinationColumn, taskIds: newDestinationColumnTaskIds };
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          [newSourceColumn.id]: newSourceColumn,
+          [newDestinationColumn.id]: newDestinationColumn,
+        }));
+        const movedTask = tasks[result.draggableId];
+        const newTask = { ...movedTask, columnId: destination.droppableId };
+        setTasks((prevTasks) => ({ ...prevTasks, [newTask.id]: newTask }));
+        setSourceColIdToUpdate(newSourceColumn.id);
+        setDestinationColIdToUpdate(newDestinationColumn.id);
+        setMovedTaskId(draggableId);
       }
     }
   };
@@ -202,10 +279,9 @@ const BoardDetail = () => {
   const getCurrentColumnAndTasks = (columnId) => {
     const _column = columns[columnId];
     let _tasks = [];
-    if (_column.taskIds.length > 0 && tasks && tasks.length > 0) {
+    if (_column.taskIds.length > 0 && tasks && Object.keys(tasks).length > 0) {
       _column.taskIds.forEach((taskId) => {
-        const foundTask = tasks.find((task) => task.id === taskId);
-        _tasks.push(foundTask);
+        _tasks.push(tasks[taskId]);
       });
     }
     return [_column, _tasks];
