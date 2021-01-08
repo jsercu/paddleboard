@@ -15,23 +15,65 @@ import { useParams } from 'react-router-dom';
 const BoardDetail = () => {
   let { boardId } = useParams();
   let history = useHistory();
-  const isInitialMount = useRef(true);
-  const [board, setBoard] = useState(true);
+
+  const [board, setBoard] = useState(false);
+  const [columns, setColumns] = useState({});
+  const [tasks, setTasks] = useState([]);
+
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
   const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
   const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
   const [isShowCreateTaskSlideOver, setIsShowCreateTaskSlideOver] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingValues, setIsLoadingValues] = useState({
+    isBoardLoading: true,
+    isColumnsLoading: true,
+    isTasksLoading: true,
+  });
+  const isInitialMount = useRef(true);
+  const [columnIdToUpdate, setColumnIdToUpdate] = useState(null);
+  const [columnRequiresUpdate, setColumnRequiresUpdate] = useState(null);
 
   useEffect(() => {
-    console.log('boardDetail: first useEffect');
     const unsubscribe = firestore
       .collection('boards')
       .doc(boardId)
       .onSnapshot((doc) => {
         const newBoard = doc.data();
         setBoard(newBoard);
-        setIsLoading(false);
+        setIsLoadingValues((prevState) => ({ ...prevState, isBoardLoading: false }));
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection('boards')
+      .doc(boardId)
+      .collection('columns')
+      .onSnapshot((snapshot) => {
+        const newColumnsArr = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const newColumns = {};
+        newColumnsArr.forEach((col) => {
+          newColumns[col.id] = { ...col };
+        });
+        setColumns(newColumns);
+        setIsLoadingValues((prevState) => ({ ...prevState, isColumnsLoading: false }));
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection('tasks')
+      .where('boardId', '==', boardId)
+      .onSnapshot((snapshot) => {
+        const newTasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setTasks(newTasks);
+        setIsLoadingValues((prevState) => ({ ...prevState, isTasksLoading: false }));
       });
     return () => {
       unsubscribe();
@@ -40,49 +82,23 @@ const BoardDetail = () => {
 
   useEffect(() => {
     if (isInitialMount.current) {
-      console.log('boardDetail: second useEffect => if block');
       isInitialMount.current = false;
     } else {
-      console.log('boardDetail: second useEffect => else block');
       firestore.collection('boards').doc(boardId).update({ columnOrder: board.columnOrder });
     }
   }, [board.columnOrder]);
 
-  // TODO -> This deleteBoard function does NOT yet handle deleting the columns subCollection
-  const deleteBoard = async (boardId) => {
-    try {
-      await firestore
+  useEffect(() => {
+    if (columnRequiresUpdate && columnIdToUpdate) {
+      firestore
         .collection('boards')
         .doc(boardId)
-        .update({ deleteStatus: true })
-        .then(() => {
-          toggleShowDeleteBoardModal();
-          history.push('/boards');
-        });
-    } catch (exception) {
-      console.error(exception.toString());
+        .collection('columns')
+        .doc(columnIdToUpdate)
+        .update({ taskIds: columns[columnIdToUpdate].taskIds });
+      setColumnToUpdate(false);
     }
-  };
-
-  // TODO -> batch api calls
-  const addColumn = async (columnValues) => {
-    const { name } = columnValues;
-    let columnId;
-    try {
-      await firestore
-        .collection(`boards/${boardId}/columns`)
-        .add({ name, taskIds: [] })
-        .then((doc) => {
-          columnId = doc.id;
-        });
-      await firestore
-        .collection('boards')
-        .doc(boardId)
-        .update({ columnOrder: firebase.firestore.FieldValue.arrayUnion(columnId) });
-    } catch (exception) {
-      console.error(exception.toString());
-    }
-  };
+  }, [columnRequiresUpdate, columnIdToUpdate]);
 
   // TODO -> batch api calls
   const deleteColumn = async (columnId) => {
@@ -130,6 +146,37 @@ const BoardDetail = () => {
     }
   };
 
+  // React-Beautiful-DnD onDragEnd callback (required)
+  const onDragEnd = (result) => {
+    const { source, destination, type } = result;
+    if (!destination) {
+      console.log('no destination for drop');
+      return;
+    }
+    if (type === 'column') {
+      const newColumnOrder = reorder(board.columnOrder, source.index, destination.index);
+      setBoard((prevBoard) => ({ ...prevBoard, columnOrder: newColumnOrder }));
+      return;
+    }
+    if (type === 'task') {
+      if (source.droppableId === destination.droppableId) {
+        console.log('task moved within same column.');
+        const sourceColumn = columns[source.droppableId];
+        const newTaskIds = reorder(sourceColumn.taskIds, source.index, destination.index);
+        const newColumn = { ...sourceColumn, taskIds: newTaskIds };
+        setColumns((prevColumns) => ({ ...prevColumns, [newColumn.id]: newColumn }));
+        setColumnIdToUpdate(newColumn.id);
+        setColumnRequiresUpdate(true);
+      } else {
+        console.log('task moved between columns');
+        // 1) Remove task from source column's taskIds array
+        // 2) Add task at appropriate position in destination column's taskIds array
+        // 3) update task document's columnId with id of destination column
+      }
+    }
+  };
+
+  // onDragEnd helper methods:
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -137,18 +184,31 @@ const BoardDetail = () => {
     return result;
   };
 
-  const onDragEnd = (result) => {
-    console.log(result);
-    const { source, destination } = result;
-    if (!destination) {
-      return;
-    }
-    const newColumnOrder = reorder(board.columnOrder, source.index, destination.index);
-    setBoard((prevBoard) => ({ ...prevBoard, columnOrder: newColumnOrder }));
+  const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+    destClone.splice(droppableDestination.index, 0, removed);
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+    return result;
   };
 
   const getColumnListStyle = (isDraggingOver) => {
     return isDraggingOver ? 'bg-gray-900 bg-opacity-10' : '';
+  };
+
+  const getCurrentColumnAndTasks = (columnId) => {
+    const _column = columns[columnId];
+    let _tasks = [];
+    if (_column.taskIds.length > 0 && tasks && tasks.length > 0) {
+      _column.taskIds.forEach((taskId) => {
+        const foundTask = tasks.find((task) => task.id === taskId);
+        _tasks.push(foundTask);
+      });
+    }
+    return [_column, _tasks];
   };
 
   const toggleShowBoardSettings = () => setIsShowBoardSettings(!isShowBoardSettings);
@@ -156,7 +216,7 @@ const BoardDetail = () => {
   const toggleShowDeleteBoardModal = () => setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
   const toggleShowCreateTaskSlideOver = () => setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
 
-  if (isLoading) {
+  if (isLoadingValues.isBoardLoading || isLoadingValues.isColumnsLoading || isLoadingValues.isTasksLoading) {
     return <></>;
   }
 
@@ -172,29 +232,39 @@ const BoardDetail = () => {
         />
         <Container>
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="columnList" direction="horizontal">
+            <Droppable droppableId="columnList" direction="horizontal" type="column">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={getColumnListStyle(snapshot.isDraggingOver) + ` -mt-32 flex`}>
                   {!!board.columnOrder && board.columnOrder.length ? (
-                    board.columnOrder.map((colId, index) => (
-                      <Draggable key={colId} draggableId={colId} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="mr-2 w-100 last:mr-0">
-                            <Column id={colId} deleteColumn={deleteColumn} addTask={addTask} deleteTask={deleteTask} />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))
+                    board.columnOrder.map((colId, index) => {
+                      const [currentColumn, currentTasks] = getCurrentColumnAndTasks(colId);
+                      return (
+                        <Draggable key={colId} draggableId={colId} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="mr-2 w-100 last:mr-0">
+                              <Column
+                                columnValues={currentColumn}
+                                tasks={currentTasks}
+                                deleteColumn={deleteColumn}
+                                addTask={addTask}
+                                deleteTask={deleteTask}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })
                   ) : (
                     <ColumnEmptyState />
                   )}
+                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
