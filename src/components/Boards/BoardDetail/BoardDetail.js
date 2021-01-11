@@ -18,7 +18,7 @@ const BoardDetail = () => {
 
   const [board, setBoard] = useState(false);
   const [columns, setColumns] = useState({});
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState({});
 
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
   const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
@@ -128,7 +128,6 @@ const BoardDetail = () => {
     }
   }, [movedTaskId, sourceColIdToUpdate]);
 
-  // TODO -> This deleteBoard function does NOT yet handle deleting the columns subCollection
   const deleteBoard = async (boardId) => {
     try {
       await firestore
@@ -164,14 +163,14 @@ const BoardDetail = () => {
     }
   };
 
-  // TODO -> batch api calls
   const deleteColumn = async (columnId) => {
     try {
+      let batch = firestore.batch();
+      let boardRef = firestore.collection('boards').doc(boardId);
+      batch.delete(boardRef.collection('columns').doc(columnId));
+      batch.set(boardRef, { columnOrder: firebase.firestore.FieldValue.arrayRemove(columnId) });
+      await batch.commit();
       await firestore.collection('boards').doc(boardId).collection('columns').doc(columnId).delete();
-      await firestore
-        .collection('boards')
-        .doc(boardId)
-        .update({ columnOrder: firebase.firestore.FieldValue.arrayRemove(columnId) });
     } catch (exception) {
       console.error(exception.toString());
     }
@@ -308,14 +307,14 @@ const BoardDetail = () => {
         />
         <Container>
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="columnList" direction="horizontal" type="column">
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={getColumnListStyle(snapshot.isDraggingOver) + ` -mt-32 flex`}>
-                  {!!board.columnOrder && board.columnOrder.length ? (
-                    board.columnOrder.map((colId, index) => {
+            {!!board && board.columnOrder.length ? (
+              <Droppable droppableId="columnList" direction="horizontal" type="column">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={getColumnListStyle(snapshot.isDraggingOver) + ` -mt-32 flex`}>
+                    {board.columnOrder.map((colId, index) => {
                       const [currentColumn, currentTasks] = getCurrentColumnAndTasks(colId);
                       return (
                         <Draggable key={colId} draggableId={colId} index={index}>
@@ -336,14 +335,14 @@ const BoardDetail = () => {
                           )}
                         </Draggable>
                       );
-                    })
-                  ) : (
-                    <ColumnEmptyState />
-                  )}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ) : (
+              <ColumnEmptyState />
+            )}
           </DragDropContext>
         </Container>
       </div>
