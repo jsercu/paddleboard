@@ -11,24 +11,26 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
       case 'large':
         return 'px-5 py-3 text-md font-medium ';
       case 'small':
-        return `px-4 py-1 text-sm font-medium `;
+        return 'px-4 py-1 text-sm font-medium ';
+      case 'medium-wide':
+        return 'px-12 py-2 text-sm font-medium ';
       case 'medium':
       default:
-        return `px-4 py-2 text-sm font-medium '`;
+        return 'px-4 py-2 text-sm font-medium ';
     }
   };
 
   const getRoundedStyles = () => {
     switch (rounded) {
       case 'small':
-        return `rounded-sm`;
+        return 'rounded-sm';
       case 'normal':
-        return `rounded`;
+        return 'rounded';
       case 'large':
-        return `rounded-lg`;
+        return 'rounded-lg';
       case 'medium':
       default:
-        return `rounded-md`;
+        return 'rounded-md';
     }
   };
 

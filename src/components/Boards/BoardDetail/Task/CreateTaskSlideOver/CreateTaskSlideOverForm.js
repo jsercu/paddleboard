@@ -44,74 +44,76 @@ const CreateTaskForm = (props) => {
   }
 
   return (
-    <form className="flex flex-col h-full" onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name" className="block">
-          <span className="block text-sm font-medium text-gray-700 leading-5">Name</span>
-          <input
-            className={`${
-              errors.name && touched.name
-                ? 'bg-white border-transparent ring-2 ring-red-600 focus:ring-red-400'
-                : 'border-gray-300 focus:ring-indigo-500'
-            } block w-full mt-1 text-sm rounded-sm shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2`}
-            type="text"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={name}
-            name="name"
+    <form className="flex flex-col justify-between h-full" onSubmit={handleSubmit}>
+      <div className="px-4 sm:px-6">
+        <div>
+          <label htmlFor="name" className="block">
+            <span className="block text-sm font-medium text-gray-700 leading-5">Name</span>
+            <input
+              className={`${
+                errors.name && touched.name
+                  ? 'border-transparent ring-2 ring-red-600 focus:ring-red-400'
+                  : 'border-gray-300 focus:ring-indigo-500'
+              } bg-gray-50 block w-full mt-1 text-sm rounded-sm shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2`}
+              type="text"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={name}
+              name="name"
+            />
+          </label>
+          <div id="error-container" className="h-5 mt-2">
+            {errors.name && touched.name && (
+              <div id="feedback" className="text-xs text-red-700">
+                {errors.name}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="mt-1">
+          <label htmlFor="name" className="block">
+            <span className="block text-sm font-medium text-gray-700 leading-5">Description</span>
+            <textarea
+              className="block w-full mt-1 text-sm border-gray-300 rounded-sm bg-gray-50 shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+              rows="5"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={description}
+              name="description"
+            />
+          </label>
+          <div id="error-container" className="h-5 mt-2">
+            {errors.description && touched.description && (
+              <div id="feedback" className="text-xs text-red-700">
+                {errors.description}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="mt-1">
+          <ColumnSelectInput
+            name="column"
+            labelText="Column"
+            columns={columns}
+            columnId={columnId}
+            value={column}
+            placeholderText="Select column to add task to..."
+            error={errors.column}
+            touched={touched.column}
+            setFieldValue={setFieldValue}
+            setFieldTouched={setFieldTouched}
           />
-        </label>
-        <div id="error-container" className="h-5 mt-2">
-          {errors.name && touched.name && (
-            <div id="feedback" className="text-xs text-red-700">
-              {errors.name}
-            </div>
-          )}
+          <div id="error-container" className="h-5 mt-2">
+            {errors.column && touched.column && (
+              <div id="feedback" className="text-xs text-red-700">
+                {errors.column.id}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className="mt-1">
-        <label htmlFor="name" className="block">
-          <span className="block text-sm font-medium text-gray-700 leading-5">Description</span>
-          <textarea
-            className="block w-full mt-1 text-sm border-gray-300 rounded-sm shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-            rows="5"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={description}
-            name="description"
-          />
-        </label>
-        <div id="error-container" className="h-5 mt-2">
-          {errors.description && touched.description && (
-            <div id="feedback" className="text-xs text-red-700">
-              {errors.description}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="mt-1">
-        <ColumnSelectInput
-          name="column"
-          labelText="Column"
-          columns={columns}
-          columnId={columnId}
-          value={column}
-          placeholderText="Select column to add task to..."
-          error={errors.column}
-          touched={touched.column}
-          setFieldValue={setFieldValue}
-          setFieldTouched={setFieldTouched}
-        />
-        <div id="error-container" className="h-5 mt-2">
-          {errors.column && touched.column && (
-            <div id="feedback" className="text-xs text-red-700">
-              {errors.column.id}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-row-reverse mt-8 space-x-4 space-x-reverse">
-        <Button type="submit" color="primary" size="medium" text="Create Task" />
+      <div className="flex px-4 py-6 border-t border-gray-300 bg-gray-50 b sm:px-6 space-x-4">
+        <Button type="submit" color="primary" size="medium-wide" text="Create Task" />
         <Button type="button" action={toggleShowCreateTaskSlideOver} color="tertiary" size="medium" text="Cancel" />
       </div>
     </form>
@@ -154,9 +156,9 @@ const ColumnSelectInput = ({
               <Listbox.Button
                 className={`${
                   error && touched
-                    ? 'bg-white border-transparent ring-2 ring-red-600 focus:ring-red-400'
+                    ? 'border-transparent ring-2 ring-red-600 focus:ring-red-400'
                     : 'border-gray-300 focus:ring-indigo-500'
-                } relative w-full py-2 pl-3 pr-10 text-left bg-white border rounded-sm cursor-default focus:bg-white focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-5`}>
+                } relative bg-gray-50 w-full py-2 pl-3 pr-10 text-left border rounded-sm cursor-default focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-5`}>
                 {value ? (
                   <span className="block truncate">{value.name}</span>
                 ) : (
