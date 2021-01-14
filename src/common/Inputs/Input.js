@@ -18,8 +18,13 @@ const Input = ({ labelText, ariaLabel, name, value, type, isRequired, changeHand
 
   return (
     <div>
-      <label htmlFor={name} className={`block`}>
-        <span className={`text-gray-700 mb-1 block text-sm leading-5 font-medium`}>{labelText}:</span>
+      <label htmlFor={name} className="block">
+        <div className="flex items-end justify-between space-between">
+          <span className="block text-sm font-medium text-gray-700 leading-5">{labelText}:</span>
+          {isRequired && (
+            <span className="block text-xs italic text-gray-400 text-opacity-70 leading-5">* Field Required</span>
+          )}
+        </div>
         <input
           aria-label={ariaLabel}
           name={name}

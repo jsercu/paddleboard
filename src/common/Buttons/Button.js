@@ -44,7 +44,7 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
         return `border border-transparent bg-rose-600 text-white hover:bg-rose-500 focus:ring-rose-400`;
       case 'primary':
       default:
-        return `border border-transparent bg-indigo-700 text-white hover:bg-indigo-600 focus:ring-indigo-400`;
+        return `border border-indigo-800 bg-indigo-700 text-white hover:bg-indigo-600 focus:ring-indigo-400`;
     }
   };
 

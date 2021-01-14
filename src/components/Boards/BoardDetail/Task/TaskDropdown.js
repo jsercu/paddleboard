@@ -10,7 +10,7 @@ const TaskDropdown = ({ id, deleteTask, columnId }) => {
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative flex">
       <Menu>
         {({ open }) => (
           <>
@@ -26,7 +26,7 @@ const TaskDropdown = ({ id, deleteTask, columnId }) => {
               leave="transition ease-in duration-300"
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95">
-              <Menu.Items className="absolute right-0 z-40 w-56 mt-2 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
+              <Menu.Items className="absolute right-0 z-40 w-56 mt-2 bg-white border border-gray-200 rounded-sm shadow-lg outline-none top-4 origin-top-right divide-y divide-gray-100">
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (

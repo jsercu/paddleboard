@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../../../hooks/useAuth';
 import firebase, { firestore } from '../../../firebase';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +8,7 @@ import BoardDetailHeader from './BoardDetailHeader/BoardDetailHeader';
 import BoardSettings from './BoardDetailHeader/BoardSettings';
 import CreateColumnModal from './Column/CreateColumnModal';
 import DeleteBoardModal from './BoardDetailHeader/DeleteBoardModal';
-import CreateTaskSlideOver from './Task/CreateTaskSlideOver';
+import CreateTaskSlideOver from './Task/CreateTaskSlideOver/CreateTaskSlideOver';
 import Column from './Column/Column';
 import ColumnEmptyState from './Column/ColumnEmptyState';
 import { useParams } from 'react-router-dom';
@@ -15,6 +16,7 @@ import { useParams } from 'react-router-dom';
 const BoardDetail = () => {
   let { boardId } = useParams();
   let history = useHistory();
+  let auth = useAuth();
 
   const [board, setBoard] = useState(false);
   const [columns, setColumns] = useState({});
@@ -176,13 +178,21 @@ const BoardDetail = () => {
     }
   };
 
-  const addTask = async (taskValues) => {
+  const addTask = async (taskFormValues) => {
     let taskId;
-    let { columnId } = taskValues;
+    let { columnId } = taskFormValues;
+    let task = {
+      ...taskFormValues,
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      author: auth.user.displayName,
+      authorId: auth.user.uid,
+      deleteStatus: false,
+      boardId,
+    };
     try {
       await firestore
         .collection('tasks')
-        .add({ ...taskValues, boardId })
+        .add(task)
         .then((doc) => {
           taskId = doc.id;
         });
@@ -196,7 +206,6 @@ const BoardDetail = () => {
   };
 
   const deleteTask = async (taskId, columnId) => {
-    debugger;
     try {
       await firestore
         .collection('boards')
