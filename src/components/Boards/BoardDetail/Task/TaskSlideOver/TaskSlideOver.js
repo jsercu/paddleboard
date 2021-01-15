@@ -1,8 +1,8 @@
 import React from 'react';
 import SlideOver from '../../../../../common/Modals/SlideOver';
-import CreateTaskSlideOverForm from './CreateTaskSlideOverForm';
+import TaskSlideOverForm from './TaskSlideOverForm';
 
-const CreateTaskSlideOver = ({ addTask, updateTask, columns, editMode, initialValues, toggleShowTaskSlideOver }) => {
+const TaskSlideOver = ({ addTask, updateTask, columns, editMode, initialValues, toggleShowTaskSlideOver }) => {
   const getFormattedInitialValues = () => {
     if (initialValues.columnId) {
       return { ...initialValues, column: columns[initialValues.columnId] };
@@ -20,7 +20,7 @@ const CreateTaskSlideOver = ({ addTask, updateTask, columns, editMode, initialVa
           : 'Get started by filling in the information below to create your new task.'
       }
       toggleShowSlideOver={toggleShowTaskSlideOver}>
-      <CreateTaskSlideOverForm
+      <TaskSlideOverForm
         addTask={addTask}
         updateTask={updateTask}
         editMode={editMode}
@@ -31,4 +31,4 @@ const CreateTaskSlideOver = ({ addTask, updateTask, columns, editMode, initialVa
   );
 };
 
-export default CreateTaskSlideOver;
+export default TaskSlideOver;

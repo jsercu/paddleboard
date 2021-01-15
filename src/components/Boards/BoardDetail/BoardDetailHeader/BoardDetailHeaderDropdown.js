@@ -6,11 +6,7 @@ import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-
 import { ReactComponent as CogIcon } from '../../../../assets/img/icons/cog-20.svg';
 import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
 
-const BoardDetailHeaderDropdown = ({
-  toggleShowBoardSettings,
-  toggleShowCreateColumnModal,
-  toggleShowDeleteBoardModal,
-}) => {
+const BoardDetailHeaderDropdown = ({ toggleShowBoardSettings, handleCreateColumn, toggleShowDeleteBoardModal }) => {
   return (
     <div className="relative inline-block text-left">
       <Menu>
@@ -40,7 +36,7 @@ const BoardDetailHeaderDropdown = ({
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
                         role="menuitem"
-                        onClick={toggleShowCreateColumnModal}>
+                        onClick={handleCreateColumn}>
                         <AddColumnIcon className="w-5 h-5 mr-2 text-gray-400" />
                         <span>Create Column</span>
                       </div>

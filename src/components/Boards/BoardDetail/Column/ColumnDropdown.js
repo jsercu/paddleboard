@@ -1,21 +1,30 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
+import { ReactComponent as PencilIcon } from '../../../../assets/img/icons/pencil-alt-20.svg';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
 
-const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowTaskSlideOver }) => {
+const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowColumnModal, toggleShowTaskSlideOver }) => {
   const handleDelete = () => {
     deleteColumn(columnValues.id);
   };
 
   const handleCreateTask = (event) => {
-    debugger;
     if (event) {
       event.preventDefault();
     }
     const initialTaskValues = { column: { ...columnValues } };
     toggleShowTaskSlideOver(false, initialTaskValues);
+  };
+
+  const handleUpdateColumn = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    const { name, id } = columnValues;
+    const initialColumnValues = { name: name, id: id };
+    toggleShowColumnModal(true, initialColumnValues);
   };
 
   return (
@@ -37,6 +46,19 @@ const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowTaskSlideOver })
               leaveTo="transform opacity-0 scale-95">
               <Menu.Items className="absolute right-0 z-40 w-56 mt-2 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
                 <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
+                        role="menuitem"
+                        onClick={handleUpdateColumn}>
+                        <PencilIcon className="w-5 h-5 mr-2 text-gray-400" />
+                        <span>Edit Column</span>
+                      </div>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <div

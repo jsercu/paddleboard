@@ -3,7 +3,7 @@ import Task from '../Task/Task';
 import ColumnDropdown from './ColumnDropdown';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Column = ({ columnValues, tasks, deleteColumn, deleteTask, toggleShowTaskSlideOver }) => {
+const Column = ({ columnValues, deleteColumn, deleteTask, tasks, toggleShowColumnModal, toggleShowTaskSlideOver }) => {
   const getTaskListStyle = () => {};
 
   return (
@@ -21,6 +21,7 @@ const Column = ({ columnValues, tasks, deleteColumn, deleteTask, toggleShowTaskS
                   <ColumnDropdown
                     columnValues={columnValues}
                     deleteColumn={deleteColumn}
+                    toggleShowColumnModal={toggleShowColumnModal}
                     toggleShowTaskSlideOver={toggleShowTaskSlideOver}
                   />
                 </div>
@@ -35,9 +36,9 @@ const Column = ({ columnValues, tasks, deleteColumn, deleteTask, toggleShowTaskS
                           className="">
                           <Task
                             key={task.id}
+                            deleteTask={deleteTask}
                             task={task}
                             toggleShowTaskSlideOver={toggleShowTaskSlideOver}
-                            deleteTask={deleteTask}
                           />
                         </div>
                       )}

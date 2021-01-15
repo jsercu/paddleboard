@@ -7,7 +7,7 @@ import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24
 const BoardDetailHeader = ({
   id,
   toggleShowBoardSettings,
-  toggleShowCreateColumnModal,
+  toggleShowColumnModal,
   toggleShowDeleteBoardModal,
   toggleShowTaskSlideOver,
 }) => {
@@ -16,6 +16,13 @@ const BoardDetailHeader = ({
       event.preventDefault();
     }
     toggleShowTaskSlideOver(false);
+  };
+
+  const handleCreateColumn = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    toggleShowColumnModal(false);
   };
 
   return (
@@ -46,7 +53,7 @@ const BoardDetailHeader = ({
             <div className="flex lg:ml-4 space-x-2">
               <BoardDetailHeaderDropdown
                 toggleShowBoardSettings={toggleShowBoardSettings}
-                toggleShowCreateColumnModal={toggleShowCreateColumnModal}
+                handleCreateColumn={handleCreateColumn}
                 toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
                 toggleShowTaskSlideOver={toggleShowTaskSlideOver}
               />

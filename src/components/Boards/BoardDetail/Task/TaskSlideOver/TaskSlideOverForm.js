@@ -3,13 +3,12 @@ import { Listbox, Transition } from '@headlessui/react';
 import { firestore } from '../../../../../firebase';
 import { useParams } from 'react-router-dom';
 import { withFormik } from 'formik';
+import * as Yup from 'yup';
 import Button from '../../../../../common/Buttons/Button';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
 
-import * as Yup from 'yup';
-
-const CreateTaskForm = (props) => {
+const TaskForm = (props) => {
   let { boardId } = useParams();
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -211,7 +210,7 @@ const ColumnSelectInput = ({
   );
 };
 
-const CreateTaskSlideOverForm = withFormik({
+const TaskSlideOverForm = withFormik({
   mapPropsToValues: (props) => ({
     name: props.initialValues.name,
     description: props.initialValues.description,
@@ -243,6 +242,6 @@ const CreateTaskSlideOverForm = withFormik({
     FormikBag.setSubmitting(false);
     FormikBag.props.toggleShowTaskSlideOver();
   },
-})(CreateTaskForm);
+})(TaskForm);
 
-export default CreateTaskSlideOverForm;
+export default TaskSlideOverForm;
