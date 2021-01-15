@@ -25,7 +25,14 @@ const BoardDetail = () => {
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
   const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
   const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
-  const [isShowCreateTaskSlideOver, setIsShowCreateTaskSlideOver] = useState(false);
+
+  const [modalConfig, setModalConfig] = useState({
+    boardSettings: { display: false },
+    columnModal: { display: false, editMode: false },
+    deleteBoardModal: { display: false },
+    taskSlideOver: { display: false, editMode: false, initialValues: {} },
+  });
+
   const [isLoadingValues, setIsLoadingValues] = useState({
     isBoardLoading: true,
     isColumnsLoading: true,
@@ -205,6 +212,28 @@ const BoardDetail = () => {
     }
   };
 
+  const updateTask = async (taskFormValues, taskId, prevColumnId) => {
+    const { name, description, columnId } = taskFormValues;
+    try {
+      let batch = firestore.batch();
+      let taskRef = firestore.collection('tasks').doc(taskId);
+      batch.update(taskRef, {
+        name: name,
+        description: description,
+        columnId: columnId,
+      });
+      if (prevColumnId !== columnId) {
+        let prevColumnRef = firestore.collection('boards').doc(boardId).collection('columns').doc(prevColumnId);
+        let newColumnRef = firestore.collection('boards').doc(boardId).collection('columns').doc(columnId);
+        batch.update(prevColumnRef, { taskIds: firebase.firestore.FieldValue.arrayRemove(taskId) });
+        batch.update(newColumnRef, { taskIds: firebase.firestore.FieldValue.arrayUnion(taskId) });
+      }
+      await batch.commit();
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
+
   const deleteTask = async (taskId, columnId) => {
     try {
       await firestore
@@ -298,10 +327,17 @@ const BoardDetail = () => {
   const toggleShowBoardSettings = () => setIsShowBoardSettings(!isShowBoardSettings);
   const toggleShowCreateColumnModal = () => setIsShowCreateColumnModal(!isShowCreateColumnModal);
   const toggleShowDeleteBoardModal = () => setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
-  const toggleShowCreateTaskSlideOver = () => setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
+  const toggleShowTaskSlideOver = (editMode, initialValues) => {
+    const newTaskSlideOver = {
+      display: !modalConfig.taskSlideOver.display,
+      editMode: editMode,
+      initialValues: !!initialValues ? { ...initialValues } : { name: '', description: '' },
+    };
+    setModalConfig((prevModalConfig) => ({ ...prevModalConfig, taskSlideOver: newTaskSlideOver }));
+  };
 
   if (isLoadingValues.isBoardLoading || isLoadingValues.isColumnsLoading || isLoadingValues.isTasksLoading) {
-    return <></>;
+    return <div></div>;
   }
 
   return (
@@ -312,7 +348,7 @@ const BoardDetail = () => {
           toggleShowBoardSettings={toggleShowBoardSettings}
           toggleShowCreateColumnModal={toggleShowCreateColumnModal}
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
-          toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
+          toggleShowTaskSlideOver={toggleShowTaskSlideOver}
         />
         <Container>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -337,8 +373,8 @@ const BoardDetail = () => {
                                 columnValues={currentColumn}
                                 tasks={currentTasks}
                                 deleteColumn={deleteColumn}
-                                addTask={addTask}
                                 deleteTask={deleteTask}
+                                toggleShowTaskSlideOver={toggleShowTaskSlideOver}
                               />
                             </div>
                           )}
@@ -366,8 +402,15 @@ const BoardDetail = () => {
         />
       )}
       {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
-      {!!isShowCreateTaskSlideOver && (
-        <CreateTaskSlideOver toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver} addTask={addTask} />
+      {!!modalConfig.taskSlideOver.display && (
+        <CreateTaskSlideOver
+          toggleShowTaskSlideOver={toggleShowTaskSlideOver}
+          addTask={addTask}
+          updateTask={updateTask}
+          editMode={modalConfig.taskSlideOver.editMode}
+          columns={columns}
+          initialValues={modalConfig.taskSlideOver.initialValues}
+        />
       )}
     </>
   );

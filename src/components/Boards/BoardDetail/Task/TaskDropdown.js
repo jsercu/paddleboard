@@ -1,14 +1,11 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
-import { ReactComponent as FlagIcon } from '../../../../assets/img/icons/flag-20.svg';
+import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
+import { ReactComponent as PencilIcon } from '../../../../assets/img/icons/pencil-alt-20.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
 
-const TaskDropdown = ({ id, deleteTask, columnId }) => {
-  const handleDelete = () => {
-    deleteTask(id, columnId);
-  };
-
+const TaskDropdown = ({ deleteTask, editTask }) => {
   return (
     <div className="relative flex">
       <Menu>
@@ -35,8 +32,21 @@ const TaskDropdown = ({ id, deleteTask, columnId }) => {
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
                         role="menuitem">
-                        <FlagIcon className="w-5 h-5 mr-2 text-gray-400" />
-                        <span>Do Something</span>
+                        <LockIcon className="w-5 h-5 mr-2 text-gray-400" />
+                        <span>Lock Position</span>
+                      </div>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
+                        role="menuitem"
+                        onClick={editTask}>
+                        <PencilIcon className="w-5 h-5 mr-2 text-gray-400" />
+                        <span>Edit Task</span>
                       </div>
                     )}
                   </Menu.Item>
@@ -50,7 +60,7 @@ const TaskDropdown = ({ id, deleteTask, columnId }) => {
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300s`}
                         role="menuitem"
-                        onClick={handleDelete}>
+                        onClick={deleteTask}>
                         <TrashIcon className="w-5 h-5 mr-2 text-gray-400" />
                         <span>Delete Task</span>
                       </div>

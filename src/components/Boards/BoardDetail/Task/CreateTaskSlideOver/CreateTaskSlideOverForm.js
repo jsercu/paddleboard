@@ -23,7 +23,8 @@ const CreateTaskForm = (props) => {
     handleSubmit,
     setFieldValue,
     setFieldTouched,
-    toggleShowCreateTaskSlideOver,
+    editMode,
+    toggleShowTaskSlideOver,
     columnId,
   } = props;
   const { name, description, column } = values;
@@ -112,9 +113,9 @@ const CreateTaskForm = (props) => {
           </div>
         </div>
       </div>
-      <div className="flex px-4 py-6 border-t border-gray-300 bg-gray-50 b sm:px-6 space-x-4">
-        <Button type="submit" color="primary" size="medium-wide" text="Create Task" />
-        <Button type="button" action={toggleShowCreateTaskSlideOver} color="tertiary" size="medium" text="Cancel" />
+      <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 b sm:px-6 space-x-4">
+        <Button type="submit" color="primary" size="medium-wide" text={editMode ? 'Update Task' : 'Create Task'} />
+        <Button type="button" action={toggleShowTaskSlideOver} color="tertiary" size="medium" text="Cancel" />
       </div>
     </form>
   );
@@ -211,7 +212,11 @@ const ColumnSelectInput = ({
 };
 
 const CreateTaskSlideOverForm = withFormik({
-  mapPropsToValues: () => ({ name: '', description: '', column: '' }),
+  mapPropsToValues: (props) => ({
+    name: props.initialValues.name,
+    description: props.initialValues.description,
+    column: props.initialValues.column,
+  }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required('This field is required.'),
     column: Yup.object().shape({
@@ -222,16 +227,21 @@ const CreateTaskSlideOverForm = withFormik({
   validateOnChange: false,
 
   handleSubmit: (values, FormikBag) => {
-    debugger;
     const { name, description, column } = values;
+    const { id: taskId, columnId } = FormikBag.props.initialValues;
     const taskFormValues = {
       name: name,
       description: description,
       columnId: column.id,
     };
-    FormikBag.props.addTask(taskFormValues);
+    if (FormikBag.props.editMode) {
+      FormikBag.props.updateTask(taskFormValues, taskId, columnId);
+    } else {
+      FormikBag.props.addTask(taskFormValues);
+    }
+
     FormikBag.setSubmitting(false);
-    FormikBag.props.toggleShowCreateTaskSlideOver();
+    FormikBag.props.toggleShowTaskSlideOver();
   },
 })(CreateTaskForm);
 

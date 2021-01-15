@@ -9,8 +9,15 @@ const BoardDetailHeader = ({
   toggleShowBoardSettings,
   toggleShowCreateColumnModal,
   toggleShowDeleteBoardModal,
-  toggleShowCreateTaskSlideOver,
+  toggleShowTaskSlideOver,
 }) => {
+  const handleCreateTask = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    toggleShowTaskSlideOver(false);
+  };
+
   return (
     <>
       <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
@@ -41,7 +48,7 @@ const BoardDetailHeader = ({
                 toggleShowBoardSettings={toggleShowBoardSettings}
                 toggleShowCreateColumnModal={toggleShowCreateColumnModal}
                 toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
-                toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
+                toggleShowTaskSlideOver={toggleShowTaskSlideOver}
               />
               <Button
                 text="Create Task"
@@ -49,7 +56,7 @@ const BoardDetailHeader = ({
                 color="transparent"
                 size="medium"
                 hasIcon
-                action={toggleShowCreateTaskSlideOver}>
+                action={handleCreateTask}>
                 <PlusIcon
                   className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
                   title="plus-icon"

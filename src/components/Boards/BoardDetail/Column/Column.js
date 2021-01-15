@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Task from '../Task/Task';
-import CreateTaskSlideOver from '../Task/CreateTaskSlideOver/CreateTaskSlideOver';
 import ColumnDropdown from './ColumnDropdown';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Column = ({ columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
-  const [isShowCreateTaskSlideOver, setIsShowCreateTaskSlideOver] = useState(false);
-
+const Column = ({ columnValues, tasks, deleteColumn, deleteTask, toggleShowTaskSlideOver }) => {
   const getTaskListStyle = () => {};
-
-  const toggleShowCreateTaskSlideOver = () => setIsShowCreateTaskSlideOver(!isShowCreateTaskSlideOver);
 
   return (
     <>
@@ -24,14 +19,14 @@ const Column = ({ columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
                 <div className="flex items-center justify-between">
                   <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{columnValues.name}</h3>
                   <ColumnDropdown
-                    id={columnValues.id}
+                    columnValues={columnValues}
                     deleteColumn={deleteColumn}
-                    toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
+                    toggleShowTaskSlideOver={toggleShowTaskSlideOver}
                   />
                 </div>
                 {tasks && tasks.length > 0 ? (
-                  tasks.map(({ name, id, description }, index) => (
-                    <Draggable key={id} draggableId={id} index={index}>
+                  tasks.map((task, index) => (
+                    <Draggable key={task.id} draggableId={task.id} index={index}>
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
@@ -39,11 +34,9 @@ const Column = ({ columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
                           {...provided.dragHandleProps}
                           className="">
                           <Task
-                            key={id}
-                            name={name}
-                            id={id}
-                            columnId={columnValues.id}
-                            description={description}
+                            key={task.id}
+                            task={task}
+                            toggleShowTaskSlideOver={toggleShowTaskSlideOver}
                             deleteTask={deleteTask}
                           />
                         </div>
@@ -59,13 +52,6 @@ const Column = ({ columnValues, tasks, deleteColumn, addTask, deleteTask }) => {
           </div>
         )}
       </Droppable>
-      {!!isShowCreateTaskSlideOver && (
-        <CreateTaskSlideOver
-          toggleShowCreateTaskSlideOver={toggleShowCreateTaskSlideOver}
-          addTask={addTask}
-          columnId={columnValues.id}
-        />
-      )}
     </>
   );
 };

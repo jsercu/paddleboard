@@ -4,13 +4,18 @@ import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/th
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
 
-const ColumnDropdown = ({ id, deleteColumn, toggleShowCreateTaskSlideOver }) => {
+const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowTaskSlideOver }) => {
   const handleDelete = () => {
-    deleteColumn(id);
+    deleteColumn(columnValues.id);
   };
 
-  const handleCreateTask = () => {
-    toggleShowCreateTaskSlideOver();
+  const handleCreateTask = (event) => {
+    debugger;
+    if (event) {
+      event.preventDefault();
+    }
+    const initialTaskValues = { column: { ...columnValues } };
+    toggleShowTaskSlideOver(false, initialTaskValues);
   };
 
   return (

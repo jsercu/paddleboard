@@ -1,7 +1,8 @@
 import React from 'react';
 import TaskDropdown from './TaskDropdown';
 
-const Task = ({ name, id, columnId, description, deleteTask }) => {
+const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
+  const { name, description, id, columnId } = task;
   const getCategoryStyles = () => {
     switch (category) {
       case 'Product Documentation':
@@ -16,12 +17,20 @@ const Task = ({ name, id, columnId, description, deleteTask }) => {
     }
   };
 
+  const handleDeleteTask = () => {
+    deleteTask(id, columnId);
+  };
+
+  const handleEditTask = () => {
+    toggleShowTaskSlideOver(true, { ...task });
+  };
+
   return (
     <div className="p-4 my-2 bg-white border border-gray-200 rounded-sm hover:border-gray-300 cursor-grab">
       <div className="flex flex-col">
         <div className="flex flex-row items-center justify-between">
           <p className="text-sm font-medium text-gray-700">{name}</p>
-          <TaskDropdown id={id} deleteTask={deleteTask} columnId={columnId} />
+          <TaskDropdown deleteTask={handleDeleteTask} editTask={handleEditTask} />
         </div>
         <div className="mr-8">
           <p className="text-xs font-light text-gray-400 leading-4">{description}</p>

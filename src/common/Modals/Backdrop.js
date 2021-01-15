@@ -2,7 +2,9 @@ import React from 'react';
 
 const Backdrop = ({ children, toggleShowModal }) => {
   const handleClick = () => {
-    toggleShowModal();
+    if (!!toggleShowModal) {
+      toggleShowModal();
+    }
   };
 
   return (
