@@ -23,7 +23,6 @@ const BoardDetail = () => {
   const [tasks, setTasks] = useState({});
 
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
-  const [isShowCreateColumnModal, setIsShowCreateColumnModal] = useState(false);
   const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
 
   const [modalConfig, setModalConfig] = useState({
@@ -140,14 +139,19 @@ const BoardDetail = () => {
 
   const deleteBoard = async (boardId) => {
     try {
-      await firestore
-        .collection('boards')
-        .doc(boardId)
-        .update({ deleteStatus: true })
-        .then(() => {
-          toggleShowDeleteBoardModal();
-          history.push('/boards');
-        });
+      let batch = firestore.batch();
+      let boardRef = firestore.collection('boards').doc(boardId);
+      batch.update(boardRef, { deleteStatus: true });
+      if (tasks && Object.keys(tasks).length > 0) {
+        for (let taskId in tasks) {
+          let taskRef = firestore.collection('tasks').doc(taskId);
+          batch.update(taskRef, { deleteStatus: true });
+        }
+      }
+      batch.commit().then(() => {
+        toggleShowDeleteBoardModal();
+        history.push('/boards');
+      });
     } catch (exception) {
       console.error(exception.toString());
     }
