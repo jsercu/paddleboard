@@ -8,7 +8,7 @@ import Button from '../../../../../common/Buttons/Button';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
 
-const TaskForm = (props) => {
+const TaskSlideOverForm = (props) => {
   let { boardId } = useParams();
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -210,7 +210,7 @@ const ColumnSelectInput = ({
   );
 };
 
-const TaskSlideOverForm = withFormik({
+const TaskSlideOverFormExtended = withFormik({
   mapPropsToValues: (props) => ({
     name: props.initialValues.name,
     description: props.initialValues.description,
@@ -242,6 +242,6 @@ const TaskSlideOverForm = withFormik({
     FormikBag.setSubmitting(false);
     FormikBag.props.toggleShowTaskSlideOver();
   },
-})(TaskForm);
+})(TaskSlideOverForm);
 
-export default TaskSlideOverForm;
+export { TaskSlideOverFormExtended as TaskSlideOverForm };

@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideOver from '../../../../../common/Modals/SlideOver';
-import TaskSlideOverForm from './TaskSlideOverForm';
+import { TaskSlideOverForm } from './TaskSlideOverForm';
 
 const TaskSlideOver = ({ addTask, updateTask, columns, editMode, initialValues, toggleShowTaskSlideOver }) => {
   const getFormattedInitialValues = () => {

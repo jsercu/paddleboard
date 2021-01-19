@@ -4,9 +4,10 @@ import { useAuth } from '../../../hooks/useAuth';
 import BoardsListHeader from './BoardsListHeader';
 import BoardsTable from './BoardsTable/BoardsTable';
 import BoardListEmptyState from './BoardListEmptyState';
+import BoardSlideOver from './BoardSlideOver/BoardSlideOver';
 
 const BoardList = () => {
-  const [isShowCreateBoard, setIsShowCreateBoard] = useState(false);
+  const [isShowBoardSlideOver, setIsShowBoardSlideOver] = useState(false);
   const [boards, setBoards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const auth = useAuth();
@@ -25,8 +26,8 @@ const BoardList = () => {
     };
   }, []);
 
-  const toggleShowCreateBoard = () => {
-    setIsShowCreateBoard(!isShowCreateBoard);
+  const toggleShowBoardSlideOver = () => {
+    setIsShowBoardSlideOver(!isShowBoardSlideOver);
   };
 
   const addBoard = async (boardValues) => {
@@ -44,8 +45,8 @@ const BoardList = () => {
     } catch (exception) {
       console.error(exception.toString());
     }
-    if (isShowCreateBoard) {
-      toggleShowCreateBoard();
+    if (isShowBoardSlideOver) {
+      toggleShowBoardSlideOver();
     }
   };
 
@@ -55,22 +56,17 @@ const BoardList = () => {
 
   return (
     <>
-      <BoardsListHeader
-        isShowCreateBoard={isShowCreateBoard}
-        toggleShowCreateBoard={toggleShowCreateBoard}
-        addBoard={addBoard}
-      />
+      <BoardsListHeader toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
       <div className="flex -mt-32">
         {boards && boards.length ? (
           <BoardsTable boards={boards} />
         ) : (
-          <BoardListEmptyState
-            isShowCreateBoard={isShowCreateBoard}
-            toggleShowCreateBoard={toggleShowCreateBoard}
-            addBoard={addBoard}
-          />
+          <BoardListEmptyState toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
         )}
       </div>
+      {isShowBoardSlideOver && (
+        <BoardSlideOver toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
+      )}
     </>
   );
 };

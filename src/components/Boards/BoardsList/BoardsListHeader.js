@@ -1,13 +1,13 @@
 import React from 'react';
 import Container from '../../../common/Container';
-import CreateBoardSlideOver from './CreateBoardSlideOver';
+import CreateBoardSlideOver from './BoardSlideOver/BoardSlideOver';
 import Button from '../../../common/Buttons/Button';
 import IconButton from '../../../common/Buttons/IconButton';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
 import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down-24.svg';
 import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter-20.svg';
 
-const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) => {
+const BoardsHeader = ({ toggleShowBoardSlideOver }) => {
   return (
     <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
       <Container>
@@ -30,7 +30,7 @@ const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) =>
               <Button
                 text="Create Board"
                 type="button"
-                action={toggleShowCreateBoard}
+                action={toggleShowBoardSlideOver}
                 color="transparent"
                 size="medium"
                 hasIcon>
@@ -39,9 +39,6 @@ const BoardsHeader = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) =>
                   title="plus-icon"
                 />
               </Button>
-              {isShowCreateBoard && (
-                <CreateBoardSlideOver toggleShowCreateBoard={toggleShowCreateBoard} addBoard={addBoard} />
-              )}
             </span>
 
             {/* <!-- Dropdown --> */}

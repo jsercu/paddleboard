@@ -2,9 +2,9 @@ import React from 'react';
 import Container from '../../../common/Container';
 import Button from '../../../common/Buttons/Button';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
-import CreateBoardSlideOver from './CreateBoardSlideOver';
+import CreateBoardSlideOver from './BoardSlideOver/BoardSlideOver';
 
-const BoardListEmptyState = ({ isShowCreateBoard, toggleShowCreateBoard, addBoard }) => {
+const BoardListEmptyState = ({ toggleShowBoardSlideOver }) => {
   return (
     <Container>
       <div className="flex flex-col">
@@ -22,12 +22,9 @@ const BoardListEmptyState = ({ isShowCreateBoard, toggleShowCreateBoard, addBoar
                   color="primary"
                   size="medium"
                   hasIcon
-                  action={toggleShowCreateBoard}>
+                  action={toggleShowBoardSlideOver}>
                   <PlusIcon title="plus-icon"></PlusIcon>
                 </Button>
-                {isShowCreateBoard && (
-                  <CreateBoardSlideOver toggleShowCreateBoard={toggleShowCreateBoard} addBoard={addBoard} />
-                )}
               </div>
             </div>
           </div>
