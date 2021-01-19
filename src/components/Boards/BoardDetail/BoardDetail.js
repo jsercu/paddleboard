@@ -10,7 +10,7 @@ import ColumnModal from './Column/ColumnModal/ColumnModal';
 import DeleteBoardModal from './BoardDetailHeader/DeleteBoardModal';
 import TaskSlideOver from './Task/TaskSlideOver/TaskSlideOver';
 import Column from './Column/Column';
-import ColumnEmptyState from './Column/ColumnEmptyState';
+import ColumnsEmptyState from './Column/ColumnsEmptyState';
 import { useParams } from 'react-router-dom';
 
 const BoardDetail = () => {
@@ -404,7 +404,7 @@ const BoardDetail = () => {
                 )}
               </Droppable>
             ) : (
-              <ColumnEmptyState />
+              <ColumnsEmptyState toggleShowColumnModal={toggleShowColumnModal} />
             )}
           </DragDropContext>
         </Container>

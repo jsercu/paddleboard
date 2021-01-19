@@ -14,7 +14,7 @@ const Column = ({ columnValues, deleteColumn, deleteTask, tasks, toggleShowColum
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={getTaskListStyle(snapshot.isDraggingOver)}>
-            <div className="flex bg-gray-100 rounded-sm shadow-xl" style={{ minHeight: '33vh' }}>
+            <div className="flex bg-gray-100 rounded-sm shadow-xl" style={{ minHeight: '24rem' }}>
               <div className="w-full p-4">
                 <div className="flex items-center justify-between">
                   <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{columnValues.name}</h3>
