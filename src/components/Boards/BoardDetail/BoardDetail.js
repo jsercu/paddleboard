@@ -432,6 +432,7 @@ const BoardDetail = () => {
           columns={columns}
           editMode={modalConfig.taskSlideOver.editMode}
           initialValues={modalConfig.taskSlideOver.initialValues}
+          toggleShowColumnModal={toggleShowColumnModal}
           toggleShowTaskSlideOver={toggleShowTaskSlideOver}
           updateTask={updateTask}
         />

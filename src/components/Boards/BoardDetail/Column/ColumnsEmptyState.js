@@ -8,12 +8,10 @@ const ColumnsEmptyState = ({ toggleShowColumnModal }) => {
       <div className="inline-block min-w-full min-h-full py-2 align-middle">
         <div className="overflow-hidden rounded-sm shadow-xl">
           <div className="min-w-full bg-white border border-gray-200">
-            <div className="flex flex-col items-center justify-center px-8 py-24 text-center sm:px-24 md:px-48">
+            <div className="flex flex-col items-center justify-center px-8 py-24 text-center sm:px-24 md:px-64">
               <h5 className="text-lg font-semibold text-gray-800">This board doesn't have any columns yet.</h5>
               <p className="mb-3 text-sm font-normal text-gray-500">
-                Columns are used to group individual tasks into categories (for example:
-                <span className="italic"> Not Started</span>,<span className="italic"> In Progress</span>,
-                <span className="italic"> Completed</span>).
+                Columns are collections of individual tasks. Use columns to group related tasks into categories.
               </p>
               <Button
                 type="button"

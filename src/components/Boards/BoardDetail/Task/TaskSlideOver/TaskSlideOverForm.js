@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import Button from '../../../../../common/Buttons/Button';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
+import { ReactComponent as PlusIcon } from '../../../../../assets/img/icons/plus-24.svg';
 
 const TaskSlideOverForm = (props) => {
   let { boardId } = useParams();
@@ -23,6 +24,7 @@ const TaskSlideOverForm = (props) => {
     setFieldValue,
     setFieldTouched,
     editMode,
+    toggleShowColumnModal,
     toggleShowTaskSlideOver,
     columnId,
   } = props;
@@ -38,6 +40,11 @@ const TaskSlideOverForm = (props) => {
       unsubscribe();
     };
   }, []);
+
+  const handleOpenColumnModal = () => {
+    toggleShowTaskSlideOver();
+    toggleShowColumnModal(false);
+  };
 
   if (isLoading) {
     return <></>;
@@ -93,15 +100,16 @@ const TaskSlideOverForm = (props) => {
         <div className="mt-1">
           <ColumnSelectInput
             name="column"
-            labelText="Column"
-            columns={columns}
             columnId={columnId}
-            value={column}
-            placeholderText="Select column to add task to..."
+            columns={columns}
             error={errors.column}
-            touched={touched.column}
+            handleOpenColumnModal={handleOpenColumnModal}
+            labelText="Column"
+            placeholderText="Select column to add task to..."
             setFieldValue={setFieldValue}
             setFieldTouched={setFieldTouched}
+            touched={touched.column}
+            value={column}
           />
           <div id="error-container" className="h-5 mt-2">
             {errors.column && touched.column && (
@@ -112,7 +120,7 @@ const TaskSlideOverForm = (props) => {
           </div>
         </div>
       </div>
-      <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 b sm:px-6 space-x-4">
+      <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 sm:px-6 space-x-4">
         <Button type="submit" color="primary" size="medium-wide" text={editMode ? 'Update Task' : 'Create Task'} />
         <Button type="button" action={toggleShowTaskSlideOver} color="tertiary" size="medium" text="Cancel" />
       </div>
@@ -121,15 +129,16 @@ const TaskSlideOverForm = (props) => {
 };
 
 const ColumnSelectInput = ({
+  columnId,
+  columns,
+  error,
+  handleOpenColumnModal,
   labelText,
   placeholderText,
-  columns,
-  columnId,
-  value,
-  error,
-  touched,
   setFieldValue,
   setFieldTouched,
+  touched,
+  value,
 }) => {
   useEffect(() => {
     if (!!columnId) {
@@ -176,32 +185,49 @@ const ColumnSelectInput = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
               className="absolute z-50 w-full mt-1 bg-white shadow-lg rounded-md">
-              <Listbox.Options
-                static
-                className="py-1 overflow-auto text-base max-h-60 rounded-md leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5">
-                {columns.map((column) => (
-                  <Listbox.Option key={column.id} value={column}>
-                    {({ selected, active }) => (
-                      <div
-                        className={`${
-                          active ? 'text-white bg-indigo-600' : 'text-gray-900'
-                        } cursor-default select-none relative py-2 pl-8 pr-4`}>
-                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>
-                          {column.name}
-                        </span>
-                        {selected && (
-                          <span
-                            className={`${
-                              active ? 'text-white' : 'text-indigo-600'
-                            } absolute inset-y-0 left-0 flex items-center pl-1.5`}>
-                            <CheckIcon className="w-5 h-5" />
+              {columns && columns.length > 0 ? (
+                <Listbox.Options
+                  static
+                  className="py-1 overflow-auto text-base max-h-60 rounded-md leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5">
+                  {columns.map((column) => (
+                    <Listbox.Option key={column.id} value={column}>
+                      {({ selected, active }) => (
+                        <div
+                          className={`${
+                            active ? 'text-white bg-indigo-600' : 'text-gray-900'
+                          } cursor-default select-none relative py-2 pl-8 pr-4`}>
+                          <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>
+                            {column.name}
                           </span>
-                        )}
-                      </div>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
+                          {selected && (
+                            <span
+                              className={`${
+                                active ? 'text-white' : 'text-indigo-600'
+                              } absolute inset-y-0 left-0 flex items-center pl-1.5`}>
+                              <CheckIcon className="w-5 h-5" />
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              ) : (
+                <div className="flex-col items-center justify-start px-4 pt-6 pb-4">
+                  <h5 className="text-sm font-semibold text-gray-800 leading-5">
+                    This board doesn't have any columns yet.
+                  </h5>
+                  <p className="mb-3 text-sm font-normal text-gray-500">
+                    Click{' '}
+                    <button
+                      className="inline-flex items-center text-sm font-medium text-indigo-700 hover:text-indigo-600 hover:underline"
+                      onClick={handleOpenColumnModal}>
+                      here
+                    </button>{' '}
+                    to create a column.
+                  </p>
+                </div>
+              )}
             </Transition>
           </div>
         </>

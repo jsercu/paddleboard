@@ -2,7 +2,15 @@ import React from 'react';
 import SlideOver from '../../../../../common/Modals/SlideOver';
 import { TaskSlideOverForm } from './TaskSlideOverForm';
 
-const TaskSlideOver = ({ addTask, updateTask, columns, editMode, initialValues, toggleShowTaskSlideOver }) => {
+const TaskSlideOver = ({
+  addTask,
+  updateTask,
+  columns,
+  editMode,
+  initialValues,
+  toggleShowColumnModal,
+  toggleShowTaskSlideOver,
+}) => {
   const getFormattedInitialValues = () => {
     if (initialValues.columnId) {
       return { ...initialValues, column: columns[initialValues.columnId] };
@@ -25,6 +33,7 @@ const TaskSlideOver = ({ addTask, updateTask, columns, editMode, initialValues, 
         updateTask={updateTask}
         editMode={editMode}
         initialValues={getFormattedInitialValues()}
+        toggleShowColumnModal={toggleShowColumnModal}
         toggleShowTaskSlideOver={toggleShowTaskSlideOver}
       />
     </SlideOver>
