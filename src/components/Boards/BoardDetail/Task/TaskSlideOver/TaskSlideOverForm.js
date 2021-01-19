@@ -238,9 +238,9 @@ const ColumnSelectInput = ({
 
 const TaskSlideOverFormExtended = withFormik({
   mapPropsToValues: (props) => ({
-    name: props.initialValues.name,
-    description: props.initialValues.description,
-    column: props.initialValues.column,
+    name: props.initialValues.name || '',
+    description: props.initialValues.description || '',
+    column: props.initialValues.column || '',
   }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required('This field is required.'),

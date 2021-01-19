@@ -81,6 +81,7 @@ const BoardDetail = () => {
     const unsubscribe = firestore
       .collection('tasks')
       .where('boardId', '==', boardId)
+      .where('deleteStatus', '==', false)
       .onSnapshot((snapshot) => {
         const newTasksArr = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         const newTasks = {};
@@ -181,15 +182,19 @@ const BoardDetail = () => {
     }
   };
 
-  // TODO Handle setting deleteStatus flag of all tasks in column to true
-  const deleteColumn = async (columnId) => {
+  const deleteColumn = async (columnId, taskIds) => {
     try {
       let batch = firestore.batch();
       let boardRef = firestore.collection('boards').doc(boardId);
       batch.delete(boardRef.collection('columns').doc(columnId));
-      batch.set(boardRef, { columnOrder: firebase.firestore.FieldValue.arrayRemove(columnId) });
+      batch.update(boardRef, { columnOrder: firebase.firestore.FieldValue.arrayRemove(columnId) });
+      if (taskIds && taskIds.length > 0) {
+        for (let taskId of taskIds) {
+          let taskRef = firestore.collection('tasks').doc(taskId);
+          batch.update(taskRef, { deleteStatus: true });
+        }
+      }
       await batch.commit();
-      await firestore.collection('boards').doc(boardId).collection('columns').doc(columnId).delete();
     } catch (exception) {
       console.error(exception.toString());
     }
@@ -252,7 +257,7 @@ const BoardDetail = () => {
         .collection('columns')
         .doc(columnId)
         .update({ taskIds: firebase.firestore.FieldValue.arrayRemove(taskId) });
-      await firestore.collection('tasks').doc(taskId).delete();
+      await firestore.collection('tasks').doc(taskId).update({ deleteStatus: true });
     } catch (exception) {
       console.error(exception.toString());
     }

@@ -22,7 +22,7 @@ const BoardDetailHeader = ({
     if (event) {
       event.preventDefault();
     }
-    toggleShowColumnModal(x);
+    toggleShowColumnModal(false);
   };
 
   return (

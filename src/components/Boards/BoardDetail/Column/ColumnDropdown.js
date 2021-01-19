@@ -7,7 +7,8 @@ import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-
 
 const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowColumnModal, toggleShowTaskSlideOver }) => {
   const handleDelete = () => {
-    deleteColumn(columnValues.id);
+    const { id, taskIds } = columnValues;
+    deleteColumn(id, taskIds);
   };
 
   const handleCreateTask = (event) => {
