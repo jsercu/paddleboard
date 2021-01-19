@@ -4,14 +4,13 @@ import PrivateRoute from '../Auth/PrivateRoute';
 import Navbar from '../Navbar/Navbar';
 import Dashboard from '../Dashboard/Dashboard';
 import Boards from '../Boards/Boards';
-import BoardDetail from '../Boards/BoardDetail/BoardDetail';
 
 class Main extends Component {
   render() {
     return (
       <Router>
-        <div className={`bg-gray-100 h-screen`}>
-          <Navbar className={`sticky top-0`} />
+        <div className="h-screen bg-gray-100">
+          <Navbar className="sticky top-0" />
           <Switch>
             <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
             <PrivateRoute path="/boards" component={Boards}></PrivateRoute>
