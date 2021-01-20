@@ -40,7 +40,7 @@ const Login = ({ history }) => {
         <div className="py-4 mt-3 mb-1">
           <div className="w-full border-b border-gray-300"></div>
           <div className="-mt-3 text-center">
-            <span className="px-6 text-sm font-light text-gray-500 bg-gray-100">Or continue with</span>
+            <span className="px-6 text-sm text-gray-500 bg-gray-100">Or continue with</span>
           </div>
         </div>
         <div className="flex">
@@ -55,14 +55,24 @@ const Login = ({ history }) => {
             <GoogleIcon className="w-5 h-5 ml-1" title="google-icon" />
           </Button>
         </div>
-        <div className="py-8">
-          <div className="flex flex-row justify-center space-x-4">
-            <Link to="/register" className="text-sm font-medium text-indigo-700 hover:text-indigo-600">
-              Sign up for an account
-            </Link>
-            <Link to="/" className="text-sm font-medium text-indigo-700 hover:text-indigo-600">
-              Password Reset
-            </Link>
+        <div className="py-6">
+          <div className="flex flex-row items-center justify-center">
+            <div>
+              <span className="mr-1 text-xs text-gray-500">Don't have an account yet? </span>
+              <Link
+                to="/register"
+                className="text-xs font-medium text-indigo-700 hover:underline hover:text-indigo-600">
+                Create New Account
+              </Link>
+            </div>
+            <div className="px-2 mt-1 text-gray-300" style={{ fontSize: '8px' }}>
+              <span>{'\u25CF'}</span>
+            </div>
+            <div>
+              <Link to="/reset" className="text-xs font-medium text-indigo-700 hover:underline hover:text-indigo-600">
+                Password Reset
+              </Link>
+            </div>
           </div>
         </div>
       </div>
