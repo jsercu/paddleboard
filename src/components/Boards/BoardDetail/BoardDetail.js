@@ -210,8 +210,8 @@ const BoardDetail = () => {
     let task = {
       ...taskFormValues,
       created: firebase.firestore.FieldValue.serverTimestamp(),
-      author: auth.user.displayName,
-      authorId: auth.user.uid,
+      author: auth.userProfile.displayName,
+      authorId: auth.userProfile.uid,
       deleteStatus: false,
       boardId,
     };

@@ -38,8 +38,8 @@ const BoardList = () => {
         description: description,
         columnOrder: [],
         created: firebase.firestore.FieldValue.serverTimestamp(),
-        author: auth.user.displayName,
-        authorId: auth.user.uid,
+        author: auth.userProfile.displayName,
+        authorId: auth.userProfile.uid,
         deleteStatus: false,
       });
     } catch (exception) {

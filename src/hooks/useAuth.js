@@ -1,6 +1,6 @@
-import React, { useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import firebase from '../firebase';
+import firebase, { firestore } from '../firebase';
 import 'firebase/auth';
 
 const authContext = createContext();
@@ -24,35 +24,38 @@ export function useProvideAuth() {
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
-  const signin = (email, password) => {
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
-      });
+  const signin = async (email, password) => {
+    try {
+      const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+      const user = response.user;
+      setUser(user);
+      return user;
+    } catch (exception) {
+      console.error(exception.toString());
+    }
   };
 
-  const signinWithGoogle = () => {
+  const signinWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
-      });
+    try {
+      const response = await firebase.auth().signInWithPopup(provider);
+      const user = response.user;
+      setUser(user);
+      return user;
+    } catch (exception) {
+      console.error(exception.toString());
+    }
   };
 
-  const signup = (email, password) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
-      });
+  const signup = async (email, password) => {
+    try {
+      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const user = response.user;
+      setUser(user);
+      return user;
+    } catch (exception) {
+      console.error(exception.toString());
+    }
   };
 
   const signout = () => {
@@ -82,14 +85,61 @@ export function useProvideAuth() {
       });
   };
 
+  const createUserDocument = async (user, additionalData) => {
+    // If there is no user, let's not do this.
+    if (!user) return;
+
+    // Get a reference to the location in the Firestore where the user
+    // document may or may not exist.
+    const userRef = firestore.doc(`users/${user.uid}`);
+
+    // Go and fetch a document from that location.
+    const snapshot = await userRef.get();
+
+    // If there isn't a document for that user. Let's use information
+    // that we got from either Google or our sign up form.
+    if (!snapshot.exists) {
+      const { displayName, email, photoURL } = user;
+      const createdAt = new Date();
+      try {
+        await userRef.set({
+          displayName,
+          email,
+          photoURL,
+          createdAt,
+          ...additionalData,
+        });
+      } catch (error) {
+        console.error('Error creating user', console.error);
+      }
+    }
+
+    // Get the document and return it, since that's what we're
+    // likely to want to do next.
+    return getUserDocument(user.uid);
+  };
+
+  const getUserDocument = async (uid) => {
+    if (!uid) return null;
+    try {
+      const userDocument = await firestore.collection('users').doc(uid).get();
+
+      return { uid, ...userDocument.data() };
+    } catch (error) {
+      console.error('Error fetching user', error.message);
+    }
+  };
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        setUser(user);
+        debugger;
+        const userProfile = await createUserDocument(user);
+        setUser(userProfile);
       } else {
         setUser(null);
       }
