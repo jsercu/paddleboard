@@ -37,9 +37,9 @@ const BoardList = () => {
         name: name,
         description: description,
         columnOrder: [],
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        author: auth.userProfile.displayName,
-        authorId: auth.userProfile.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        author: auth.user.displayName,
+        authorId: auth.user.uid,
         deleteStatus: false,
       });
     } catch (exception) {

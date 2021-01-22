@@ -78,7 +78,7 @@ const TaskSlideOverForm = (props) => {
           </div>
         </div>
         <div className="mt-1">
-          <label htmlFor="name" className="block">
+          <label htmlFor="description" className="block">
             <span className="block text-sm font-medium text-gray-700 leading-5">Description</span>
             <textarea
               className="block w-full mt-1 text-sm border-gray-300 rounded-sm bg-gray-50 shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2 focus:ring-indigo-500"

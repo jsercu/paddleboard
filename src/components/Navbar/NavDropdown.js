@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';
-import { ReactComponent as SettingsIcon } from '../../assets/img/icons/cog-20.svg';
 import { ReactComponent as UserProfileIcon } from '../../assets/img/icons/user-circle-20.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/img/icons/logout-20.svg';
 
-const UserProfileDropdown = ({ handleSignOut }) => {
+const NavDropdown = ({ handleSignOut }) => {
   const auth = useAuth();
   return (
     <div className="relative flex">
@@ -29,26 +29,14 @@ const UserProfileDropdown = ({ handleSignOut }) => {
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <div
+                      <Link
+                        to={`/users/${auth.user.uid}`}
                         className={`${
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                        } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
-                        role="menuitem">
+                        } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300s`}>
                         <UserProfileIcon className="w-5 h-5 mr-2 text-gray-400" />
-                        <span>Your Profile</span>
-                      </div>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <div
-                        className={`${
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                        } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
-                        role="menuitem">
-                        <SettingsIcon className="w-5 h-5 mr-2 text-gray-400" />
-                        <span>Settings</span>
-                      </div>
+                        Your Profile
+                      </Link>
                     )}
                   </Menu.Item>
                 </div>
@@ -77,4 +65,4 @@ const UserProfileDropdown = ({ handleSignOut }) => {
   );
 };
 
-export default UserProfileDropdown;
+export default NavDropdown;

@@ -13,26 +13,26 @@ const BoardsTableRow = ({ name, description, id }) => {
         </div>
       </div>
       <div className="flex w-full">
-        <div className={`flex flex-row-reverse justify-start mx-3`}>
+        <div className="flex flex-row-reverse justify-start mx-3">
           <img
-            className={`inline-block w-8 h-8 rounded-full ring-2 ring-white`}
+            className="inline-block w-8 h-8 rounded-full ring-2 ring-white"
             src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt=""
           />
           <img
-            className={`inline-block w-8 h-8 rounded-full ring-2 ring-white`}
+            className="inline-block w-8 h-8 rounded-full ring-2 ring-white"
             src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
             alt=""
           />
           <img
-            className={`inline-block w-8 h-8 rounded-full ring-2 ring-white`}
+            className="inline-block w-8 h-8 rounded-full ring-2 ring-white"
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt=""
           />
         </div>
       </div>
-      <div className={`w-full px-6 py-3 text-sm text-gray-500 whitespace-nowrap`}></div>
-      <div className={`w-full px-6 py-3 text-sm font-medium text-center whitespace-nowrap`}>
+      <div className="w-full px-6 py-3 text-sm text-gray-500 whitespace-nowrap"></div>
+      <div className="w-full px-6 py-3 text-sm font-medium text-center whitespace-nowrap">
         <div className="flex justify-end">
           <div className="opacity-0 group-hover:opacity-100">
             <Link

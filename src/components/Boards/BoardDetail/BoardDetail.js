@@ -164,7 +164,13 @@ const BoardDetail = () => {
     try {
       await firestore
         .collection(`boards/${boardId}/columns`)
-        .add({ name, taskIds: [] })
+        .add({
+          name,
+          taskIds: [],
+          author: auth.user.displayName,
+          authorId: auth.user.uid,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
         .then((doc) => {
           columnId = doc.id;
         });
@@ -209,9 +215,9 @@ const BoardDetail = () => {
     let { columnId } = taskFormValues;
     let task = {
       ...taskFormValues,
-      created: firebase.firestore.FieldValue.serverTimestamp(),
-      author: auth.userProfile.displayName,
-      authorId: auth.userProfile.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      author: auth.user.displayName,
+      authorId: auth.user.uid,
       deleteStatus: false,
       boardId,
     };

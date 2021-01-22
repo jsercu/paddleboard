@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import firebase, { firestore } from '../firebase';
 import 'firebase/auth';
@@ -20,7 +20,9 @@ export function useAuth() {
 
 // Provider hook that creates auth object and handles state
 export function useProvideAuth() {
-  const [user, setUser] = useLocalStorage('user', null);
+  const [user, setUser] = useState(null);
+  const isInitialMount = useRef(true);
+  const [userProfile, setUserProfile] = useState(null);
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
@@ -100,13 +102,12 @@ export function useProvideAuth() {
     // that we got from either Google or our sign up form.
     if (!snapshot.exists) {
       const { displayName, email, photoURL } = user;
-      const createdAt = new Date();
       try {
         await userRef.set({
           displayName,
           email,
           photoURL,
-          createdAt,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           ...additionalData,
         });
       } catch (error) {
@@ -123,34 +124,46 @@ export function useProvideAuth() {
     if (!uid) return null;
     try {
       const userDocument = await firestore.collection('users').doc(uid).get();
-
       return { uid, ...userDocument.data() };
     } catch (error) {
       console.error('Error fetching user', error.message);
     }
   };
 
-  // Subscribe to user on mount
-  // Because this sets state in the callback it will cause any ...
-  // ... component that utilizes this hook to re-render with the ...
-  // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        debugger;
-        const userProfile = await createUserDocument(user);
-        setUser(userProfile);
+        setUser(user);
       } else {
-        setUser(null);
+        setUser(false);
       }
     });
+
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      const unsubscribe = firestore
+        .collection('users')
+        .doc(user?.uid)
+        .onSnapshot((doc) => {
+          const newUserProfile = doc.data();
+          setUserProfile(newUserProfile);
+        });
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [user]);
+
   // Return the user object and auth methods
   return {
     user,
+    userProfile,
     signin,
     signinWithGoogle,
     signup,

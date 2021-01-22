@@ -30,9 +30,11 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
       <div className="flex flex-col">
         <div className="flex flex-row items-center justify-between">
           <p className="text-sm font-medium text-gray-700">{name}</p>
-          <TaskDropdown deleteTask={handleDeleteTask} editTask={handleEditTask} />
+          <div className="-mt-2">
+            <TaskDropdown deleteTask={handleDeleteTask} editTask={handleEditTask} />
+          </div>
         </div>
-        <div className="mr-8">
+        <div className="">
           <p className="text-xs font-light text-gray-400 leading-4">{description}</p>
         </div>
         {/* <div className="flex flex-row items-center justify-between mt-2">

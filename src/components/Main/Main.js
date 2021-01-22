@@ -4,6 +4,8 @@ import PrivateRoute from '../Auth/PrivateRoute';
 import Navbar from '../Navbar/Navbar';
 import Dashboard from '../Dashboard/Dashboard';
 import Boards from '../Boards/Boards';
+import Tasks from '../Tasks/Tasks';
+import Users from '../Users/Users';
 
 class Main extends Component {
   render() {
@@ -14,6 +16,8 @@ class Main extends Component {
           <Switch>
             <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
             <PrivateRoute path="/boards" component={Boards}></PrivateRoute>
+            <PrivateRoute path="/tasks" component={Tasks}></PrivateRoute>
+            <PrivateRoute path="/users" component={Users}></PrivateRoute>
             <PrivateRoute path="*" component={Boards}></PrivateRoute>
           </Switch>
         </div>

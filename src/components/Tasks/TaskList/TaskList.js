@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Dashboard = () => {
+const TaskList = () => {
   return (
     <div className="block pt-24">
-      <h2>Dashboard</h2>
+      <h2>Tasks</h2>
     </div>
   );
 };
 
-export default Dashboard;
+export default TaskList;
