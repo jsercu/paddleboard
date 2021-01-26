@@ -5,7 +5,8 @@ import Button from '../../../../common/Buttons/Button';
 
 const YourProfileForm = (props) => {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props;
-  const { displayName, title, company, location, bio } = values;
+  const { displayName, photoURL, title, company, location, bio } = values;
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="px-12 pt-6 grid grid-cols-12">
@@ -154,6 +155,7 @@ const YourProfileForm = (props) => {
 const YourProfileFormExtended = withFormik({
   mapPropsToValues: (props) => ({
     displayName: props.initialValues.displayName || '',
+    photoURL: props.initialValues.photoURL || null,
     title: props.initialValues.title || '',
     company: props.initialValues.company || '',
     location: props.initialValues.location || '',

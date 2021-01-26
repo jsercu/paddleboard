@@ -20,7 +20,8 @@ export function useAuth() {
 
 // Provider hook that creates auth object and handles state
 export function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [user, setUser] = useLocalStorage('user', null);
   const isInitialMount = useRef(true);
   const [userProfile, setUserProfile] = useState(null);
 
@@ -144,9 +145,7 @@ export function useProvideAuth() {
   }, []);
 
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
+    if (!!user) {
       const unsubscribe = firestore
         .collection('users')
         .doc(user?.uid)

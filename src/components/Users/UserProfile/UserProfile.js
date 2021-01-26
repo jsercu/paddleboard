@@ -1,25 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import { firestore } from '../../../firebase';
+import { firestore, storage } from '../../../firebase';
 import Container from '../../../common/Container';
 import Button from '../../../common/Buttons/Button';
 import YourProfile from '../../Users/UserProfile/YourProfile/YourProfile';
 import { ReactComponent as LocationIcon } from '../../../assets/img/icons/location-20.svg';
+import UserPhotoModal from './UserPhotoModal';
 
 const UserProfile = () => {
   const auth = useAuth();
+  const [showUserPhotoModal, setShowUserPhotoModal] = useState(false);
 
   const updateUser = async (userValues, userId) => {
-    const { displayName, title, company, location, bio } = userValues;
+    const { displayName, title, company, location, bio, photoURL } = userValues;
     try {
-      await firestore
-        .collection('users')
-        .doc(userId)
-        .update({ displayName: displayName, title: title, company, company, location: location, bio: bio });
+      await firestore.collection('users').doc(userId).update({
+        displayName: displayName,
+        title: title,
+        company: company,
+        location: location,
+        bio: bio,
+        photoURL: photoURL,
+      });
     } catch (exception) {
       console.error(exception.toString());
     }
   };
+
+  const storeProfilePhoto = async (profilePhoto, userId) => {
+    try {
+      debugger;
+      const storageRef = storage.ref();
+      const profileImagesRef = storageRef.child(`${userId}/profileImages/${profilePhoto.name}`);
+      const response = await profileImagesRef.put(profilePhoto);
+      const photoURL = await response.ref.getDownloadURL();
+      return photoURL;
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
+
+  const handleUpdateProfilePhoto = async (profilePhoto) => {
+    const userId = auth.user.uid;
+    try {
+      const photoURL = await storeProfilePhoto(profilePhoto, userId);
+      await firestore.collection('users').doc(userId).update({ photoURL: photoURL });
+      toggleShowUserPhotoModal();
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
+
+  const toggleShowUserPhotoModal = () => {
+    setShowUserPhotoModal(!showUserPhotoModal);
+  };
+
+  if (!auth.userProfile) {
+    return <></>;
+  }
 
   return (
     <div>
@@ -28,10 +66,27 @@ const UserProfile = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-between">
               <div className="flex-shrink-0">
-                <button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <button
+                  className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                  onClick={toggleShowUserPhotoModal}>
                   <span className="sr-only">Edit user profile photo</span>
-                  <img className="w-20 h-20 rounded-full" src={auth.user.photoURL} alt="User Profile Photo" />
+                  <div className="relative group">
+                    <div className="absolute inset-0 flex items-center justify-between opacity-0 group-hover:opacity-100 z-100">
+                      <p className="mx-auto text-white text-md">Edit</p>
+                    </div>
+                    <img
+                      className="w-20 h-20 rounded-full group-hover:opacity-20"
+                      src={auth.userProfile.photoURL}
+                      alt="User Profile Photo"
+                    />
+                  </div>
                 </button>
+                {!!showUserPhotoModal && (
+                  <UserPhotoModal
+                    toggleShowUserPhotoModal={toggleShowUserPhotoModal}
+                    handleUpdateProfilePhoto={handleUpdateProfilePhoto}
+                  />
+                )}
               </div>
               <div className="ml-4">
                 <div className="flex flex-row items-center text-2xl font-bold">

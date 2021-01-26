@@ -8,6 +8,11 @@ const YourProfile = ({ user, userId, updateUser }) => {
   const toggleEditMode = () => {
     setEditMode((editMode) => !editMode);
   };
+
+  if (!user) {
+    return <></>;
+  }
+
   return (
     <div className="shadow sm:rounded-sm sm:overflow-hidden">
       <div className="bg-white">

@@ -7,6 +7,7 @@ import { ReactComponent as LogoutIcon } from '../../assets/img/icons/logout-20.s
 
 const NavDropdown = ({ handleSignOut }) => {
   const auth = useAuth();
+
   return (
     <div className="relative flex">
       <Menu>
@@ -14,7 +15,9 @@ const NavDropdown = ({ handleSignOut }) => {
           <>
             <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
               <span className="sr-only">Open user menu</span>
-              <img className="w-8 h-8 rounded-full" src={auth.user.photoURL} alt="User Profile Photo" />
+              {!!auth.userProfile && (
+                <img className="w-8 h-8 rounded-full" src={auth.userProfile.photoURL} alt="User Profile Photo" />
+              )}
             </Menu.Button>
 
             <Transition
