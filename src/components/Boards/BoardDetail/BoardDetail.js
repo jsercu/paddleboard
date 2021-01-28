@@ -22,6 +22,7 @@ const BoardDetail = () => {
   const [columns, setColumns] = useState({});
   const [tasks, setTasks] = useState({});
 
+  //TODO refactor component to remove these two useState hooks --> use [modalConfig, setModalConfig] instead
   const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
   const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
 
@@ -377,6 +378,7 @@ const BoardDetail = () => {
       <div className="w-full h-full bg-gray-200">
         <BoardDetailHeader
           id={boardId}
+          board={board}
           toggleShowBoardSettings={toggleShowBoardSettings}
           toggleShowColumnModal={toggleShowColumnModal}
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}

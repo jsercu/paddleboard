@@ -8,12 +8,14 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
 
   const getSizeStyles = () => {
     switch (size) {
-      case 'large':
-        return 'px-5 py-3 text-md font-medium ';
+      case 'tiny':
+        return 'px-2 text-xs font-medium ';
       case 'small':
         return 'px-4 py-1 text-sm font-medium ';
       case 'medium-wide':
         return 'px-12 py-2 text-sm font-medium ';
+      case 'large':
+        return 'px-5 py-3 text-md font-medium ';
       case 'medium':
       default:
         return 'px-4 py-2 text-sm font-medium ';

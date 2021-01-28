@@ -31,7 +31,7 @@ const BoardList = () => {
   };
 
   const addBoard = async (boardValues) => {
-    const { name, description } = boardValues;
+    const { name, description, participantIds } = boardValues;
     try {
       await firestore.collection('boards').add({
         name: name,
@@ -41,6 +41,7 @@ const BoardList = () => {
         author: auth.user.displayName,
         authorId: auth.user.uid,
         deleteStatus: false,
+        participantIds: participantIds,
       });
     } catch (exception) {
       console.error(exception.toString());

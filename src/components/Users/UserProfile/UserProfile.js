@@ -12,7 +12,7 @@ const UserProfile = () => {
   const [showUserPhotoModal, setShowUserPhotoModal] = useState(false);
 
   const updateUser = async (userValues, userId) => {
-    const { displayName, title, company, location, bio, photoURL } = userValues;
+    const { displayName, title, company, location, bio } = userValues;
     try {
       await firestore.collection('users').doc(userId).update({
         displayName: displayName,
@@ -20,7 +20,6 @@ const UserProfile = () => {
         company: company,
         location: location,
         bio: bio,
-        photoURL: photoURL,
       });
     } catch (exception) {
       console.error(exception.toString());
@@ -29,7 +28,6 @@ const UserProfile = () => {
 
   const storeProfilePhoto = async (profilePhoto, userId) => {
     try {
-      debugger;
       const storageRef = storage.ref();
       const profileImagesRef = storageRef.child(`${userId}/profileImages/${profilePhoto.name}`);
       const response = await profileImagesRef.put(profilePhoto);

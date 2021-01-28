@@ -6,6 +6,7 @@ import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24
 
 const BoardDetailHeader = ({
   id,
+  board,
   toggleShowBoardSettings,
   toggleShowColumnModal,
   toggleShowDeleteBoardModal,
@@ -36,7 +37,7 @@ const BoardDetailHeader = ({
             <div className="ml-4">
               <div className="flex flex-row items-center text-2xl font-bold">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
-                  Board {id}
+                  {board.name}
                 </span>
                 <span className="px-2 mt-1 ml-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full">
                   Active
@@ -44,7 +45,7 @@ const BoardDetailHeader = ({
               </div>
               <div className="text-sm">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
-                  Board description text goes here. We'll probably need a way of truncating this content...
+                  {board.description}
                 </span>
               </div>
             </div>

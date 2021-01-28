@@ -1,11 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../../../common/Buttons/Button';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch } from 'react-instantsearch-dom';
+import UserSearchAutocomplete from './UserSearchAutocomplete';
+
+const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
 
 const BoardSlideOverForm = (props) => {
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit, toggleShowBoardSlideOver } = props;
+  const [participantsStore, setParticipantsStore] = useState([]);
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    toggleShowBoardSlideOver,
+  } = props;
   const { name, description } = values;
+
+  useEffect(() => {
+    setFieldValue('participants', participantsStore);
+  }, [participantsStore]);
+
+  const addParticipant = (newParticpant) => {
+    const existingParticipant = participantsStore.find((participant) => participant.userId === newParticpant.userId);
+    if (existingParticipant) {
+      return;
+    } else {
+      setParticipantsStore([...participantsStore, newParticpant]);
+    }
+  };
+
+  const removeParticipant = (event, removedParticpant) => {
+    if (event) {
+      event.preventDefault();
+    }
+    const newParticipants = participantsStore.filter((participant) => participant.userId !== removedParticpant.userId);
+    setParticipantsStore(newParticipants);
+  };
 
   return (
     <form className="flex flex-col justify-between h-full" onSubmit={handleSubmit}>
@@ -54,6 +90,27 @@ const BoardSlideOverForm = (props) => {
             )}
           </div>
         </div>
+        <InstantSearch searchClient={searchClient} indexName="users">
+          <UserSearchAutocomplete defaultRefinement="" addParticipant={addParticipant} />
+          <div className="mt-1 divide-y divide-solid divide-gray-100">
+            {participantsStore.map((participant) => (
+              <div className="flex items-center justify-between p-3" key={participant.userId}>
+                <div className="flex">
+                  <img className="w-8 h-8 rounded-full" src={participant.photoURL} alt={participant.displayName} />
+                  <div className="flex-col items-center ml-2">
+                    <div className="text-sm font-medium text-gray-800 leading-5">{participant.displayName}</div>
+                    <div className="text-xs font-normal leading-none text-gray-500">{participant.company}</div>
+                  </div>
+                </div>
+                <Button
+                  text="Remove"
+                  color="tertiary"
+                  size="tiny"
+                  action={() => removeParticipant(event, participant)}></Button>
+              </div>
+            ))}
+          </div>
+        </InstantSearch>
       </div>
       <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 b sm:px-6 space-x-4">
         <Button type="submit" color="primary" size="medium-wide" text="Create Board" />
@@ -67,6 +124,7 @@ const BoardSlideOverFormExtended = withFormik({
   mapPropsToValues: () => ({
     name: '',
     description: '',
+    participants: [],
   }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required('This field is required.'),
@@ -75,10 +133,13 @@ const BoardSlideOverFormExtended = withFormik({
   validateOnChange: false,
 
   handleSubmit: (values, FormikBag) => {
-    const { name, description } = values;
+    debugger;
+    const { name, description, participants } = values;
+    const participantIds = participants.map((participant) => participant.userId);
     const boardValues = {
       name: name,
       description: description,
+      participantIds: participantIds,
     };
     FormikBag.props.addBoard(boardValues);
     FormikBag.setSubmitting(false);

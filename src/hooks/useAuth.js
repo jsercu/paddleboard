@@ -20,9 +20,7 @@ export function useAuth() {
 
 // Provider hook that creates auth object and handles state
 export function useProvideAuth() {
-  // const [user, setUser] = useState(null);
   const [user, setUser] = useLocalStorage('user', null);
-  const isInitialMount = useRef(true);
   const [userProfile, setUserProfile] = useState(null);
 
   // Wrap any Firebase methods we want to use making sure ...
@@ -43,8 +41,10 @@ export function useProvideAuth() {
     try {
       const response = await firebase.auth().signInWithPopup(provider);
       const user = response.user;
+      const userProfile = await createUserDocument(user);
       setUser(user);
-      return user;
+      setUserProfile(userProfile);
+      return { user, userProfile };
     } catch (exception) {
       console.error(exception.toString());
     }
@@ -54,8 +54,10 @@ export function useProvideAuth() {
     try {
       const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
       const user = response.user;
+      const userProfile = await createUserDocument(user);
       setUser(user);
-      return user;
+      setUserProfile(userProfile);
+      return { user, userProfile };
     } catch (exception) {
       console.error(exception.toString());
     }
