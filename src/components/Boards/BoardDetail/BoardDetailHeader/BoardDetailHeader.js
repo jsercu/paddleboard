@@ -1,17 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { firestore } from '../../../../firebase';
 import Button from '../../../../common/Buttons/Button';
 import Container from '../../../../common/Container';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
+import ParticipantsList from './ParticipantsList/ParticipantsList';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 
 const BoardDetailHeader = ({
-  id,
   board,
   toggleShowBoardSettings,
   toggleShowColumnModal,
   toggleShowDeleteBoardModal,
   toggleShowTaskSlideOver,
 }) => {
+  const [participants, setParticipants] = useState([]);
+
+  useEffect(() => {
+    getParticipantInfo(board);
+  }, [board.participantIds]);
+
+  const getParticipantInfo = async (board) => {
+    const { participantIds } = board;
+    const newParticipants = [];
+    for (let participantId of participantIds) {
+      try {
+        let participant = await firestore.collection('users').doc(participantId).get();
+        newParticipants.push({ participantId, ...participant.data() });
+      } catch (exception) {
+        console.error(exception.toString());
+      }
+    }
+    setParticipants(newParticipants);
+  };
+
   const handleCreateTask = (event) => {
     if (event) {
       event.preventDefault();
@@ -49,6 +70,9 @@ const BoardDetailHeader = ({
                 </span>
               </div>
             </div>
+          </div>
+          <div>
+            <ParticipantsList participants={participants} />
           </div>
           <div className="flex lg:ml-4 space-x-2">
             <BoardDetailHeaderDropdown

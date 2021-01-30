@@ -130,8 +130,12 @@ const YourProfileForm = (props) => {
             <label htmlFor="bio" className="block">
               <span className="block text-sm font-medium text-gray-700 leading-5">Bio</span>
               <textarea
-                className="block w-full mt-1 text-sm border-gray-300 rounded-sm bg-gray-50 shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                rows="5"
+                className={`${
+                  errors.bio && touched.bio
+                    ? 'border-transparent ring-2 ring-red-600 focus:ring-red-400'
+                    : 'border-gray-300 focus:ring-indigo-500'
+                } bg-gray-50 block w-full mt-1 text-sm rounded-sm shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2`}
+                rows="3"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={bio}
@@ -163,6 +167,7 @@ const YourProfileFormExtended = withFormik({
   }),
   validationSchema: Yup.object().shape({
     displayName: Yup.string().required('This field is required.'),
+    bio: Yup.string().max(140, 'Please limit your response to 140 characters.'),
   }),
   validateOnBlur: true,
   validateOnChange: true,

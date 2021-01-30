@@ -93,6 +93,14 @@ const BoardSlideOverForm = (props) => {
         <InstantSearch searchClient={searchClient} indexName="users">
           <UserSearchAutocomplete defaultRefinement="" addParticipant={addParticipant} />
           <div className="mt-1 divide-y divide-solid divide-gray-100">
+            {!participantsStore.length && (
+              <div className="flex-col items-center justify-center px-3 py-4 text-left">
+                <h5 className="text-sm font-semibold text-gray-600">No participants added yet.</h5>
+                <p className="mb-3 text-xs font-normal text-gray-400">
+                  Any team members that will receive an invitation to join this board will be displayed here.
+                </p>
+              </div>
+            )}
             {participantsStore.map((participant) => (
               <div className="flex items-center justify-between p-3" key={participant.userId}>
                 <div className="flex">
@@ -133,7 +141,6 @@ const BoardSlideOverFormExtended = withFormik({
   validateOnChange: false,
 
   handleSubmit: (values, FormikBag) => {
-    debugger;
     const { name, description, participants } = values;
     const participantIds = participants.map((participant) => participant.userId);
     const boardValues = {
