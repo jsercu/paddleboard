@@ -6,7 +6,11 @@ import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-
 import { ReactComponent as CogIcon } from '../../../../assets/img/icons/cog-20.svg';
 import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
 
-const BoardDetailHeaderDropdown = ({ toggleShowBoardSettings, handleCreateColumn, toggleShowDeleteBoardModal }) => {
+const BoardDetailHeaderDropdown = ({
+  toggleShowBoardMenuSlideOver,
+  handleCreateColumn,
+  toggleShowDeleteBoardModal,
+}) => {
   return (
     <div className="relative inline-block text-left">
       <Menu>
@@ -47,23 +51,11 @@ const BoardDetailHeaderDropdown = ({ toggleShowBoardSettings, handleCreateColumn
                       <div
                         className={`${
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                        } flex justify-start align-baseline w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
-                        role="menuitem">
-                        <UsersIcon className="w-5 h-5 mr-2 text-gray-400" />
-                        <span>Edit Participants</span>
-                      </div>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <div
-                        className={`${
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
                         role="menuitem"
-                        onClick={toggleShowBoardSettings}>
+                        onClick={toggleShowBoardMenuSlideOver}>
                         <CogIcon className="w-5 h-5 mr-2 text-gray-400" />
-                        <span>Board Settings</span>
+                        <span>Board Menu</span>
                       </div>
                     )}
                   </Menu.Item>

@@ -2,8 +2,9 @@ import React, { useState, useRef } from 'react';
 import { connectAutoComplete, connectHighlight } from 'react-instantsearch-dom';
 import Button from '../../../../common/Buttons/Button';
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
+import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
 
-const Autocomplete = ({ hits, currentRefinement, refine, addParticipant }) => {
+const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId }) => {
   // Create a ref that we add to the element for which we want to detect outside clicks
   const resultsRef = useRef();
   // State for our modal
@@ -46,7 +47,7 @@ const Autocomplete = ({ hits, currentRefinement, refine, addParticipant }) => {
           {hits.length > 0 ? (
             <ul className="absolute right-0 w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
               {hits.map((hit) => (
-                <Hit key={hit.objectID} hit={hit} handleInviteParticipant={handleInviteParticipant} />
+                <Hit key={hit.objectID} hit={hit} handleInviteParticipant={handleInviteParticipant} ownerId={ownerId} />
               ))}
             </ul>
           ) : (
@@ -62,13 +63,18 @@ const Autocomplete = ({ hits, currentRefinement, refine, addParticipant }) => {
   );
 };
 
-const Hit = ({ hit, handleInviteParticipant }) => (
+const Hit = ({ hit, handleInviteParticipant, ownerId }) => (
   <span>
-    <CustomHighlight attribute="displayName" hit={hit} handleInviteParticipant={handleInviteParticipant} />
+    <CustomHighlight
+      attribute="displayName"
+      hit={hit}
+      handleInviteParticipant={handleInviteParticipant}
+      ownerId={ownerId}
+    />
   </span>
 );
 
-const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInviteParticipant }) => {
+const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInviteParticipant, ownerId }) => {
   const parsedHit = highlight({
     highlightProperty: '_highlightResult',
     attribute,
@@ -76,7 +82,7 @@ const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInv
   });
 
   return (
-    <div className="flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50 hover:bg-opacity-70">
+    <div className="flex items-center justify-between p-3 cursor-pointer hover:bg-gr1y-50 hover:bg-opacity-70">
       <div className="flex">
         <img className="w-8 h-8 rounded-full" src={hit.photoURL} alt={hit.displayName} />
         <div className="flex-col items-center ml-2">
@@ -94,11 +100,19 @@ const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInv
           <div className="text-xs font-normal leading-none text-gray-500">{hit.company}</div>
         </div>
       </div>
-      <Button
-        text="Add Participant"
-        color="tertiary"
-        size="tiny"
-        action={() => handleInviteParticipant(event, hit)}></Button>
+      {hit.objectID === ownerId ? (
+        <div className="flex items-center pl-2 pr-3 ml-2 text-xs font-semibold text-indigo-700 align-bottom bg-indigo-100 rounded-full">
+          <LockIcon className="inline-block w-3 h-3 mr-1 text-indigo-800" />
+          <span className="">Board Owner</span>
+        </div>
+      ) : (
+        <Button
+          text="Add Participant"
+          color="tertiary"
+          size="tiny"
+          action={() => handleInviteParticipant(event, hit)}
+        />
+      )}
     </div>
   );
 });

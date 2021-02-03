@@ -16,6 +16,7 @@ const BoardList = () => {
     const unsubscribe = firestore
       .collection('boards')
       .where('deleteStatus', '==', false)
+      .orderBy('createdAt', 'desc')
       .onSnapshot((snapshot) => {
         const newBoards = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setBoards(newBoards);
@@ -31,17 +32,17 @@ const BoardList = () => {
   };
 
   const addBoard = async (boardValues) => {
-    const { name, description, participantIds } = boardValues;
+    const { name, description, participants } = boardValues;
     try {
       await firestore.collection('boards').add({
         name: name,
         description: description,
         columnOrder: [],
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        author: auth.user.displayName,
-        authorId: auth.user.uid,
+        author: { displayName: auth.userProfile.displayName, userId: auth.user.uid },
+        status: 'Active',
         deleteStatus: false,
-        participantIds: participantIds,
+        participants: participants,
       });
     } catch (exception) {
       console.error(exception.toString());

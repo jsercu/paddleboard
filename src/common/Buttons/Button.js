@@ -41,7 +41,7 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
       case 'transparent':
         return 'bg-gray-600 bg-opacity-50 text-white hover:bg-gray-500 hover:bg-opacity-25 focus:ring-gray-300';
       case 'danger':
-        return 'bg-red-600 bg-opacity-90 text-white hover:bg-red-500 focus:ring-red-300';
+        return 'bg-red-600 border border-red-700 bg-opacity-90 text-white hover:bg-red-500 focus:ring-red-300';
       case 'success':
         return 'border border-green-700 bg-green-600 text-white hover:bg-green-500 focus:ring-green-300';
       case 'tertiary':

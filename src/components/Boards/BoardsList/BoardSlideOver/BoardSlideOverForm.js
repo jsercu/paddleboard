@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../.././../hooks/useAuth';
 import Button from '../../../../common/Buttons/Button';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch } from 'react-instantsearch-dom';
 import UserSearchAutocomplete from './UserSearchAutocomplete';
+import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
 
 const BoardSlideOverForm = (props) => {
-  const [participantsStore, setParticipantsStore] = useState([]);
+  const auth = useAuth();
+  const [participantsStore, setParticipantsStore] = useState([
+    {
+      displayName: auth.userProfile.displayName,
+      email: auth.userProfile.email,
+      company: auth.userProfile.company,
+      photoURL: auth.userProfile.photoURL,
+      userId: auth.user.uid,
+      isOwner: true,
+    },
+  ]);
   const {
     values,
     touched,
@@ -26,20 +38,20 @@ const BoardSlideOverForm = (props) => {
     setFieldValue('participants', participantsStore);
   }, [participantsStore]);
 
-  const addParticipant = (newParticpant) => {
-    const existingParticipant = participantsStore.find((participant) => participant.userId === newParticpant.userId);
+  const addParticipant = (newParticipant) => {
+    const existingParticipant = participantsStore.find((participant) => participant.userId === newParticipant.userId);
     if (existingParticipant) {
       return;
     } else {
-      setParticipantsStore([...participantsStore, newParticpant]);
+      setParticipantsStore([...participantsStore, newParticipant]);
     }
   };
 
-  const removeParticipant = (event, removedParticpant) => {
+  const removeParticipant = (event, removedParticipant) => {
     if (event) {
       event.preventDefault();
     }
-    const newParticipants = participantsStore.filter((participant) => participant.userId !== removedParticpant.userId);
+    const newParticipants = participantsStore.filter((participant) => participant.userId !== removedParticipant.userId);
     setParticipantsStore(newParticipants);
   };
 
@@ -70,12 +82,12 @@ const BoardSlideOverForm = (props) => {
             )}
           </div>
         </div>
-        <div className="mt-1">
+        <div className="my-2">
           <label htmlFor="name" className="block">
             <span className="block text-sm font-medium text-gray-700 leading-5">Description</span>
             <textarea
               className="block w-full mt-1 text-sm border-gray-300 rounded-sm bg-gray-50 shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-              rows="10"
+              rows="5"
               onChange={handleChange}
               onBlur={handleBlur}
               value={description}
@@ -91,30 +103,42 @@ const BoardSlideOverForm = (props) => {
           </div>
         </div>
         <InstantSearch searchClient={searchClient} indexName="users">
-          <UserSearchAutocomplete defaultRefinement="" addParticipant={addParticipant} />
+          <UserSearchAutocomplete defaultRefinement="" addParticipant={addParticipant} ownerId={auth.user.uid} />
           <div className="mt-1 divide-y divide-solid divide-gray-100">
             {!participantsStore.length && (
               <div className="flex-col items-center justify-center px-3 py-4 text-left">
                 <h5 className="text-sm font-semibold text-gray-600">No participants added yet.</h5>
                 <p className="mb-3 text-xs font-normal text-gray-400">
-                  Any team members that will receive an invitation to join this board will be displayed here.
+                  We'll send out an invitation to join the board to all of the participants on this list.
                 </p>
               </div>
             )}
             {participantsStore.map((participant) => (
               <div className="flex items-center justify-between p-3" key={participant.userId}>
                 <div className="flex">
-                  <img className="w-8 h-8 rounded-full" src={participant.photoURL} alt={participant.displayName} />
+                  <img
+                    className="w-8 h-8 rounded-full shadow-sm"
+                    src={participant.photoURL}
+                    alt={participant.displayName}
+                  />
                   <div className="flex-col items-center ml-2">
                     <div className="text-sm font-medium text-gray-800 leading-5">{participant.displayName}</div>
                     <div className="text-xs font-normal leading-none text-gray-500">{participant.company}</div>
                   </div>
                 </div>
-                <Button
-                  text="Remove"
-                  color="tertiary"
-                  size="tiny"
-                  action={() => removeParticipant(event, participant)}></Button>
+                {participant.isOwner ? (
+                  <div className="flex items-center pl-2 pr-3 ml-2 text-xs font-semibold text-indigo-700 align-bottom bg-indigo-100 rounded-full">
+                    <LockIcon className="inline-block w-3 h-3 mr-1 text-indigo-800" />
+                    <span className="">Board Owner</span>
+                  </div>
+                ) : (
+                  <Button
+                    text="Remove"
+                    color="tertiary"
+                    size="tiny"
+                    action={() => removeParticipant(event, participant)}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -142,11 +166,10 @@ const BoardSlideOverFormExtended = withFormik({
 
   handleSubmit: (values, FormikBag) => {
     const { name, description, participants } = values;
-    const participantIds = participants.map((participant) => participant.userId);
     const boardValues = {
       name: name,
       description: description,
-      participantIds: participantIds,
+      participants: participants,
     };
     FormikBag.props.addBoard(boardValues);
     FormikBag.setSubmitting(false);

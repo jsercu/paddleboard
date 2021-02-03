@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { firestore } from '../../../../firebase';
+import React from 'react';
 import Button from '../../../../common/Buttons/Button';
 import Container from '../../../../common/Container';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
@@ -8,31 +7,11 @@ import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24
 
 const BoardDetailHeader = ({
   board,
-  toggleShowBoardSettings,
+  toggleShowBoardMenuSlideOver,
   toggleShowColumnModal,
   toggleShowDeleteBoardModal,
   toggleShowTaskSlideOver,
 }) => {
-  const [participants, setParticipants] = useState([]);
-
-  useEffect(() => {
-    getParticipantInfo(board);
-  }, [board.participantIds]);
-
-  const getParticipantInfo = async (board) => {
-    const { participantIds } = board;
-    const newParticipants = [];
-    for (let participantId of participantIds) {
-      try {
-        let participant = await firestore.collection('users').doc(participantId).get();
-        newParticipants.push({ participantId, ...participant.data() });
-      } catch (exception) {
-        console.error(exception.toString());
-      }
-    }
-    setParticipants(newParticipants);
-  };
-
   const handleCreateTask = (event) => {
     if (event) {
       event.preventDefault();
@@ -55,7 +34,7 @@ const BoardDetailHeader = ({
             <div className="flex-shrink-0">
               <div className="w-12 h-12 bg-gray-800 border border-gray-800 rounded-sm"></div>
             </div>
-            <div className="ml-4">
+            <div className="flex-shrink ml-4">
               <div className="flex flex-row items-center text-2xl font-bold">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
                   {board.name}
@@ -71,13 +50,13 @@ const BoardDetailHeader = ({
               </div>
             </div>
           </div>
-          <div>
-            <ParticipantsList participants={participants} />
+          <div className="flex-shrink-0 mx-8">
+            <ParticipantsList participants={board.participants} />
           </div>
-          <div className="flex lg:ml-4 space-x-2">
+          <div className="flex flex-shrink-0 lg:ml-4 space-x-2">
             <BoardDetailHeaderDropdown
-              toggleShowBoardSettings={toggleShowBoardSettings}
               handleCreateColumn={handleCreateColumn}
+              toggleShowBoardMenuSlideOver={toggleShowBoardMenuSlideOver}
               toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
               toggleShowTaskSlideOver={toggleShowTaskSlideOver}
             />

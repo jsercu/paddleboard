@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import Button from '../../../../../common/Buttons/Button';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
-import { ReactComponent as PlusIcon } from '../../../../../assets/img/icons/plus-24.svg';
 
 const TaskSlideOverForm = (props) => {
   let { boardId } = useParams();

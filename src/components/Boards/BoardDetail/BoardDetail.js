@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
 import Container from '../../../common/Container';
 import BoardDetailHeader from './BoardDetailHeader/BoardDetailHeader';
-import BoardSettings from './BoardDetailHeader/BoardSettings';
+import BoardMenuSlideOver from './BoardMenu/BoardMenuSlideOver';
 import ColumnModal from './Column/ColumnModal/ColumnModal';
 import DeleteBoardModal from './BoardDetailHeader/DeleteBoardModal';
 import TaskSlideOver from './Task/TaskSlideOver/TaskSlideOver';
@@ -22,12 +22,8 @@ const BoardDetail = () => {
   const [columns, setColumns] = useState({});
   const [tasks, setTasks] = useState({});
 
-  //TODO refactor component to remove these two useState hooks --> use [modalConfig, setModalConfig] instead
-  const [isShowBoardSettings, setIsShowBoardSettings] = useState(false);
-  const [isShowDeleteBoardModal, setIsShowDeleteBoardModal] = useState(false);
-
   const [modalConfig, setModalConfig] = useState({
-    boardSettings: { display: false, initialValues: {} },
+    boardMenuSlideOver: { display: false, initialValues: {} },
     columnModal: { display: false, editMode: false, initialValues: {} },
     deleteBoardModal: { display: false },
     taskSlideOver: { display: false, editMode: false, initialValues: {} },
@@ -350,8 +346,20 @@ const BoardDetail = () => {
     return [_column, _tasks];
   };
 
-  const toggleShowDeleteBoardModal = () => setIsShowDeleteBoardModal(!isShowDeleteBoardModal);
-  const toggleShowBoardSettings = () => setIsShowBoardSettings(!isShowBoardSettings);
+  const toggleShowDeleteBoardModal = () => {
+    const newDeleteBoardModal = {
+      display: !modalConfig.deleteBoardModal.display,
+    };
+    setModalConfig((prevModalConfig) => ({ ...prevModalConfig, deleteBoardModal: newDeleteBoardModal }));
+  };
+
+  const toggleShowBoardMenuSlideOver = () => {
+    const newBoardMenuSlideOver = {
+      display: !modalConfig.boardMenuSlideOver.display,
+    };
+    setModalConfig((prevModalConfig) => ({ ...prevModalConfig, boardMenuSlideOver: newBoardMenuSlideOver }));
+  };
+
   const toggleShowColumnModal = (editMode, initialValues) => {
     const newColumnModal = {
       display: !modalConfig.columnModal.display,
@@ -360,6 +368,7 @@ const BoardDetail = () => {
     };
     setModalConfig((prevModalConfig) => ({ ...prevModalConfig, columnModal: newColumnModal }));
   };
+
   const toggleShowTaskSlideOver = (editMode, initialValues) => {
     const newTaskSlideOver = {
       display: !modalConfig.taskSlideOver.display,
@@ -377,9 +386,8 @@ const BoardDetail = () => {
     <>
       <div className="w-full h-full bg-gray-200">
         <BoardDetailHeader
-          id={boardId}
           board={board}
-          toggleShowBoardSettings={toggleShowBoardSettings}
+          toggleShowBoardMenuSlideOver={toggleShowBoardMenuSlideOver}
           toggleShowColumnModal={toggleShowColumnModal}
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
           toggleShowTaskSlideOver={toggleShowTaskSlideOver}
@@ -435,14 +443,20 @@ const BoardDetail = () => {
           updateColumn={updateColumn}
         />
       )}
-      {!!isShowDeleteBoardModal && (
+      {!!modalConfig.deleteBoardModal.display && (
         <DeleteBoardModal
           deleteBoard={deleteBoard}
-          id={boardId}
+          boardId={boardId}
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
         />
       )}
-      {!!isShowBoardSettings && <BoardSettings toggleShowBoardSettings={toggleShowBoardSettings} />}
+      {!!modalConfig.boardMenuSlideOver.display && (
+        <BoardMenuSlideOver
+          toggleShowBoardMenuSlideOver={toggleShowBoardMenuSlideOver}
+          board={board}
+          boardId={boardId}
+        />
+      )}
       {!!modalConfig.taskSlideOver.display && (
         <TaskSlideOver
           addTask={addTask}
