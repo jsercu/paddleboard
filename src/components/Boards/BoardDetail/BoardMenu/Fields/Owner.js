@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { ReactComponent as StatusIcon } from '../../../../../assets/img/icons/status-online-24.svg';
+import { ReactComponent as UserCircleIcon } from '../../../../../assets/img/icons/user-circle-24.svg';
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
@@ -8,17 +8,32 @@ import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
 import Button from '../../../../../common/Buttons/Button';
 
-const Status = ({ status, boardId }) => {
+const Owner = ({ owner, participants, boardId }) => {
   const [editMode, setEditMode] = useState(false);
+  const [participantsStore, setParticipantsStore] = useState([...participants]);
+
+  useEffect(() => {
+    setParticipantsStore([...participants]);
+  }, [participants]);
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
 
-  const updateBoardStatus = (status) => {
+  const updateBoardOwner = (newOwner) => {
     try {
+      const newParticipants = [];
+      participants.forEach((participant) => {
+        const newParticipant = { ...participant };
+        if (participant.userId === newOwner.userId) {
+          newParticipant.isOwner = true;
+        } else {
+          newParticipant.isOwner = false;
+        }
+        newParticipants.push(newParticipant);
+      });
       const boardRef = firestore.collection('boards').doc(boardId);
-      boardRef.update({ status: status });
+      boardRef.update({ participants: newParticipants });
     } catch (exception) {
       console.error(exception.toString());
     }
@@ -27,23 +42,24 @@ const Status = ({ status, boardId }) => {
   if (editMode) {
     return (
       <div className="relative flex px-4 py-2 mx-4 my-1 items-top">
-        <StatusIcon className="flex-none w-5 h-5 text-gray-500" />
+        <UserCircleIcon className="flex-none w-5 h-5 text-gray-500" />
         <Formik
-          initialValues={{ status: status }}
+          initialValues={{ owner: owner }}
           onSubmit={(values, actions) => {
-            updateBoardStatus(values.status);
+            updateBoardOwner(values.owner);
             toggleEditMode();
           }}>
           {(props) => (
             <form className="flex flex-col justify-between flex-grow h-full ml-2" onSubmit={props.handleSubmit}>
-              <StatusSelectInput
-                name="status"
-                error={props.errors.status}
-                placeholderText="Select status for this board"
+              <OwnerSelectInput
+                name="owner"
+                error={props.errors.owner}
+                placeholderText="Select owner for this board"
                 setFieldValue={props.setFieldValue}
                 setFieldTouched={props.setFieldTouched}
-                touched={props.touched.status}
-                value={props.values.status}
+                touched={props.touched.owner}
+                value={props.values.owner}
+                participants={participantsStore}
               />
               <div className="flex mt-3 space-x-4">
                 <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Save Changes" />
@@ -67,22 +83,23 @@ const Status = ({ status, boardId }) => {
     <div
       className="relative flex px-4 py-2 mx-4 my-1 rounded-sm cursor-pointer group hover:bg-gray-200 hover:bg-opacity-50 items-top"
       onClick={toggleEditMode}>
-      <StatusIcon className="flex-none w-5 h-5 text-gray-500" />
+      <UserCircleIcon className="flex-none w-5 h-5 text-gray-500" />
       <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-400 text-opacity-0 group-hover:text-opacity-100" />
-      <span className="ml-2 text-sm text-gray-600">{status}</span>
+      <span className="inline-block ml-2 text-sm text-gray-600">
+        Owned by
+        <span className="ml-1 font-medium text-indigo-600">{owner.displayName}</span>
+      </span>
     </div>
   );
 };
 
-const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouched, touched, value }) => {
-  const statuses = ['Not Started', 'Active', 'Paused', 'Completed', 'Closed'];
-
+const OwnerSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouched, touched, value, participants }) => {
   const handleChange = (value) => {
-    setFieldValue('status', value);
+    setFieldValue('owner', value);
   };
 
   const handleBlur = () => {
-    setFieldTouched('status', true);
+    setFieldTouched('owner', true);
   };
 
   return (
@@ -98,7 +115,7 @@ const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouc
                     : 'border-gray-300 focus:ring-indigo-500'
                 } relative bg-white w-full py-2 pl-3 pr-10 text-left border rounded-sm cursor-default focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-5`}>
                 {value ? (
-                  <span className="block truncate">{value}</span>
+                  <span className="block truncate">{value.displayName}</span>
                 ) : (
                   <span className="block text-gray-400 truncate">{placeholderText || 'None Selected'}</span>
                 )}
@@ -117,14 +134,16 @@ const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouc
               <Listbox.Options
                 static
                 className="py-1 overflow-auto text-base max-h-60 rounded-md leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5">
-                {statuses.map((status) => (
-                  <Listbox.Option key={status} value={status}>
+                {participants.map((participant) => (
+                  <Listbox.Option key={participant.userId} value={participant}>
                     {({ selected, active }) => (
                       <div
                         className={`${
                           active ? 'text-white bg-indigo-600' : 'text-gray-900'
                         } cursor-default select-none relative py-2 pl-8 pr-4`}>
-                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>{status}</span>
+                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>
+                          {participant.displayName}
+                        </span>
                         {selected && (
                           <span
                             className={`${
@@ -146,4 +165,4 @@ const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouc
   );
 };
 
-export default Status;
+export default Owner;

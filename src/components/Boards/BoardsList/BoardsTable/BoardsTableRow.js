@@ -4,8 +4,24 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 const BoardsTableRow = ({ board }) => {
   let { url } = useRouteMatch();
-  const { name, id } = board;
+  const { name, id, status, participants } = board;
   let createdDate = board.createdAt ? moment(board.createdAt.toDate()).calendar() : '';
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Active':
+        return 'text-orange-800 bg-orange-200 ';
+      case 'Paused':
+        return 'text-yellow-800 bg-yellow-200 ';
+      case 'Completed':
+        return 'text-green-800 bg-green-200 ';
+      case 'Closed':
+        return 'text-red-800 bg-red-200 ';
+      case 'Not Started':
+      default:
+        return 'text-gray-800 bg-gray-200 ';
+    }
+  };
 
   return (
     <tr className="cursor-pointer hover:bg-gray-50">
@@ -14,38 +30,26 @@ const BoardsTableRow = ({ board }) => {
           <div className="flex items-center flex-shrink-0 w-10 h-10">
             <div className="w-8 h-8 bg-gray-200 rounded-sm"></div>
           </div>
-          <div className="ml-2">
-            <div className="text-sm font-medium text-gray-900">{name}</div>
+          <div className="ml-1">
+            <div className="text-sm font-medium text-gray-800">{name}</div>
           </div>
         </div>
       </td>
       <td className="px-6 py-2 whitespace-nowrap">
         <div className="flex overflow-hidden -space-x-1">
-          <img
-            className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-          <img
-            className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-          <img
-            className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-            alt=""
-          />
-          <img
-            className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
+          {participants.map((participant) => (
+            <img
+              key={participant.userId}
+              className="inline-block w-8 h-8 rounded-full ring-2 ring-white"
+              src={participant.photoURL}
+              alt={participant.displayName}
+            />
+          ))}
         </div>
       </td>
       <td className="px-6 py-2 whitespace-nowrap">
-        <span className="inline-flex px-2 text-xs font-semibold text-green-900 bg-green-200 rounded-full leading-5">
-          Active
+        <span className={getStatusStyle(status) + 'inline-flex px-2 text-xs font-semibold rounded-full leading-5'}>
+          {board.status}
         </span>
       </td>
       <td className="px-6 py-2 text-sm text-gray-500 whitespace-nowrap">{createdDate}</td>

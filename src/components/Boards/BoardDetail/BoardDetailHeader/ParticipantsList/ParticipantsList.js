@@ -27,9 +27,6 @@ const ParticipantsList = ({ participants }) => {
             </li>
           ))}
         </ul>
-        <IconButton backgroundType="darkGray" size="small">
-          <PlusIcon className="w-5 h-5 mx-auto text-gray-100" />
-        </IconButton>
       </div>
       {!!participantSlideOverConfig.display && (
         <div className="relative">

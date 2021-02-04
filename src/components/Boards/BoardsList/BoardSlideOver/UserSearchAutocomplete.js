@@ -23,9 +23,11 @@ const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId
     }
     const participant = {
       displayName: hit.displayName,
+      email: hit.email,
       userId: hit.objectID,
       photoURL: hit.photoURL,
       company: hit.company,
+      isOwner: false,
     };
     addParticipant(participant);
     setIsResultsPanelOpen(false);

@@ -136,6 +136,7 @@ const BoardSlideOverForm = (props) => {
                     text="Remove"
                     color="tertiary"
                     size="tiny"
+                    rounded="normal"
                     action={() => removeParticipant(event, participant)}
                   />
                 )}

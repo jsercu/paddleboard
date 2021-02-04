@@ -16,6 +16,10 @@ const Participants = ({ participants, boardId }) => {
   const [editMode, setEditMode] = useState(false);
   const [participantsStore, setParticipantsStore] = useState([...participants]);
 
+  useEffect(() => {
+    setParticipantsStore([...participants]);
+  }, [participants]);
+
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
@@ -84,6 +88,7 @@ const Participants = ({ participants, boardId }) => {
                           text="Remove"
                           color="tertiary"
                           size="tiny"
+                          rounded="normal"
                           action={() => removeParticipant(event, participant)}
                         />
                       )}
@@ -92,8 +97,15 @@ const Participants = ({ participants, boardId }) => {
                 </div>
               </InstantSearch>
               <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="small" text="Update Participants" />
-                <Button type="button" color="tertiary" size="small" text="Cancel" action={toggleEditMode} />
+                <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Update Participants" />
+                <Button
+                  type="button"
+                  color="tertiary"
+                  size="tiny"
+                  rounded="normal"
+                  text="Cancel"
+                  action={toggleEditMode}
+                />
               </div>
             </form>
           )}
@@ -104,13 +116,13 @@ const Participants = ({ participants, boardId }) => {
 
   return (
     <div
-      className="relative flex px-4 py-2 mx-4 my-1 rounded-sm cursor-pointer group hover:bg-gray-100 items-top"
+      className="relative flex px-4 py-2 mx-4 my-1 rounded-sm cursor-pointer group hover:bg-gray-200 hover:bg-opacity-50 items-top"
       onClick={toggleEditMode}>
       <UsersIcon className="flex-none w-5 h-5 mt-1 text-gray-500" />
-      <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-500 text-opacity-0 group-hover:text-opacity-100" />
+      <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-400 text-opacity-0 group-hover:text-opacity-100" />
       <div className="flex flex-wrap">
         {participants.map((participant) => (
-          <div key={participant.userId} className="flex items-center pr-4 mx-2 bg-indigo-100 rounded-full py">
+          <div key={participant.userId} className="flex items-center pr-4 mx-2 bg-indigo-100 rounded-full">
             <img src={participant.photoURL} className="w-8 h-8 rounded-full" />
             <span className="inline-block ml-1 text-sm font-medium text-indigo-700">{participant.displayName}</span>
           </div>
@@ -135,10 +147,12 @@ const UserSearchAutocomplete = connectAutoComplete(({ hits, currentRefinement, r
       event.preventDefault();
     }
     const participant = {
-      displayName: hit.displayName,
-      userId: hit.objectID,
-      photoURL: hit.photoURL,
       company: hit.company,
+      displayName: hit.displayName,
+      email: hit.email,
+      isOwner: false,
+      photoURL: hit.photoURL,
+      userId: hit.objectID,
     };
     addParticipant(participant);
     setIsResultsPanelOpen(false);

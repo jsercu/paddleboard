@@ -10,6 +10,8 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
     switch (size) {
       case 'tiny':
         return 'px-2 text-xs font-medium ';
+      case 'tiny-wide':
+        return 'px-4 text-xs font-medium ';
       case 'small':
         return 'px-4 py-1 text-sm font-medium ';
       case 'medium-wide':

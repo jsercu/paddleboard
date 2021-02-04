@@ -50,8 +50,15 @@ const Description = ({ description, boardId }) => {
                 name="description"
               />
               <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="small" text="Save Changes" />
-                <Button type="button" color="tertiary" size="small" text="Cancel" action={toggleEditMode} />
+                <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Save Changes" />
+                <Button
+                  type="button"
+                  color="tertiary"
+                  size="tiny"
+                  rounded="normal"
+                  text="Cancel"
+                  action={toggleEditMode}
+                />
               </div>
             </form>
           )}
@@ -62,10 +69,10 @@ const Description = ({ description, boardId }) => {
 
   return (
     <div
-      className="relative flex px-4 py-2 mx-4 my-1 rounded-sm cursor-pointer group hover:bg-gray-100 items-top"
+      className="relative flex px-4 py-2 mx-4 my-1 rounded-sm cursor-pointer group hover:bg-gray-200 hover:bg-opacity-50 items-top"
       onClick={toggleEditMode}>
       <NewspaperIcon className="flex-none w-5 h-5 text-gray-500" />
-      <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-500 text-opacity-0 group-hover:text-opacity-100" />
+      <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-400 text-opacity-0 group-hover:text-opacity-100" />
       <span className="ml-2 text-sm text-gray-600">{description}</span>
     </div>
   );
