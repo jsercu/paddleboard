@@ -14,7 +14,7 @@ const BoardMenuSlideOver = ({ toggleShowBoardMenuSlideOver, board, boardId }) =>
 
   const createdAt = moment(board.createdAt.toDate()).calendar();
   const owner = board.participants.filter((participant) => participant.isOwner === true)[0];
-  // const toggleShowBackdrop = () => setShowBackdrop(!showBackdrop);
+  const toggleShowBackdrop = () => setShowBackdrop(!showBackdrop);
 
   return (
     <SlideOver toggleShowSlideOver={toggleShowBoardMenuSlideOver}>

@@ -3,7 +3,6 @@ import { useAuth } from '../../../hooks/useAuth';
 import firebase, { firestore } from '../../../firebase';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useHistory } from 'react-router-dom';
-import Container from '../../../common/Container';
 import BoardDetailHeader from './BoardDetailHeader/BoardDetailHeader';
 import BoardMenuSlideOver from './BoardMenu/BoardMenuSlideOver';
 import ColumnModal from './Column/ColumnModal/ColumnModal';
@@ -384,7 +383,7 @@ const BoardDetail = () => {
 
   return (
     <>
-      <div className="w-full h-full bg-gray-200">
+      <div className="flex flex-col w-full h-full bg-gray-200">
         <BoardDetailHeader
           board={board}
           toggleShowBoardMenuSlideOver={toggleShowBoardMenuSlideOver}
@@ -392,7 +391,7 @@ const BoardDetail = () => {
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
           toggleShowTaskSlideOver={toggleShowTaskSlideOver}
         />
-        <Container>
+        <div className="flex flex-grow w-full h-full -mt-32 overflow-x-auto">
           <DragDropContext onDragEnd={onDragEnd}>
             {!!board && board.columnOrder.length ? (
               <Droppable droppableId="columnList" direction="horizontal" type="column">
@@ -400,7 +399,7 @@ const BoardDetail = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={getColumnListStyle(snapshot.isDraggingOver) + ` -mt-32 flex`}>
+                    className={getColumnListStyle(snapshot.isDraggingOver) + ' flex w-full h-full'}>
                     {board.columnOrder.map((colId, index) => {
                       const [currentColumn, currentTasks] = getCurrentColumnAndTasks(colId);
                       return (
@@ -410,7 +409,7 @@ const BoardDetail = () => {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className="mr-2 w-100 last:mr-0">
+                              className="flex-none w-64 h-full">
                               <Column
                                 columnValues={currentColumn}
                                 deleteColumn={deleteColumn}
@@ -432,7 +431,7 @@ const BoardDetail = () => {
               <ColumnsEmptyState toggleShowColumnModal={toggleShowColumnModal} />
             )}
           </DragDropContext>
-        </Container>
+        </div>
       </div>
       {!!modalConfig.columnModal.display && (
         <ColumnModal

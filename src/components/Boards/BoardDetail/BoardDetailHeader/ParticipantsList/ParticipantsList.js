@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import Participant from './Participant';
 import ParticipantSlideOver from './ParticipantSlideOver';
-import Button from '../../../../../common/Buttons/Button';
-import IconButton from '../../../../../common/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../../../assets/img/icons/plus-24.svg';
-import { ReactComponent as XIcon } from '../../../../../assets/img/icons/x-24.svg';
 
 const ParticipantsList = ({ participants }) => {
   const [participantSlideOverConfig, setParticipantSlideOverConfig] = useState({ display: false, participant: null });
@@ -18,16 +13,18 @@ const ParticipantsList = ({ participants }) => {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-center space-x-2">
-        <ul className="flex flex-row-reverse justify-start space-x-2">
-          {participants.map((participant) => (
-            <li key={participant.userId} className="-ml-1" onClick={() => toggleShowParticipantSlideOver(participant)}>
-              <Participant participant={participant} />
-            </li>
-          ))}
-        </ul>
-      </div>
+    <>
+      <ul className="flex -space-x-1">
+        {participants.map((participant) => (
+          <li key={participant.userId}>
+            <button
+              onClick={() => toggleShowParticipantSlideOver(participant)}
+              className="bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white transition duration-100 ease-in-out transform hover:-translate-y-1">
+              <img src={participant.photoURL} className="rounded-full w-7 h-7" />
+            </button>
+          </li>
+        ))}
+      </ul>
       {!!participantSlideOverConfig.display && (
         <div className="relative">
           <ParticipantSlideOver
@@ -36,7 +33,7 @@ const ParticipantsList = ({ participants }) => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

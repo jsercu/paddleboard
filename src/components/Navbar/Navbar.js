@@ -11,7 +11,7 @@ const Navbar = () => {
   const handleSignOut = () => auth.signout();
   return (
     <nav className="fixed z-10 w-full bg-gray-900 shadow-md">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div className="px-4 mx-auto">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">

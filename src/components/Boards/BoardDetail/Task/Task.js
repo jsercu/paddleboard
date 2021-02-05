@@ -26,7 +26,7 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
   };
 
   return (
-    <div className="p-4 my-2 bg-white border border-gray-200 rounded-sm hover:border-gray-300 cursor-grab">
+    <div className="p-3 bg-white border border-gray-200 rounded-sm hover:border-gray-300 cursor-grab">
       <div className="flex flex-col">
         <div className="flex flex-row items-center justify-between">
           <p className="text-sm font-medium text-gray-700">{name}</p>

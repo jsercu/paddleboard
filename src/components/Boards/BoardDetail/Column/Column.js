@@ -13,10 +13,12 @@ const Column = ({ columnValues, deleteColumn, deleteTask, tasks, toggleShowColum
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={getTaskListStyle(snapshot.isDraggingOver)}>
-            <div className="flex bg-gray-100 rounded-sm shadow-xl" style={{ minHeight: '24rem' }}>
-              <div className="w-full p-4">
-                <div className="flex items-center justify-between">
+            className={
+              getTaskListStyle(snapshot.isDraggingOver) + ' flex-col h-full bg-gray-100 border-l border-gray-200'
+            }>
+            <div className="flex">
+              <div className="w-full p-2">
+                <div className="flex items-center justify-between px-2 pt-2">
                   <h3 className="mb-1 text-sm font-medium text-gray-600 leading-6">{columnValues.name}</h3>
                   <ColumnDropdown
                     columnValues={columnValues}
@@ -33,7 +35,7 @@ const Column = ({ columnValues, deleteColumn, deleteTask, tasks, toggleShowColum
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="">
+                          className="mt-1">
                           <Task
                             key={task.id}
                             deleteTask={deleteTask}
