@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { firestore } from '../../../../../firebase';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ const TaskSlideOverForm = (props) => {
   let { boardId } = useParams();
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const nameInput = useRef(null);
 
   const {
     values,
@@ -34,6 +35,7 @@ const TaskSlideOverForm = (props) => {
       const newColumns = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setColumns(newColumns);
       setIsLoading(false);
+      nameInput.current.focus();
     });
     return () => {
       unsubscribe();
@@ -56,6 +58,7 @@ const TaskSlideOverForm = (props) => {
           <label htmlFor="name" className="block">
             <span className="block text-sm font-medium text-gray-700 leading-5">Name</span>
             <input
+              ref={nameInput}
               className={`${
                 errors.name && touched.name
                   ? 'border-transparent ring-2 ring-red-600 focus:ring-red-400'

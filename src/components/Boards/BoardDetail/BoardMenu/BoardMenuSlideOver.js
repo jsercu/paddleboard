@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import SlideOver from '../../../../common/Modals/SlideOver';
 import Name from './Fields/Name';
@@ -9,7 +9,6 @@ import Description from './Fields/Description';
 import { ReactComponent as CalendarIcon } from '../../../../assets/img/icons/calendar-24.svg';
 
 const BoardMenuSlideOver = ({ toggleShowBoardMenuSlideOver, board, boardId }) => {
-  // const [showBackdrop, setShowBackdrop] = useState(false);
   const { name, participants, status, description } = board;
 
   const createdAt = moment(board.createdAt.toDate()).calendar();
@@ -22,9 +21,6 @@ const BoardMenuSlideOver = ({ toggleShowBoardMenuSlideOver, board, boardId }) =>
         <div className="z-20 flex items-center justify-center bg-gray-100">
           <h5 className="py-3 text-base font-medium tracking-normal text-gray-800">Board Menu</h5>
         </div>
-        {/* {showBackdrop && (
-          <div className="absolute inset-0 z-10 bg-gray-800 bg-opacity-30" onClick={toggleShowBackdrop} />
-        )} */}
         <div className="content-start flex-shrink-0 text-center h-28 bg-gradient-to-tr from-indigo-800 to-indigo-600 sm:px-6"></div>
         <div className="flex flex-col items-start w-full py-12">
           <div className="absolute px-8 top-24">

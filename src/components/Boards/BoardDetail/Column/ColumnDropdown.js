@@ -5,18 +5,10 @@ import { ReactComponent as PencilIcon } from '../../../../assets/img/icons/penci
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
 
-const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowColumnModal, toggleShowTaskSlideOver }) => {
+const ColumnDropdown = ({ columnValues, deleteColumn, handleAddTask, toggleShowColumnModal }) => {
   const handleDelete = () => {
     const { id, taskIds } = columnValues;
     deleteColumn(id, taskIds);
-  };
-
-  const handleCreateTask = (event) => {
-    if (event) {
-      event.preventDefault();
-    }
-    const initialTaskValues = { column: { ...columnValues } };
-    toggleShowTaskSlideOver(false, initialTaskValues);
   };
 
   const handleUpdateColumn = (event) => {
@@ -67,7 +59,7 @@ const ColumnDropdown = ({ columnValues, deleteColumn, toggleShowColumnModal, tog
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } flex justify-start w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer focus:outline-none focus:ring ring-inset focus:ring-gray-300`}
                         role="menuitem"
-                        onClick={handleCreateTask}>
+                        onClick={handleAddTask}>
                         <PlusIcon className="w-5 h-5 mr-2 text-gray-400" />
                         <span>Create Task</span>
                       </div>

@@ -11,6 +11,7 @@ import TaskSlideOver from './Task/TaskSlideOver/TaskSlideOver';
 import Column from './Column/Column';
 import ColumnsEmptyState from './Column/ColumnsEmptyState';
 import { useParams } from 'react-router-dom';
+import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
 
 const BoardDetail = () => {
   let { boardId } = useParams();
@@ -391,9 +392,9 @@ const BoardDetail = () => {
           toggleShowDeleteBoardModal={toggleShowDeleteBoardModal}
           toggleShowTaskSlideOver={toggleShowTaskSlideOver}
         />
-        <div className="flex flex-grow w-full h-full -mt-32 overflow-x-auto">
-          <DragDropContext onDragEnd={onDragEnd}>
-            {!!board && board.columnOrder.length ? (
+        <div className="flex flex-grow w-full h-full overflow-x-auto">
+          {!!board && board.columnOrder.length ? (
+            <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="columnList" direction="horizontal" type="column">
                 {(provided, snapshot) => (
                   <div
@@ -409,7 +410,7 @@ const BoardDetail = () => {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className="flex-none w-64 h-full">
+                              className="flex-none w-64 h-full shadow-md">
                               <Column
                                 columnValues={currentColumn}
                                 deleteColumn={deleteColumn}
@@ -423,14 +424,24 @@ const BoardDetail = () => {
                         </Draggable>
                       );
                     })}
+                    <span
+                      className={`${
+                        snapshot.isDraggingOver ? 'hidden' : 'block'
+                      } + ' px-2 my-auto focus:outline-none'`}>
+                      <button
+                        className="inline-flex items-center justify-start w-full px-1 py-1 text-sm font-medium text-white bg-indigo-700 rounded-full shadow-md hover:bg-indigo-600 focus:ring-indigo-400 focus:outline-none focus:ring-2"
+                        onClick={() => toggleShowColumnModal(false)}>
+                        <PlusIcon className="w-5 h-5 transition ease-in-out duration-150" title="plus-icon" />
+                      </button>
+                    </span>
                     {provided.placeholder}
                   </div>
                 )}
               </Droppable>
-            ) : (
-              <ColumnsEmptyState toggleShowColumnModal={toggleShowColumnModal} />
-            )}
-          </DragDropContext>
+            </DragDropContext>
+          ) : (
+            <ColumnsEmptyState toggleShowColumnModal={toggleShowColumnModal} />
+          )}
         </div>
       </div>
       {!!modalConfig.columnModal.display && (

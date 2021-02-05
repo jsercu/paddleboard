@@ -49,10 +49,10 @@ const BoardDetailHeader = ({
   };
 
   return (
-    <div class="px-4 pt-20 pb-36 lg:flex lg:items-center lg:justify-between bg-gradient-to-tr from-gray-900 to-gray-800">
-      <div class="flex-1 min-w-0">
+    <div className="px-4 pt-20 pb-4 lg:flex lg:items-center lg:justify-between bg-gradient-to-tr from-gray-900 to-gray-800">
+      <div className="flex-1 min-w-0">
         <div className="flex flex-row items-center">
-          <h2 class="text-xl font-bold text-gray-900 leading-7 sm:truncate">
+          <h2 className="text-xl font-bold text-gray-900 leading-7 sm:truncate">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
               {board.name}
             </span>
@@ -63,22 +63,22 @@ const BoardDetailHeader = ({
             </span>
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-4">
-          <div class="flex items-center mt-1 text-sm text-gray-500">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-4">
+          <div className="flex items-center mt-1 text-sm text-gray-500">
             <UserCircleIcon className="flex-none w-4 h-4 text-gray-600" />
             <span className="inline-block ml-1 text-xs text-gray-400 mt-0.5">
               Owned by
               <span className="ml-1 font-medium text-indigo-400">{owner.displayName}</span>
             </span>
           </div>
-          <div class="flex items-center mt-1 text-sm text-gray-500">
+          <div className="flex items-center mt-1 text-sm text-gray-500">
             <CalendarIcon className="flex-none w-4 h-4 text-gray-600" />
             <span className="inline-block ml-1 text-xs text-gray-400 mt-0.5">
               Created {createdAt} by
               <span className="ml-1 font-medium text-indigo-400">{board.author.displayName}</span>
             </span>
           </div>
-          <div class="flex items-center mt-1 text-sm text-gray-500 lg:hidden">
+          <div className="flex items-center mt-1 text-sm text-gray-500 lg:hidden">
             <UsersIcon className="flex-none w-4 h-4 text-gray-600" />
             <ul className="inline-flex ml-1 space-x-1">
               {board.participants.map((participant, index) => (
@@ -96,7 +96,7 @@ const BoardDetailHeader = ({
           <ParticipantsList participants={board.participants} />
         </div>
       </div>
-      <div class="flex items-center mt-5 lg:mt-0 lg:ml-4">
+      <div className="flex items-center mt-5 lg:mt-0 lg:ml-4">
         <div>
           <BoardDetailHeaderDropdown
             handleCreateColumn={handleCreateColumn}
@@ -105,7 +105,7 @@ const BoardDetailHeader = ({
             toggleShowTaskSlideOver={toggleShowTaskSlideOver}
           />
         </div>
-        <div class="ml-3">
+        <div className="ml-3">
           <Button text="Create Task" type="button" color="primary" size="medium" hasIcon action={handleCreateTask}>
             <PlusIcon className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150" title="plus-icon" />
           </Button>
