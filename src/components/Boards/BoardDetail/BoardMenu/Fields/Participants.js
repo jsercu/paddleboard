@@ -43,8 +43,15 @@ const Participants = ({ participants, boardId }) => {
 
   const updateBoardParticipants = (newParticipants) => {
     try {
+      const newParticipantIds = [];
+      newParticipants.forEach((participant) => {
+        newParticipantIds.push(participant.userId);
+      });
+      let batch = firestore.batch();
       const boardRef = firestore.collection('boards').doc(boardId);
-      boardRef.update({ participants: newParticipants });
+      batch.update(boardRef, { participants: newParticipants });
+      boardRef.update({ participantIds: newParticipantIds });
+      batch.commit();
     } catch (exception) {
       console.error(exception.toString());
     }

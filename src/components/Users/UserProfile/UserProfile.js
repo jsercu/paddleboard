@@ -12,8 +12,8 @@ const UserProfile = () => {
   const [showUserPhotoModal, setShowUserPhotoModal] = useState(false);
 
   const updateUser = async (userValues, userId) => {
-    const { displayName, title, company, location, bio } = userValues;
     try {
+      const { displayName, title, company, location, bio } = userValues;
       await firestore.collection('users').doc(userId).update({
         displayName: displayName,
         title: title,
@@ -29,7 +29,7 @@ const UserProfile = () => {
   const storeProfilePhoto = async (profilePhoto, userId) => {
     try {
       const storageRef = storage.ref();
-      const profileImagesRef = storageRef.child(`${userId}/profileImages/${profilePhoto.name}`);
+      const profileImagesRef = storageRef.child(`profileImages/${userId}/${profilePhoto.name}`);
       const response = await profileImagesRef.put(profilePhoto);
       const photoURL = await response.ref.getDownloadURL();
       return photoURL;
@@ -39,8 +39,8 @@ const UserProfile = () => {
   };
 
   const handleUpdateProfilePhoto = async (profilePhoto) => {
-    const userId = auth.user.uid;
     try {
+      const userId = auth.user.uid;
       const photoURL = await storeProfilePhoto(profilePhoto, userId);
       await firestore.collection('users').doc(userId).update({ photoURL: photoURL });
       toggleShowUserPhotoModal();

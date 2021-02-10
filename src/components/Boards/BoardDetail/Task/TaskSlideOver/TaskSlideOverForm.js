@@ -28,7 +28,7 @@ const TaskSlideOverForm = (props) => {
     toggleShowTaskSlideOver,
     columnId,
   } = props;
-  const { name, description, column } = values;
+  const { name, description, column, dueDate } = values;
 
   useEffect(() => {
     const unsubscribe = firestore.collection(`boards/${boardId}/columns`).onSnapshot((snapshot) => {
@@ -121,6 +121,30 @@ const TaskSlideOverForm = (props) => {
             )}
           </div>
         </div>
+        <div>
+          <label htmlFor="name" className="block">
+            <span className="block text-sm font-medium text-gray-700 leading-5">Due Date</span>
+            <input
+              className={`${
+                errors.dueDate && touched.dueDate
+                  ? 'border-transparent ring-2 ring-red-600 focus:ring-red-400'
+                  : 'border-gray-300 focus:ring-indigo-500'
+              } bg-gray-50 block w-full mt-1 text-sm rounded-sm shadow-sm focus:outline-none focus:bg-white focus:border-transparent focus:ring-2`}
+              type="date"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={dueDate}
+              name="dueDate"
+            />
+          </label>
+          <div id="error-container" className="h-5 mt-2">
+            {errors.dueDate && touched.dueDate && (
+              <div id="feedback" className="text-xs text-red-700">
+                {errors.dueDate}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
       <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 sm:px-6 space-x-4">
         <Button type="submit" color="primary" size="medium-wide" text={editMode ? 'Update Task' : 'Create Task'} />
@@ -161,7 +185,7 @@ const ColumnSelectInput = ({
     <Listbox as="div" value={value} onChange={handleChange} onBlur={handleBlur}>
       {({ open }) => (
         <>
-          <Listbox.Label className="block text-sm font-medium text-gray-700 leading-5">{labelText}:</Listbox.Label>
+          <Listbox.Label className="block text-sm font-medium text-gray-700 leading-5">{labelText}</Listbox.Label>
           <div className="relative">
             <span className="z-40 inline-block w-full mt-1 rounded-sm shadow-sm">
               <Listbox.Button
@@ -243,6 +267,7 @@ const TaskSlideOverFormExtended = withFormik({
     name: props.initialValues.name || '',
     description: props.initialValues.description || '',
     column: props.initialValues.column || '',
+    dueDate: props.initialValues.dueDate || '',
   }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required('This field is required.'),
@@ -254,19 +279,19 @@ const TaskSlideOverFormExtended = withFormik({
   validateOnChange: false,
 
   handleSubmit: (values, FormikBag) => {
-    const { name, description, column } = values;
+    const { name, description, column, dueDate } = values;
     const { id: taskId, columnId } = FormikBag.props.initialValues;
     const taskFormValues = {
       name: name,
       description: description,
       columnId: column.id,
+      dueDate: dueDate,
     };
     if (FormikBag.props.editMode) {
       FormikBag.props.updateTask(taskFormValues, taskId, columnId);
     } else {
       FormikBag.props.addTask(taskFormValues);
     }
-
     FormikBag.setSubmitting(false);
     FormikBag.props.toggleShowTaskSlideOver();
   },

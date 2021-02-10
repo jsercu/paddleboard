@@ -21,11 +21,11 @@ const ColumnDropdown = ({ columnValues, deleteColumn, handleAddTask, toggleShowC
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative flex items-center">
       <Menu>
         {({ open }) => (
           <>
-            <Menu.Button className="text-gray-400 rounded-sm hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:bg-gray-200 focus:text-gray-500">
+            <Menu.Button className="p-1 text-gray-400 rounded-sm hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:bg-gray-200 focus:text-gray-500">
               <ThreeDotsIcon className="w-5 h-5 mx-auto" title="menu-icon" />
             </Menu.Button>
 

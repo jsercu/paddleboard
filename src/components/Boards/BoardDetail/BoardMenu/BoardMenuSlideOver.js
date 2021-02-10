@@ -1,5 +1,6 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
 import SlideOver from '../../../../common/Modals/SlideOver';
 import Name from './Fields/Name';
 import Owner from './Fields/Owner';
@@ -11,7 +12,9 @@ import { ReactComponent as CalendarIcon } from '../../../../assets/img/icons/cal
 const BoardMenuSlideOver = ({ toggleShowBoardMenuSlideOver, board, boardId }) => {
   const { name, participants, status, description } = board;
 
-  const createdAt = moment(board.createdAt.toDate()).calendar();
+  dayjs.extend(calendar);
+  const createdAt = dayjs().calendar(dayjs(board.createdAt.toDate()));
+
   const owner = board.participants.filter((participant) => participant.isOwner === true)[0];
   const toggleShowBackdrop = () => setShowBackdrop(!showBackdrop);
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
 import Button from '../../../../common/Buttons/Button';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
 import ParticipantsList from './ParticipantsList/ParticipantsList';
@@ -16,7 +17,10 @@ const BoardDetailHeader = ({
   toggleShowTaskSlideOver,
 }) => {
   const owner = board.participants.filter((participant) => participant.isOwner === true)[0];
-  const createdAt = moment(board.createdAt.toDate()).calendar();
+
+  // Format the createdAt date of the board
+  dayjs.extend(calendar);
+  const createdAt = dayjs().calendar(dayjs(board.createdAt.toDate()));
 
   const handleCreateTask = (event) => {
     if (event) {
@@ -35,16 +39,16 @@ const BoardDetailHeader = ({
   const getStatusStyle = (status) => {
     switch (status) {
       case 'Active':
-        return 'text-gray-800 bg-orange-200 ';
+        return 'text-green-900 bg-green-300 bg-opacity-90 ';
       case 'Paused':
-        return 'text-gray-800 bg-yellow-200 ';
+        return 'text-yellow-900 bg-yellow-300 bg-opacity-90 ';
       case 'Completed':
-        return 'text-gray-800 bg-green-200 ';
+        return 'text-indigo-900 bg-indigo-300 bg-opacity-90 ';
       case 'Closed':
-        return 'text-gray-800 bg-red-200 ';
+        return 'text-red-900 bg-red-300 bg-opacity-90 ';
       case 'Not Started':
       default:
-        return 'text-gray-800 bg-gray-200 ';
+        return 'text-gray-900 bg-gray-300 bg-opacity-90 ';
     }
   };
 

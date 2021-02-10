@@ -1,11 +1,15 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 const BoardsTableRow = ({ board }) => {
   let { url } = useRouteMatch();
   const { name, id, status, participants } = board;
-  let createdDate = board.createdAt ? moment(board.createdAt.toDate()).calendar() : '';
+
+  // Format the createdAt date of the board
+  dayjs.extend(calendar);
+  const createdDate = board.createdAt ? dayjs().calendar(dayjs(board.createdAt.toDate())) : '';
 
   const getStatusStyle = (status) => {
     switch (status) {

@@ -235,7 +235,7 @@ const BoardDetail = () => {
   };
 
   const updateTask = async (taskFormValues, taskId, prevColumnId) => {
-    const { name, description, columnId } = taskFormValues;
+    const { name, description, columnId, dueDate } = taskFormValues;
     try {
       let batch = firestore.batch();
       let taskRef = firestore.collection('tasks').doc(taskId);
@@ -243,6 +243,7 @@ const BoardDetail = () => {
         name: name,
         description: description,
         columnId: columnId,
+        dueDate: dueDate,
       });
       if (prevColumnId !== columnId) {
         let prevColumnRef = firestore.collection('boards').doc(boardId).collection('columns').doc(prevColumnId);

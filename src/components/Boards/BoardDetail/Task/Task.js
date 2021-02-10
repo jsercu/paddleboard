@@ -1,21 +1,28 @@
 import React from 'react';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
 import TaskDropdown from './TaskDropdown';
+import { ReactComponent as DescriptionIcon } from '../../../../assets/img/icons/menu-alt-2-20.svg';
+import { ReactComponent as ClockIcon } from '../../../../assets/img/icons/clock-24.svg';
 
 const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
-  const { name, description, id, columnId } = task;
-  const getCategoryStyles = () => {
-    switch (category) {
-      case 'Product Documentation':
-        return 'text-pink-800 bg-pink-100';
-      case 'Design':
-        return 'text-indigo-800 bg-indigo-100';
-      case 'Backend':
-        return 'text-amber-800 bg-amber-100';
-      case 'Feature Request':
-      default:
-        return 'text-orange-800 bg-orange-100';
-    }
-  };
+  const { name, description, id, columnId, dueDate } = task;
+  // Format the dueDate propert of the task
+  const formattedDueDate = dueDate ? dayjs(dueDate).format('MMM DD YYYY') : null;
+
+  // // const getCategoryStyles = () => {
+  //   switch (category) {
+  //     case 'Product Documentation':
+  //       return 'text-pink-800 bg-pink-100';
+  //     case 'Design':
+  //       return 'text-indigo-800 bg-indigo-100';
+  //     case 'Backend':
+  //       return 'text-amber-800 bg-amber-100';
+  //     case 'Feature Request':
+  //     default:
+  //       return 'text-orange-800 bg-orange-100';
+  //   }
+  // };
 
   const handleDeleteTask = () => {
     deleteTask(id, columnId);
@@ -26,16 +33,23 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
   };
 
   return (
-    <div className="p-3 bg-white border border-gray-200 rounded-sm hover:border-gray-300 cursor-grab">
-      <div className="flex flex-col">
+    <div className="relative bg-white border border-gray-200 rounded-sm cursor-pointer hover:border-gray-300 group shadow-sm">
+      <div className="flex flex-col p-3 group-hover:bg-gray-50 group-hover:bg-opacity-50">
         <div className="flex flex-row items-center justify-between">
-          <p className="text-sm font-medium text-gray-700">{name}</p>
-          <div className="-mt-2">
-            <TaskDropdown deleteTask={handleDeleteTask} editTask={handleEditTask} />
-          </div>
+          <p className="text-sm font-medium text-gray-800 leading-5">{name}</p>
         </div>
-        <div className="">
-          <p className="text-xs font-light text-gray-400 leading-4">{description}</p>
+        <div className="flex flex-row items-center mt-1 align-text-bottom space-x-3">
+          {description && (
+            <div className="h-4">
+              <DescriptionIcon className="w-4 h-4 text-gray-400" />
+            </div>
+          )}
+          {dueDate && (
+            <div className="flex flex-row h-4">
+              <ClockIcon className="w-4 h-4 text-gray-400" />
+              <div className="ml-1 text-xs text-gray-500">{formattedDueDate}</div>
+            </div>
+          )}
         </div>
         {/* <div className="flex flex-row items-center justify-between mt-2">
           <img
@@ -45,6 +59,9 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
           />
           <span className={`px-2 text-xs font-semibold rounded-full ` + getCategoryStyles()}>{category}</span>
         </div> */}
+      </div>
+      <div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100">
+        <TaskDropdown deleteTask={handleDeleteTask} editTask={handleEditTask} />
       </div>
     </div>
   );
