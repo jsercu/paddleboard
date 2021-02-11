@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { connectAutoComplete, connectHighlight } from 'react-instantsearch-dom';
+import { connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
 import Button from '../../../../common/Buttons/Button';
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
+import { ReactComponent as AlgoliaIcon } from '../../../../assets/img/icons/algolia-light-background.svg';
 import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
 
 const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId }) => {
@@ -47,16 +48,18 @@ const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId
       {isResultsPanelOpen && (
         <div>
           {hits.length > 0 ? (
-            <ul className="absolute right-0 w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
+            <ul className="absolute right-0 flex flex-col w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
               {hits.map((hit) => (
                 <Hit key={hit.objectID} hit={hit} handleInviteParticipant={handleInviteParticipant} ownerId={ownerId} />
               ))}
+              <CustomPoweredBy />
             </ul>
           ) : (
             <div className="absolute right-0 w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
-              <div className="flex items-center justify-start">
-                <p className="py-4 ml-4 text-xs font-medium text-gray-800">No Results</p>
+              <div className="flex items-center justify-center">
+                <p className="py-4 ml-4 text-sm text-gray-500">No Results for "{currentRefinement}"</p>
               </div>
+              <CustomPoweredBy />
             </div>
           )}
         </div>
@@ -64,6 +67,15 @@ const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId
     </div>
   );
 };
+
+const PoweredBy = ({ url }) => (
+  <a className="flex items-center justify-end px-4 py-2 bg-gray-50" href={url}>
+    <span className="mr-2 text-xs font-medium text-gray-600">Search by</span>
+    <AlgoliaIcon />
+  </a>
+);
+
+const CustomPoweredBy = connectPoweredBy(PoweredBy);
 
 const Hit = ({ hit, handleInviteParticipant, ownerId }) => (
   <span>

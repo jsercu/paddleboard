@@ -4,10 +4,10 @@ import { ReactComponent as UsersIcon } from '../../../../../assets/img/icons/use
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
 import { ReactComponent as LockIcon } from '../../../../../assets/img/icons/lock-20.svg';
 import { Formik } from 'formik';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch } from 'react-instantsearch-dom';
 import Button from '../../../../../common/Buttons/Button';
-import { connectAutoComplete, connectHighlight } from 'react-instantsearch-dom';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
+import { ReactComponent as AlgoliaIcon } from '../../../../../assets/img/icons/algolia-light-background.svg';
 import { useOnClickOutside } from '../../../../../hooks/useOnClickOutside';
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
@@ -154,7 +154,7 @@ const UserSearchAutocomplete = connectAutoComplete(({ hits, currentRefinement, r
       event.preventDefault();
     }
     const participant = {
-      company: hit.company,
+      company: hit.company || '',
       displayName: hit.displayName,
       email: hit.email,
       isOwner: false,
@@ -178,16 +178,18 @@ const UserSearchAutocomplete = connectAutoComplete(({ hits, currentRefinement, r
       {isResultsPanelOpen && (
         <div>
           {hits.length > 0 ? (
-            <ul className="absolute right-0 w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
+            <ul className="absolute right-0 flex flex-col w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
               {hits.map((hit) => (
                 <Hit key={hit.objectID} hit={hit} handleInviteParticipant={handleInviteParticipant} ownerId={ownerId} />
               ))}
+              <CustomPoweredBy />
             </ul>
           ) : (
             <div className="absolute right-0 w-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg outline-none origin-top-right divide-y divide-gray-100">
-              <div className="flex items-center justify-start">
-                <p className="py-4 ml-4 text-xs font-medium text-gray-800">No Results</p>
+              <div className="flex items-center justify-center">
+                <p className="py-4 ml-4 text-sm text-gray-500">No Results for "{currentRefinement}"</p>
               </div>
+              <CustomPoweredBy />
             </div>
           )}
         </div>
@@ -195,6 +197,15 @@ const UserSearchAutocomplete = connectAutoComplete(({ hits, currentRefinement, r
     </div>
   );
 });
+
+const PoweredBy = ({ url }) => (
+  <a className="flex items-center justify-end px-4 py-2 bg-gray-50" href={url}>
+    <span className="mr-2 text-xs font-medium text-gray-600">Search by</span>
+    <AlgoliaIcon />
+  </a>
+);
+
+const CustomPoweredBy = connectPoweredBy(PoweredBy);
 
 const Hit = ({ hit, handleInviteParticipant, ownerId }) => (
   <span>

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const NavItem = ({ path, text }) => {
   return (
-    <Link
+    <NavLink
       to={path}
-      className="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md hover:bg-gray-800 focus:outline-none focus:text-white">
+      className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-700 hover:bg-opacity-60 focus:outline-none focus:text-white"
+      activeClassName="bg-gray-800">
       {text}
-    </Link>
+    </NavLink>
   );
 };
 
