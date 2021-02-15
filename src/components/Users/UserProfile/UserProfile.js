@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import { firestore, storage } from '../../../firebase';
+import { firestore } from '../../../firebase';
 import Container from '../../../common/Container';
 import Button from '../../../common/Buttons/Button';
 import YourProfile from '../../Users/UserProfile/YourProfile/YourProfile';
@@ -14,36 +14,40 @@ const UserProfile = () => {
   const updateUser = async (userValues, userId) => {
     try {
       const { displayName, title, company, location, bio } = userValues;
-      await firestore.collection('users').doc(userId).update({
+      const batch = firestore.batch();
+      const userRef = firestore.collection('users').doc(userId);
+      const userBoards = [];
+      await firestore
+        .collection('boards')
+        .where('participantIds', 'array-contains', userId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            userBoards.push({ boardData: doc.data(), boardId: doc.id });
+          });
+        });
+      userBoards.forEach(({ boardData, boardId }) => {
+        const newBoard = { ...boardData };
+        const newParticipant = newBoard.participants.filter((participant) => participant.userId == userId)[0];
+        newParticipant.displayName = displayName;
+        newParticipant.title = title;
+        newParticipant.company = company;
+        const newParticipants = [
+          ...newBoard.participants.filter((participant) => participant.userId != userId),
+          newParticipant,
+        ];
+        newBoard.participants = newParticipants;
+        const boardRef = firestore.collection('boards').doc(boardId);
+        batch.update(boardRef, { participants: newParticipants });
+      });
+      batch.update(userRef, {
         displayName: displayName,
         title: title,
         company: company,
         location: location,
         bio: bio,
       });
-    } catch (exception) {
-      console.error(exception.toString());
-    }
-  };
-
-  const storeProfilePhoto = async (profilePhoto, userId) => {
-    try {
-      const storageRef = storage.ref();
-      const profileImagesRef = storageRef.child(`profileImages/${userId}/${profilePhoto.name}`);
-      const response = await profileImagesRef.put(profilePhoto);
-      const photoURL = await response.ref.getDownloadURL();
-      return photoURL;
-    } catch (exception) {
-      console.error(exception.toString());
-    }
-  };
-
-  const handleUpdateProfilePhoto = async (profilePhoto) => {
-    try {
-      const userId = auth.user.uid;
-      const photoURL = await storeProfilePhoto(profilePhoto, userId);
-      await firestore.collection('users').doc(userId).update({ photoURL: photoURL });
-      toggleShowUserPhotoModal();
+      batch.commit();
     } catch (exception) {
       console.error(exception.toString());
     }
@@ -79,12 +83,7 @@ const UserProfile = () => {
                     />
                   </div>
                 </button>
-                {!!showUserPhotoModal && (
-                  <UserPhotoModal
-                    toggleShowUserPhotoModal={toggleShowUserPhotoModal}
-                    handleUpdateProfilePhoto={handleUpdateProfilePhoto}
-                  />
-                )}
+                {!!showUserPhotoModal && <UserPhotoModal toggleShowUserPhotoModal={toggleShowUserPhotoModal} />}
               </div>
               <div className="ml-4">
                 <div className="flex flex-row items-center text-2xl font-bold">

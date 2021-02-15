@@ -1,12 +1,14 @@
-import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useAuth } from '../../../hooks/useAuth';
+import { useDropzone } from 'react-dropzone';
+import { firestore, storage } from '../../../firebase';
 import Modal from '../../../common/Modals/Modal';
 import Button from '../../../common/Buttons/Button';
 import IconButton from '../../../common/Buttons/IconButton';
-import { useDropzone } from 'react-dropzone';
 import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
 import { ReactComponent as UploadPictureIcon } from '../../../assets/img/icons/upload-picture-48.svg';
 
-const UserPhotoModal = ({ toggleShowUserPhotoModal, handleUpdateProfilePhoto }) => {
+const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
     maxFiles: 1,
     accept: 'image/jpeg, image/png',
@@ -24,6 +26,7 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal, handleUpdateProfilePhoto }) 
 
   const [showImagePreview, setShowImagePreview] = useState(false);
   const [uploadedImg, setUploadedImg] = useState(false);
+  const auth = useAuth();
 
   const baseStyle = {
     flex: 1,
@@ -65,11 +68,71 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal, handleUpdateProfilePhoto }) 
     [isDragActive, isDragReject, isDragAccept],
   );
 
+  const storeProfilePhoto = async (profilePhoto) => {
+    const userId = auth.user.uid;
+    const uploadTask = storage.ref(`profileImages/${userId}/${profilePhoto.name}`).put(profilePhoto);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        console.log(progress);
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        console.error(error.toString());
+      },
+      async () => {
+        // Handle successful uploads on complete
+        const photoURL = await uploadTask.snapshot.ref.getDownloadURL();
+        updateUserPhotoInfo(photoURL, userId);
+        toggleShowUserPhotoModal();
+      },
+    );
+  };
+
+  const updateUserPhotoInfo = async (profilePhotoURL, userId) => {
+    try {
+      // Some User Profile information is stored both on user doc AND on any board doc
+      // where user is a participant ( in order to reduce number of database reads for commonly accessed items )
+      const batch = firestore.batch();
+      // Update photoURL on user doc
+      const userRef = firestore.collection('users').doc(userId);
+      batch.update(userRef, { photoURL: profilePhotoURL });
+      // Query for all boards where user is participant
+      const userBoards = [];
+      await firestore
+        .collection('boards')
+        .where('participantIds', 'array-contains', userId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            userBoards.push({ boardData: doc.data(), boardId: doc.id });
+          });
+        });
+      // Update participants array with new user photoURL
+      userBoards.forEach(({ boardData, boardId }) => {
+        const newBoard = { ...boardData };
+        const newParticipant = newBoard.participants.filter((participant) => participant.userId == userId)[0];
+        newParticipant.photoURL = profilePhotoURL;
+        const newParticipants = [
+          ...newBoard.participants.filter((participant) => participant.userId != userId),
+          newParticipant,
+        ];
+        newBoard.participants = newParticipants;
+        const boardRef = firestore.collection('boards').doc(boardId);
+        batch.update(boardRef, { participants: newParticipants });
+      });
+      batch.commit();
+    } catch (exception) {
+      console.error(exception.toString());
+    }
+  };
+
   const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
     }
-    handleUpdateProfilePhoto(uploadedImg[0]);
+    storeProfilePhoto(uploadedImg[0]);
   };
 
   return (

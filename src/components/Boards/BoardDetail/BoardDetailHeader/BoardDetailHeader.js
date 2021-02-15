@@ -20,7 +20,7 @@ const BoardDetailHeader = ({
 
   // Format the createdAt date of the board
   dayjs.extend(calendar);
-  const createdAt = dayjs().calendar(dayjs(board.createdAt.toDate()));
+  const createdAt = dayjs(board.createdAt.toDate()).calendar();
 
   const handleCreateTask = (event) => {
     if (event) {
