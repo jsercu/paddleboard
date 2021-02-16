@@ -4,9 +4,9 @@ import ParticipantSlideOver from './ParticipantSlideOver';
 const ParticipantsList = ({ participants }) => {
   const [participantSlideOverConfig, setParticipantSlideOverConfig] = useState({ display: false, participant: null });
 
-  const toggleShowParticipantSlideOver = (participant) => {
-    if (participant) {
-      setParticipantSlideOverConfig({ display: true, participant: participant });
+  const toggleShowParticipantSlideOver = (newParticipant) => {
+    if (newParticipant) {
+      setParticipantSlideOverConfig({ display: true, participant: newParticipant });
     } else {
       setParticipantSlideOverConfig({ display: false, participant: null });
     }

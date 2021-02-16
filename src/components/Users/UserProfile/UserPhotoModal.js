@@ -3,8 +3,12 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useDropzone } from 'react-dropzone';
 import { firestore, storage } from '../../../firebase';
 import Modal from '../../../common/Modals/Modal';
-import Button from '../../../common/Buttons/Button';
-import IconButton from '../../../common/Buttons/IconButton';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../common/Buttons/Button';
+import IconButton, {
+  IconButtonColorTheme,
+  IconButtonSizeTheme,
+  IconButtonRoundedTheme,
+} from '../../../common/Buttons/IconButton';
 import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
 import { ReactComponent as UploadPictureIcon } from '../../../assets/img/icons/upload-picture-48.svg';
 
@@ -138,12 +142,18 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
   return (
     <Modal toggleShowModal={toggleShowUserPhotoModal}>
       <div className="relative bg-white">
+        <div className="absolute top-0 right-0 p-4">
+          <IconButton
+            color={IconButtonColorTheme.lightGray}
+            size={IconButtonSizeTheme.medium}
+            rounded={IconButtonRoundedTheme.full}
+            action={toggleShowUserPhotoModal}>
+            <XIcon className="w-5 h-5 mx-auto" />
+          </IconButton>
+        </div>
         <div className="px-10 text-left sm:mt-0">
           <div className="flex justify-between pt-8">
             <h3 className="text-xl font-medium tracking-tight text-gray-800 leading-6">Edit Profile Photo</h3>
-            <IconButton backgroundType="white" size="small" action={toggleShowUserPhotoModal}>
-              <XIcon />
-            </IconButton>
           </div>
           <section className="py-8 cursor-pointer">
             {!showImagePreview && (
@@ -179,8 +189,20 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
         </div>
       </div>
       <div className="px-4 py-4 bg-gray-50 space-x-2 space-x-reverse sm:px-10 sm:flex sm:flex-row-reverse">
-        <Button text="Update Photo" type="button" color="primary" size="small" action={handleSubmit}></Button>
-        <Button text="Cancel" type="button" color="tertiary" size="small" action={toggleShowUserPhotoModal}></Button>
+        <Button
+          text="Update Photo"
+          type="button"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.small}
+          rounded={ButtonRoundedTheme.small}
+          action={handleSubmit}></Button>
+        <Button
+          text="Cancel"
+          type="button"
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.small}
+          rounded={ButtonRoundedTheme.small}
+          action={toggleShowUserPhotoModal}></Button>
       </div>
     </Modal>
   );

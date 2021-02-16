@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
 
 const ColumnsEmptyState = ({ toggleShowColumnModal }) => {
@@ -16,8 +16,9 @@ const ColumnsEmptyState = ({ toggleShowColumnModal }) => {
         <Button
           type="button"
           text="Create Column"
-          color="primary"
-          size="medium"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.medium}
           hasIcon
           action={() => toggleShowColumnModal(false)}>
           <PlusIcon title="plus-icon"></PlusIcon>

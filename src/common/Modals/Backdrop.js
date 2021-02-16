@@ -13,7 +13,7 @@ const Backdrop = ({ children, toggleShowModal }) => {
         <div
           className="absolute inset-0 bg-gray-800 bg-opacity-75 transition-opacity"
           aria-hidden="true"
-          onClick={handleClick}></div>
+          onClick={toggleShowModal}></div>
         {children}
       </div>
     </div>

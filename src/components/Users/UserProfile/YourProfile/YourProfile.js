@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { YourProfileForm } from './YourProfileForm';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 
 const YourProfile = ({ user, userId, updateUser }) => {
   const [editMode, setEditMode] = useState(false);
@@ -37,8 +37,9 @@ const YourProfile = ({ user, userId, updateUser }) => {
                 <Button
                   text="Edit Profile"
                   type="submit"
-                  color="tertiary"
-                  size="medium"
+                  color={ButtonColorTheme.tertiary}
+                  size={ButtonSizeTheme.medium}
+                  rounded={ButtonRoundedTheme.medium}
                   action={toggleEditMode}></Button>
               </div>
             </div>

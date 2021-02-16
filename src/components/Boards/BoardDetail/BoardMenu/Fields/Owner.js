@@ -6,7 +6,7 @@ import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../../../common/Buttons/Button';
 
 const Owner = ({ owner, participants, boardId }) => {
   const [editMode, setEditMode] = useState(false);
@@ -61,13 +61,19 @@ const Owner = ({ owner, participants, boardId }) => {
                 value={props.values.owner}
                 participants={participantsStore}
               />
-              <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Save Changes" />
+              <div className="flex mt-3 space-x-2">
+                <Button
+                  type="submit"
+                  color={ButtonColorTheme.primary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
+                  text="Save Changes"
+                />
                 <Button
                   type="button"
-                  color="tertiary"
-                  size="tiny"
-                  rounded="normal"
+                  color={ButtonColorTheme.tertiary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
                   text="Cancel"
                   action={toggleEditMode}
                 />

@@ -4,7 +4,7 @@ import { firestore } from '../../../../../firebase';
 import { useParams } from 'react-router-dom';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../../common/Buttons/Button';
 import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
 
@@ -147,8 +147,21 @@ const TaskSlideOverForm = (props) => {
         </div>
       </div>
       <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 sm:px-6 space-x-4">
-        <Button type="submit" color="primary" size="medium-wide" text={editMode ? 'Update Task' : 'Create Task'} />
-        <Button type="button" action={toggleShowTaskSlideOver} color="tertiary" size="medium" text="Cancel" />
+        <Button
+          type="submit"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.medium}
+          text={editMode ? 'Update Task' : 'Create Task'}
+        />
+        <Button
+          type="button"
+          action={toggleShowTaskSlideOver}
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.medium}
+          text="Cancel"
+        />
       </div>
     </form>
   );

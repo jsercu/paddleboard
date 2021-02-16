@@ -1,8 +1,11 @@
 import React from 'react';
 import Container from '../../../common/Container';
-import CreateBoardSlideOver from './BoardSlideOver/BoardSlideOver';
-import Button from '../../../common/Buttons/Button';
-import IconButton from '../../../common/Buttons/IconButton';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../common/Buttons/Button';
+import IconButton, {
+  IconButtonColorTheme,
+  IconButtonRoundedTheme,
+  IconButtonSizeTheme,
+} from '../../../common/Buttons/IconButton';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
 import { ReactComponent as ChevronDownIcon } from '../../../assets/img/icons/chevron-down-24.svg';
 import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter-20.svg';
@@ -21,7 +24,10 @@ const BoardsHeader = ({ toggleShowBoardSlideOver }) => {
           </div>
           <div className="flex lg:ml-4">
             <span className="hidden sm:block space-x-2">
-              <IconButton backgroundType="darkGray" size="medium">
+              <IconButton
+                color={IconButtonColorTheme.darkGray}
+                size={IconButtonSizeTheme.large}
+                rounded={IconButtonRoundedTheme.medium}>
                 <FilterIcon
                   className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150"
                   title="settings-icon"
@@ -31,8 +37,9 @@ const BoardsHeader = ({ toggleShowBoardSlideOver }) => {
                 text="Create Board"
                 type="button"
                 action={toggleShowBoardSlideOver}
-                color="transparent"
-                size="medium"
+                color={ButtonColorTheme.transparent}
+                size={ButtonSizeTheme.medium}
+                rounded={ButtonRoundedTheme.medium}
                 hasIcon>
                 <PlusIcon
                   className={`h-5 w-5 mx-auto text-white transition ease-in-out duration-150`}

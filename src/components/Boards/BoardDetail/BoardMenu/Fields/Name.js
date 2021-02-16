@@ -3,7 +3,7 @@ import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../../common/Buttons/Button';
 
 const Name = ({ name, boardId, toggleShowBackdrop }) => {
   const [editMode, setEditMode] = useState(false);
@@ -70,14 +70,20 @@ const Name = ({ name, boardId, toggleShowBackdrop }) => {
                   </div>
                 </div>
               )}
-              <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="tiny-wide" text="Save Changes" rounded="normal" />
+              <div className="flex mt-3 space-x-2">
+                <Button
+                  type="submit"
+                  color={ButtonColorTheme.primary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
+                  text="Save Changes"
+                />
                 <Button
                   type="button"
-                  color="tertiary"
-                  size="tiny"
+                  color={ButtonColorTheme.tertiary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
                   text="Cancel"
-                  rounded="normal"
                   action={toggleEditMode}
                 />
               </div>

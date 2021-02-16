@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef, useContext, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import firebase, { firestore } from '../firebase';
 import 'firebase/auth';
 
 const authContext = createContext();
 
+// Hook for child components to get the auth object ...
+// ... and re-render when it changes.
+export function useAuth() {
+  return useContext(authContext);
+}
+
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
-}
-
-// Hook for child components to get the auth object ...
-// ... and re-render when it changes.
-export function useAuth() {
-  return useContext(authContext);
 }
 
 // Provider hook that creates auth object and handles state
@@ -27,67 +27,59 @@ export function useProvideAuth() {
   // ... to save the user to state.
   const signin = async (email, password) => {
     try {
-      const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-      const user = response.user;
+      const { user } = await firebase.auth().signInWithEmailAndPassword(email, password);
       setUser(user);
-      return user;
     } catch (exception) {
-      console.error(exception.toString());
+      console.error(exception);
     }
   };
 
   const signinWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     try {
-      const response = await firebase.auth().signInWithPopup(provider);
-      const user = response.user;
+      const { user } = await firebase.auth().signInWithPopup(provider);
       const userProfile = await createUserDocument(user);
       setUser(user);
       setUserProfile(userProfile);
-      return { user, userProfile };
     } catch (exception) {
-      console.error(exception.toString());
+      console.error(exception);
     }
   };
 
   const signup = async (email, password) => {
     try {
-      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
-      const user = response.user;
+      const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password);
       const userProfile = await createUserDocument(user);
       setUser(user);
       setUserProfile(userProfile);
-      return { user, userProfile };
     } catch (exception) {
-      console.error(exception.toString());
+      console.error(exception);
     }
   };
 
-  const signout = () => {
-    return firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setUser(null);
-      });
+  const signout = async () => {
+    try {
+      await firebase.auth().signOut();
+      setUser(null);
+    } catch (exception) {
+      console.error(exception);
+    }
   };
 
-  const sendPasswordResetEmail = (email) => {
-    return firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        return true;
-      });
+  const sendPasswordResetEmail = async (email) => {
+    try {
+      firebase.auth().sendPasswordResetEmail(email);
+    } catch (exception) {
+      console.error(exception);
+    }
   };
 
-  const confirmPasswordReset = (code, password) => {
-    return firebase
-      .auth()
-      .confirmPasswordReset(code, password)
-      .then(() => {
-        return true;
-      });
+  const confirmPasswordReset = async (code, password) => {
+    try {
+      firebase.auth().confirmPasswordReset(code, password);
+    } catch (exception) {
+      console.error(exception);
+    }
   };
 
   const createUserDocument = async (user, additionalData) => {
@@ -113,8 +105,8 @@ export function useProvideAuth() {
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           ...additionalData,
         });
-      } catch (error) {
-        console.error('Error creating user', console.error);
+      } catch (exception) {
+        console.error('Error creating user', exception);
       }
     }
 
@@ -128,37 +120,31 @@ export function useProvideAuth() {
     try {
       const userDocument = await firestore.collection('users').doc(uid).get();
       return { uid, ...userDocument.data() };
-    } catch (error) {
-      console.error('Error fetching user', error.message);
+    } catch (exception) {
+      console.error('Error fetching user', exception);
     }
   };
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(false);
-      }
+      setUser(user || null);
     });
-
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
-    if (!!user) {
-      const unsubscribe = firestore
-        .collection('users')
-        .doc(user?.uid)
-        .onSnapshot((doc) => {
-          const newUserProfile = doc.data();
-          setUserProfile(newUserProfile);
-        });
-      return () => {
-        unsubscribe();
-      };
-    }
+    if (!user) return;
+    const unsubscribe = firestore
+      .collection('users')
+      .doc(user?.uid)
+      .onSnapshot((doc) => {
+        const newUserProfile = doc.data();
+        setUserProfile(newUserProfile);
+      });
+    return () => {
+      unsubscribe();
+    };
   }, [user]);
 
   // Return the user object and auth methods

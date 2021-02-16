@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import Button from '../../../common/Buttons/Button';
-import Logo from '../../../common/Logo';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../common/Buttons/Button';
+import Logo, { LogoColorTheme, LogoSizeTheme } from '../../../common/Logo';
 import { LoginForm } from './LoginForm';
 import { ReactComponent as GoogleIcon } from '../../../assets/img/icons/google-icon.svg';
 
@@ -32,7 +32,7 @@ const Login = ({ history }) => {
   return (
     <div className="flex justify-center min-h-screen px-6 py-24 bg-gray-100 sm:items-center sm:px-6 lg:px-8">
       <div className="w-full max-w-lg mx-auto">
-        <Logo size="large" color="gray" />
+        <Logo size={LogoSizeTheme.large} color={LogoColorTheme.gray} />
         <h2 className="mt-4 text-sm font-semibold tracking-wider text-center text-gray-500 uppercase">
           Sign In to your Account
         </h2>
@@ -48,10 +48,11 @@ const Login = ({ history }) => {
             text="Sign In Using Google"
             type="button"
             action={loginWithGoogle}
-            color="tertiary"
+            color={ButtonColorTheme.tertiary}
+            size={ButtonSizeTheme.medium}
+            rounded={ButtonRoundedTheme.tiny}
             fullWidth
-            hasIcon
-            rounded="small">
+            hasIcon>
             <GoogleIcon className="w-5 h-5 ml-1" title="google-icon" />
           </Button>
         </div>

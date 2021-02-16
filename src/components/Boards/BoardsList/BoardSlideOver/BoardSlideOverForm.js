@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../.././../hooks/useAuth';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import algoliasearch from 'algoliasearch/lite';
@@ -134,9 +134,9 @@ const BoardSlideOverForm = (props) => {
                 ) : (
                   <Button
                     text="Remove"
-                    color="tertiary"
-                    size="tiny"
-                    rounded="normal"
+                    color={ButtonColorTheme.tertiary}
+                    size={ButtonSizeTheme.tiny}
+                    rounded={ButtonRoundedTheme.small}
                     action={() => removeParticipant(event, participant)}
                   />
                 )}
@@ -146,8 +146,21 @@ const BoardSlideOverForm = (props) => {
         </InstantSearch>
       </div>
       <div className="flex px-4 py-4 border-t border-gray-200 bg-gray-50 b sm:px-6 space-x-4">
-        <Button type="submit" color="primary" size="medium-wide" text="Create Board" />
-        <Button type="button" action={toggleShowBoardSlideOver} color="tertiary" size="medium" text="Cancel" />
+        <Button
+          type="submit"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.medium}
+          text="Create Board"
+        />
+        <Button
+          type="button"
+          action={toggleShowBoardSlideOver}
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.medium}
+          text="Cancel"
+        />
       </div>
     </form>
   );

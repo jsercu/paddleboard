@@ -6,7 +6,7 @@ import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/
 import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../../../common/Buttons/Button';
 
 const Status = ({ status, boardId }) => {
   const [editMode, setEditMode] = useState(false);
@@ -20,7 +20,7 @@ const Status = ({ status, boardId }) => {
       const boardRef = firestore.collection('boards').doc(boardId);
       boardRef.update({ status: status });
     } catch (exception) {
-      console.error(exception.toString());
+      console.error(exception);
     }
   };
 
@@ -30,7 +30,7 @@ const Status = ({ status, boardId }) => {
         <StatusIcon className="flex-none w-5 h-5 text-gray-500" />
         <Formik
           initialValues={{ status: status }}
-          onSubmit={(values, actions) => {
+          onSubmit={(values) => {
             updateBoardStatus(values.status);
             toggleEditMode();
           }}>
@@ -45,13 +45,19 @@ const Status = ({ status, boardId }) => {
                 touched={props.touched.status}
                 value={props.values.status}
               />
-              <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Save Changes" />
+              <div className="flex mt-3 space-x-2">
+                <Button
+                  type="submit"
+                  color={ButtonColorTheme.primary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
+                  text="Save Changes"
+                />
                 <Button
                   type="button"
-                  color="tertiary"
-                  size="tiny"
-                  rounded="normal"
+                  color={ButtonColorTheme.tertiary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
                   text="Cancel"
                   action={toggleEditMode}
                 />

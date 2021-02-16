@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
 import { ReactComponent as AlgoliaIcon } from '../../../../assets/img/icons/algolia-light-background.svg';
 import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
@@ -122,8 +122,9 @@ const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInv
       ) : (
         <Button
           text="Add Participant"
-          color="tertiary"
-          size="tiny"
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.tiny}
+          rounded={ButtonRoundedTheme.small}
           action={() => handleInviteParticipant(event, hit)}
         />
       )}

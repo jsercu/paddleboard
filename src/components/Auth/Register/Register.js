@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import Logo from '../../../common/Logo';
-import Button from '../../../common/Buttons/Button';
+import Logo, { LogoColorTheme, LogoSizeTheme } from '../../../common/Logo';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../common/Buttons/Button';
 import { ReactComponent as GoogleIcon } from '../../../assets/img/icons/google-icon.svg';
 import { RegisterForm } from './RegisterForm';
 
@@ -32,7 +32,7 @@ const Register = ({ history }) => {
   return (
     <div className="flex justify-center min-h-screen px-6 py-24 bg-gray-100 sm:items-center sm:px-6 lg:px-8">
       <div className="w-full max-w-lg">
-        <Logo size="large" color="gray" />
+        <Logo size={LogoSizeTheme.large} color={LogoColorTheme.gray} />
         <h2 className="mt-4 text-sm font-semibold tracking-wider text-center text-gray-500 uppercase">
           Create New Account
         </h2>
@@ -47,7 +47,9 @@ const Register = ({ history }) => {
           <Button
             text="Sign Up Using Google"
             type="button"
-            color="tertiary"
+            color={ButtonColorTheme.tertiary}
+            size={ButtonSizeTheme.medium}
+            rounded={ButtonRoundedTheme.tiny}
             fullWidth
             action={signUpWithGoogle}
             hasIcon

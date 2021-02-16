@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { firestore } from '../../../firebase';
 import Container from '../../../common/Container';
-import Button from '../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../common/Buttons/Button';
 import YourProfile from '../../Users/UserProfile/YourProfile/YourProfile';
 import { ReactComponent as LocationIcon } from '../../../assets/img/icons/location-20.svg';
 import UserPhotoModal from './UserPhotoModal';
@@ -103,8 +103,18 @@ const UserProfile = () => {
               </div>
             </div>
             <div className="flex lg:ml-4 space-x-2">
-              <Button text="Lorem" type="button" color="transparent" size="medium"></Button>
-              <Button text="Lorem Ipsum" type="button" color="primary" size="medium"></Button>
+              <Button
+                text="Lorem"
+                type="button"
+                color={ButtonColorTheme.transparent}
+                size={ButtonSizeTheme.medium}
+                rounded={ButtonRoundedTheme.medium}></Button>
+              <Button
+                text="Lorem Ipsum"
+                type="button"
+                color={ButtonColorTheme.primary}
+                size={ButtonSizeTheme.medium}
+                rounded={ButtonRoundedTheme.medium}></Button>
             </div>
           </div>
         </Container>

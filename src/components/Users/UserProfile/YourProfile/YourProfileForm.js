@@ -1,7 +1,7 @@
 import React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 
 const YourProfileForm = (props) => {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props;
@@ -17,7 +17,12 @@ const YourProfileForm = (props) => {
           </p>
         </div>
         <div className="py-6 text-right col-span-5 place-self-stretch">
-          <Button text="Save Changes" type="submit" color="tertiary" size="medium"></Button>
+          <Button
+            text="Save Changes"
+            type="submit"
+            color={ButtonColorTheme.tertiary}
+            size={ButtonSizeTheme.medium}
+            rounded={ButtonRoundedTheme.medium}></Button>
         </div>
       </div>
       <div className="px-12 pb-12 mt-4">

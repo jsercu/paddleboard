@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import Backdrop from './Backdrop';
-import BgPattern from '../BgPattern/BgPattern';
-import IconButton from '../Buttons/IconButton';
-import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
 
 const Modal = ({ children, toggleShowModal }) => {
-  return ReactDOM.createPortal(
+  return createPortal(
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <Backdrop toggleShowModal={toggleShowModal}>

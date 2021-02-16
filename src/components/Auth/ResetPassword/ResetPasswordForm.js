@@ -1,7 +1,7 @@
 import React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import Button from '../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../common/Buttons/Button';
 import { ReactComponent as LockIcon } from '../../../assets/img/icons/lock-20.svg';
 
 const ResetPasswordForm = (props) => {
@@ -37,7 +37,15 @@ const ResetPasswordForm = (props) => {
         </div>
       </div>
       <div className="mt-2">
-        <Button text="Send Password Reset" type="submit" color="primary" fullWidth hasIcon rounded="small">
+        <Button
+          text="Send Password Reset"
+          type="submit"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.medium}
+          rounded={ButtonRoundedTheme.tiny}
+          fullWidth
+          hasIcon
+          rounded="small">
           <LockIcon
             className="w-5 h-5 text-indigo-500 group-hover:text-indigo-500 transition ease-in-out duration-150"
             title="lock-icon"

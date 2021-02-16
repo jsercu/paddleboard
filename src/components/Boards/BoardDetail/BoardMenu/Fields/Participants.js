@@ -4,7 +4,7 @@ import { ReactComponent as UsersIcon } from '../../../../../assets/img/icons/use
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
 import { ReactComponent as LockIcon } from '../../../../../assets/img/icons/lock-20.svg';
 import { Formik } from 'formik';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../../common/Buttons/Button';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
 import { ReactComponent as AlgoliaIcon } from '../../../../../assets/img/icons/algolia-light-background.svg';
@@ -93,9 +93,9 @@ const Participants = ({ participants, boardId }) => {
                       ) : (
                         <Button
                           text="Remove"
-                          color="tertiary"
-                          size="tiny"
-                          rounded="normal"
+                          color={ButtonColorTheme.tertiary}
+                          size={ButtonSizeTheme.tiny}
+                          rounded={ButtonRoundedTheme.small}
                           action={() => removeParticipant(event, participant)}
                         />
                       )}
@@ -103,13 +103,19 @@ const Participants = ({ participants, boardId }) => {
                   ))}
                 </div>
               </InstantSearch>
-              <div className="flex mt-3 space-x-4">
-                <Button type="submit" color="primary" size="tiny-wide" rounded="normal" text="Update Participants" />
+              <div className="flex mt-3 space-x-2">
+                <Button
+                  type="submit"
+                  color={ButtonColorTheme.primary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
+                  text="Update Participants"
+                />
                 <Button
                   type="button"
-                  color="tertiary"
-                  size="tiny"
-                  rounded="normal"
+                  color={ButtonColorTheme.tertiary}
+                  size={ButtonSizeTheme.tiny}
+                  rounded={ButtonRoundedTheme.small}
                   text="Cancel"
                   action={toggleEditMode}
                 />
@@ -252,8 +258,9 @@ const CustomHighlight = connectHighlight(({ highlight, attribute, hit, handleInv
       ) : (
         <Button
           text="Add Participant"
-          color="tertiary"
-          size="tiny"
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.tiny}
+          rounded={ButtonRoundedTheme.small}
           action={() => handleInviteParticipant(event, hit)}
         />
       )}

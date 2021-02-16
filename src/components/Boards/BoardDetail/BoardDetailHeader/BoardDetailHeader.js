@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
-import Button from '../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../common/Buttons/Button';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
 import ParticipantsList from './ParticipantsList/ParticipantsList';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
@@ -110,7 +110,14 @@ const BoardDetailHeader = ({
           />
         </div>
         <div className="ml-3">
-          <Button text="Create Task" type="button" color="primary" size="medium" hasIcon action={handleCreateTask}>
+          <Button
+            text="Create Task"
+            type="button"
+            color={ButtonColorTheme.primary}
+            size={ButtonSizeTheme.medium}
+            rounded={ButtonRoundedTheme.medium}
+            hasIcon
+            action={handleCreateTask}>
             <PlusIcon className="w-5 h-5 mx-auto text-white transition ease-in-out duration-150" title="plus-icon" />
           </Button>
         </div>

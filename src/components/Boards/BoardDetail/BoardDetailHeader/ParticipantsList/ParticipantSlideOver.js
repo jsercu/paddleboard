@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideOver from '../../../../../common/Modals/SlideOver';
-import Button from '../../../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../../common/Buttons/Button';
 
 const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) => {
   return (
@@ -17,8 +17,18 @@ const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) =
                 <h4 className="text-3xl font-bold text-gray-800">{participant.displayName}</h4>
                 <span className="text-base text-gray-500">{participant.email}</span>
                 <div className="flex pt-3 pb-6 space-x-4">
-                  <Button text="Remove From Board" color="tertiary" size="small" />
-                  <Button text="Make Admin" color="tertiary" size="small" />
+                  <Button
+                    text="Remove From Board"
+                    color={ButtonColorTheme.tertiary}
+                    size={ButtonSizeTheme.tiny}
+                    rounded={ButtonRoundedTheme.small}
+                  />
+                  <Button
+                    text="Make Admin"
+                    color={ButtonColorTheme.tertiary}
+                    size={ButtonSizeTheme.tiny}
+                    rounded={ButtonRoundedTheme.small}
+                  />
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../../../common/Container';
-import Button from '../../../common/Buttons/Button';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../common/Buttons/Button';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
 import CreateBoardSlideOver from './BoardSlideOver/BoardSlideOver';
 
@@ -19,8 +19,9 @@ const BoardListEmptyState = ({ toggleShowBoardSlideOver }) => {
                 <Button
                   type="button"
                   text="Create Board"
-                  color="primary"
-                  size="medium"
+                  color={ButtonColorTheme.primary}
+                  size={ButtonSizeTheme.medium}
+                  rounded={ButtonRoundedTheme.medium}
                   hasIcon
                   action={toggleShowBoardSlideOver}>
                   <PlusIcon title="plus-icon"></PlusIcon>

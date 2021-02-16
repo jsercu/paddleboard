@@ -1,8 +1,5 @@
 import React from 'react';
-import Button from '../../../../../common/Buttons/Button';
-import IconButton from '../../../../../common/Buttons/IconButton';
-import Input from '../../../../../common/Inputs/Input';
-import { ReactComponent as XIcon } from '../../../../../assets/img/icons/x-24.svg';
+import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../../common/Buttons/Button';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -16,9 +13,6 @@ const ColumnForm = (props) => {
             <h3 className="text-xl font-medium tracking-tight text-gray-800 leading-6">
               {editMode ? 'Edit Column' : 'Create New Column'}
             </h3>
-            <IconButton backgroundType="white" size="small" action={toggleShowColumnModal}>
-              <XIcon />
-            </IconButton>
           </div>
           <div className="px-10 pt-6 pb-8 text-left">
             <div>
@@ -49,8 +43,19 @@ const ColumnForm = (props) => {
         </div>
       </div>
       <div className="px-4 py-4 bg-gray-100 space-x-2 space-x-reverse sm:px-10 sm:flex sm:flex-row-reverse">
-        <Button text={editMode ? 'Save Changes' : 'Create Column'} type="submit" color="primary" size="small"></Button>
-        <Button text="Cancel" type="button" color="tertiary" size="small" action={toggleShowColumnModal}></Button>
+        <Button
+          text={editMode ? 'Save Changes' : 'Create Column'}
+          type="submit"
+          color={ButtonColorTheme.primary}
+          size={ButtonSizeTheme.small}
+          rounded={ButtonRoundedTheme.small}></Button>
+        <Button
+          text="Cancel"
+          type="button"
+          color={ButtonColorTheme.tertiary}
+          size={ButtonSizeTheme.small}
+          rounded={ButtonRoundedTheme.small}
+          action={toggleShowColumnModal}></Button>
       </div>
     </form>
   );

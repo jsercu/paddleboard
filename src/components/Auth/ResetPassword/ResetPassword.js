@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import Logo from '../../../common/Logo';
+import Logo, { LogoColorTheme, LogoSizeTheme } from '../../../common/Logo';
 import { ResetPasswordForm } from './ResetPasswordForm';
 
 const ResetPassword = ({ history }) => {
@@ -27,7 +27,7 @@ const ResetPassword = ({ history }) => {
   return (
     <div className="flex justify-center min-h-screen px-6 py-24 bg-gray-100 sm:items-center sm:px-6 lg:px-8">
       <div className="w-full max-w-lg mx-auto">
-        <Logo size="large" color="gray" />
+        <Logo size={LogoSizeTheme.large} color={LogoColorTheme.gray} />
         <h2 className="my-4 text-sm font-semibold tracking-wider text-center text-gray-500 uppercase">
           Password Reset
         </h2>
