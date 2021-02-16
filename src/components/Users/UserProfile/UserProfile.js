@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { firestore } from '../../../firebase';
-import Container from '../../../common/Container';
+import Container, { ContainerWidthTheme } from '../../../common/Container';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../common/Buttons/Button';
 import YourProfile from '../../Users/UserProfile/YourProfile/YourProfile';
 import { ReactComponent as LocationIcon } from '../../../assets/img/icons/location-20.svg';
@@ -64,7 +64,7 @@ const UserProfile = () => {
   return (
     <div>
       <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
-        <Container width="medium">
+        <Container width={ContainerWidthTheme.medium}>
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-between">
               <div className="flex-shrink-0">
@@ -120,7 +120,7 @@ const UserProfile = () => {
         </Container>
       </div>
       <div className="-mt-32">
-        <Container width="medium">
+        <Container width={ContainerWidthTheme.medium}>
           <YourProfile user={auth.userProfile} userId={auth.user.uid} updateUser={updateUser} />
         </Container>
       </div>

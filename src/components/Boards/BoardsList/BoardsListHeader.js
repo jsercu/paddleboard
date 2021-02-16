@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../../../common/Container';
+import Container, { ContainerWidthTheme } from '../../../common/Container';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../common/Buttons/Button';
 import IconButton, {
   IconButtonColorTheme,
@@ -13,7 +13,7 @@ import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter-2
 const BoardsHeader = ({ toggleShowBoardSlideOver }) => {
   return (
     <div className="pt-24 pb-40 bg-gradient-to-tr from-gray-900 to-gray-800">
-      <Container>
+      <Container width={ContainerWidthTheme.large}>
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-between">
             <div className="py-2 text-3xl font-bold">

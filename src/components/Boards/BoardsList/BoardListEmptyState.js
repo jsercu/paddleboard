@@ -1,12 +1,11 @@
 import React from 'react';
-import Container from '../../../common/Container';
+import Container, { ContainerWidthTheme } from '../../../common/Container';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../common/Buttons/Button';
 import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
-import CreateBoardSlideOver from './BoardSlideOver/BoardSlideOver';
 
 const BoardListEmptyState = ({ toggleShowBoardSlideOver }) => {
   return (
-    <Container>
+    <Container width={ContainerWidthTheme.large}>
       <div className="flex flex-col">
         <div className="inline-block min-w-full min-h-full py-2 align-middle">
           <div className="overflow-hidden rounded-sm shadow-xl">

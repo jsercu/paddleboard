@@ -1,10 +1,10 @@
 import React from 'react';
-import Container from '../../../../common/Container';
+import Container, { ContainerWidthTheme } from '../../../../common/Container';
 import BoardsTableRow from './BoardsTableRow';
 
 const BoardsTable = ({ boards }) => {
   return (
-    <Container>
+    <Container width={ContainerWidthTheme.large}>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from './Backdrop';
 import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
 import IconButton, { IconButtonColorTheme, IconButtonRoundedTheme, IconButtonSizeTheme } from '../Buttons/IconButton';
 
+const modalRoot = document.getElementById('modal-root');
+
 const SlideOver = ({ children, toggleShowSlideOver }) => {
-  const handleClick = () => {
-    toggleShowSlideOver();
-  };
+  const elRef = useRef(null);
+
+  if (!elRef.current) {
+    const div = document.createElement('div');
+    elRef.current = div;
+  }
+
+  useEffect(() => {
+    modalRoot.appendChild(elRef.current);
+    return () => modalRoot.removeChild(elRef.current);
+  });
+
+  const handleClick = () => toggleShowSlideOver();
 
   return ReactDOM.createPortal(
     <Backdrop toggleShowModal={handleClick}>
@@ -27,7 +39,7 @@ const SlideOver = ({ children, toggleShowSlideOver }) => {
         </div>
       </section>
     </Backdrop>,
-    document.getElementById('modal-root'),
+    elRef.current,
   );
 };
 
