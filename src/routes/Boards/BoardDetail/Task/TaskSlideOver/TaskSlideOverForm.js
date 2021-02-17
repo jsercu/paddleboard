@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { firestore } from '../../../../../firebase';
 import { useParams } from 'react-router-dom';
 import { withFormik } from 'formik';
-import { object, string } from 'yup';
+import { object as YupObject, string as YupString } from 'yup';
 import Button, {
   ButtonColorTheme,
   ButtonRoundedTheme,
@@ -286,10 +286,10 @@ const TaskSlideOverFormExtended = withFormik({
     column: props.initialValues.column || '',
     dueDate: props.initialValues.dueDate || '',
   }),
-  validationSchema: object().shape({
-    name: string().required('This field is required.'),
-    column: object().shape({
-      id: string().required('This field is required.'),
+  validationSchema: YupObject().shape({
+    name: YupString().required('This field is required.'),
+    column: YupObject().shape({
+      id: YupString().required('This field is required.'),
     }),
   }),
   validateOnBlur: false,

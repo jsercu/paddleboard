@@ -7,8 +7,8 @@ export const TextAreaColorTheme = {
 
 const TextArea = ({ labelText, ariaLabel, name, value, isRequired, rows, changeHandler, color }) => {
   return (
-    <label htmlFor={name} className={`block`}>
-      <span className={`text-gray-700 mb-1 block text-sm leading-5 font-medium`}>{labelText}:</span>
+    <label htmlFor={name} className="block">
+      <span className="block mb-1 text-sm font-medium text-gray-700 leading-5">{labelText}:</span>
       <textarea
         aria-label={ariaLabel}
         name={name}

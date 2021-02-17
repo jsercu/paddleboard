@@ -37,22 +37,6 @@ const BoardDetailHeader = ({
     toggleShowColumnModal(false);
   };
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'Active':
-        return 'text-green-900 bg-green-300 bg-opacity-90 ';
-      case 'Paused':
-        return 'text-yellow-900 bg-yellow-300 bg-opacity-90 ';
-      case 'Completed':
-        return 'text-indigo-900 bg-indigo-300 bg-opacity-90 ';
-      case 'Closed':
-        return 'text-red-900 bg-red-300 bg-opacity-90 ';
-      case 'Not Started':
-      default:
-        return 'text-gray-900 bg-gray-300 bg-opacity-90 ';
-    }
-  };
-
   return (
     <div className="px-4 pt-20 pb-4 lg:flex lg:items-center lg:justify-between bg-gradient-to-tr from-gray-900 to-gray-800">
       <div className="flex-1 min-w-0">
@@ -63,9 +47,6 @@ const BoardDetailHeader = ({
             </span>
           </h2>
           <div className="hidden sm:block">
-            {/* <span className={getStatusStyle(board.status) + 'px-2 mt-1 ml-2 text-xs font-semibold rounded-full'}>
-              {board.status}
-            </span> */}
             <StatusBadge status={board.status} />
           </div>
         </div>

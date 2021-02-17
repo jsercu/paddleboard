@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../../../hooks/useAuth';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../components/Buttons/Button';
 import { withFormik } from 'formik';
-import { object, string } from 'yup';
+import { object as YupObject, string as YupString } from 'yup';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch } from 'react-instantsearch-dom';
 import UserSearchAutocomplete from './UserSearchAutocomplete';
@@ -172,8 +172,8 @@ const BoardSlideOverFormExtended = withFormik({
     description: '',
     participants: [],
   }),
-  validationSchema: object().shape({
-    name: string().required('This field is required.'),
+  validationSchema: YupObject().shape({
+    name: YupString().required('This field is required.'),
   }),
   validateOnBlur: false,
   validateOnChange: false,

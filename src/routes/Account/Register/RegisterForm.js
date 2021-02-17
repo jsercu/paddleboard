@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik } from 'formik';
-import { object, string } from 'yup';
+import { object as YupObject, string as YupString } from 'yup';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
 import { ReactComponent as LockIcon } from '../../../assets/img/icons/lock-20.svg';
 
@@ -81,9 +81,9 @@ const RegisterForm = (props) => {
 
 const RegisterFormExtended = withFormik({
   mapPropsToValues: () => ({ email: '', password: '' }),
-  validationSchema: object().shape({
-    email: string().email('Please enter a valid email.').required('This field is required.'),
-    password: string().required('This field is required.'),
+  validationSchema: YupObject().shape({
+    email: YupString().email('Please enter a valid email.').required('This field is required.'),
+    password: YupString().required('This field is required.'),
   }),
   validateOnBlur: false,
   validateOnChange: true,
