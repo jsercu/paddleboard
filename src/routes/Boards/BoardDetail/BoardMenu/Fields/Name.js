@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
-import { string } from 'yup';
+import { object, string } from 'yup';
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
 import Button, {
   ButtonColorTheme,
@@ -19,7 +19,7 @@ const Name = ({ name, boardId, toggleShowBackdrop }) => {
     }
   });
 
-  const validationSchema = Yup.object().shape({
+  const validationSchema = object().shape({
     name: string().required('This field is required.'),
   });
 

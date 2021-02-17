@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
+import StatusBadge from '../../../../components/Status/StatusBadge';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 const BoardsTableRow = ({ board }) => {
@@ -9,7 +10,7 @@ const BoardsTableRow = ({ board }) => {
 
   // Format the createdAt date of the board
   dayjs.extend(calendar);
-  const createdDate = board.createdAt ? dayjs().calendar(dayjs(board.createdAt.toDate())) : '';
+  const createdDate = dayjs(board.createdAt.toDate()).calendar();
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -52,9 +53,7 @@ const BoardsTableRow = ({ board }) => {
         </div>
       </td>
       <td className="px-6 py-2 whitespace-nowrap">
-        <span className={getStatusStyle(status) + 'inline-flex px-2 text-xs font-semibold rounded-full leading-5'}>
-          {board.status}
-        </span>
+        <StatusBadge status={board.status} />
       </td>
       <td className="px-6 py-2 text-sm text-gray-500 whitespace-nowrap">{createdDate}</td>
       <td className="px-6 py-2 text-sm font-medium text-right whitespace-nowrap">

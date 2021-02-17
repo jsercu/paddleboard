@@ -2,6 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../components/Buttons/Button';
+import StatusBadge from '../../../../components/Status/StatusBadge.js';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
 import ParticipantsList from './ParticipantsList/ParticipantsList';
 import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
@@ -62,9 +63,10 @@ const BoardDetailHeader = ({
             </span>
           </h2>
           <div className="hidden sm:block">
-            <span className={getStatusStyle(board.status) + 'px-2 mt-1 ml-2 text-xs font-semibold rounded-full'}>
+            {/* <span className={getStatusStyle(board.status) + 'px-2 mt-1 ml-2 text-xs font-semibold rounded-full'}>
               {board.status}
-            </span>
+            </span> */}
+            <StatusBadge status={board.status} />
           </div>
         </div>
         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-4">

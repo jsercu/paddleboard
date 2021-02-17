@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { STATUSES } from '../../../../../components/Status/Status';
 import { Listbox, Transition } from '@headlessui/react';
 import { ReactComponent as StatusIcon } from '../../../../../assets/img/icons/status-online-24.svg';
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
@@ -79,7 +80,7 @@ const Status = ({ status, boardId }) => {
       onClick={toggleEditMode}>
       <StatusIcon className="flex-none w-5 h-5 text-gray-500" />
       <PencilIcon className="absolute top-0 right-0 w-4 h-4 m-2 text-gray-400 text-opacity-0 group-hover:text-opacity-100" />
-      <span className="ml-2 text-sm text-gray-600">{status}</span>
+      <span className="ml-2 text-sm text-gray-600">{STATUSES[status].title}</span>
     </div>
   );
 };
@@ -108,7 +109,7 @@ const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouc
                     : 'border-gray-300 focus:ring-indigo-500'
                 } relative bg-white w-full py-2 pl-3 pr-10 text-left border rounded-sm cursor-default focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-5`}>
                 {value ? (
-                  <span className="block truncate">{value}</span>
+                  <span className="block truncate">{STATUSES[value].title}</span>
                 ) : (
                   <span className="block text-gray-400 truncate">{placeholderText || 'None Selected'}</span>
                 )}
@@ -127,14 +128,16 @@ const StatusSelectInput = ({ error, placeholderText, setFieldValue, setFieldTouc
               <Listbox.Options
                 static
                 className="py-1 overflow-auto text-base max-h-60 rounded-md leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5">
-                {statuses.map((status) => (
-                  <Listbox.Option key={status} value={status}>
+                {Object.keys(STATUSES).map((status) => (
+                  <Listbox.Option key={STATUSES[status].key} value={STATUSES[status].key}>
                     {({ selected, active }) => (
                       <div
                         className={`${
                           active ? 'text-white bg-indigo-600' : 'text-gray-900'
                         } cursor-default select-none relative py-2 pl-8 pr-4`}>
-                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>{status}</span>
+                        <span className={`${selected ? 'font-semibold' : 'font-normal'} block truncate`}>
+                          {STATUSES[status].title}
+                        </span>
                         {selected && (
                           <span
                             className={`${
