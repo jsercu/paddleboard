@@ -1,7 +1,7 @@
 import React from 'react';
 import NavItem from './NavItem';
 import NavDropdown from './NavDropdown';
-import Logo from '../../common/Logo';
+import Logo, { LogoColorTheme, LogoSizeTheme } from '../Logo';
 import { useAuth } from '../../hooks/useAuth';
 import { ReactComponent as MenuIcon } from '../../assets/img/icons/menu-24.svg';
 import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Logo size="medium" color="white" />
+              <Logo size={LogoSizeTheme.medium} color={LogoColorTheme.white} />
             </div>
             <div className="hidden md:block">
               <div className="flex items-baseline ml-10 space-x-4">
