@@ -1,8 +1,13 @@
 import React from 'react';
 import Container, { ContainerWidthTheme } from '../../../../components/Container';
+import BoardListEmptyState from '../BoardListEmptyState';
 import BoardsTableRow from './BoardsTableRow';
 
-const BoardsTable = ({ boards }) => {
+const BoardsTable = ({ boards, toggleShowBoardSlideOver, addBoard }) => {
+  if (!boards || boards.length === 0) {
+    return <BoardListEmptyState toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />;
+  }
+
   return (
     <Container width={ContainerWidthTheme.large}>
       <div className="flex flex-col">

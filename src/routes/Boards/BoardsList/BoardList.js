@@ -5,6 +5,7 @@ import BoardsListHeader from './BoardsListHeader';
 import BoardsTable from './BoardsTable/BoardsTable';
 import BoardListEmptyState from './BoardListEmptyState';
 import BoardSlideOver from './BoardSlideOver/BoardSlideOver';
+import { STATUSES } from '../../../components/Status/Status';
 
 const BoardList = () => {
   const [isShowBoardSlideOver, setIsShowBoardSlideOver] = useState(false);
@@ -34,10 +35,7 @@ const BoardList = () => {
 
   const addBoard = async (boardValues) => {
     const { name, description, participants } = boardValues;
-    const participantIds = [];
-    participants.forEach((participant) => {
-      participantIds.push(participant.userId);
-    });
+    const participantIds = participants.map(({ userId }) => userId);
     try {
       await firestore.collection('boards').add({
         name: name,
@@ -45,7 +43,7 @@ const BoardList = () => {
         columnOrder: [],
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         author: { displayName: auth.userProfile.displayName, userId: auth.user.uid },
-        status: 'notStarted',
+        status: STATUSES.NOT_STARTED.key,
         deleteStatus: false,
         participants: participants,
         participantIds: participantIds,
@@ -58,19 +56,13 @@ const BoardList = () => {
     }
   };
 
-  if (isLoading) {
-    return <></>;
-  }
+  if (isLoading) return null;
 
   return (
     <>
       <BoardsListHeader toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
       <div className="flex -mt-32">
-        {boards && boards.length ? (
-          <BoardsTable boards={boards} />
-        ) : (
-          <BoardListEmptyState toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
-        )}
+        <BoardsTable boards={boards} toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />
       </div>
       {isShowBoardSlideOver && (
         <BoardSlideOver toggleShowBoardSlideOver={toggleShowBoardSlideOver} addBoard={addBoard} />

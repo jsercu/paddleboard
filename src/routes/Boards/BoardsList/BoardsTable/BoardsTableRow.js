@@ -10,23 +10,7 @@ const BoardsTableRow = ({ board }) => {
 
   // Format the createdAt date of the board
   dayjs.extend(calendar);
-  const createdDate = dayjs(board.createdAt.toDate()).calendar();
-
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'Active':
-        return 'text-orange-800 bg-orange-200 ';
-      case 'Paused':
-        return 'text-yellow-800 bg-yellow-200 ';
-      case 'Completed':
-        return 'text-green-800 bg-green-200 ';
-      case 'Closed':
-        return 'text-red-800 bg-red-200 ';
-      case 'Not Started':
-      default:
-        return 'text-gray-800 bg-gray-200 ';
-    }
-  };
+  const createdDate = dayjs(board.createdAt?.toDate()).calendar();
 
   return (
     <tr className="cursor-pointer hover:bg-gray-50">
