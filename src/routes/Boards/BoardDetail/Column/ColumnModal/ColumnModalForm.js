@@ -5,7 +5,7 @@ import Button, {
   ButtonSizeTheme,
 } from '../../../../../components/Buttons/Button';
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 
 const ColumnForm = (props) => {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit, editMode, toggleShowColumnModal } = props;
@@ -69,8 +69,8 @@ const ColumnModalForm = withFormik({
   mapPropsToValues: (props) => ({
     name: props.initialValues.name,
   }),
-  validationSchema: Yup.object().shape({
-    name: Yup.string().required('This field is required.'),
+  validationSchema: object().shape({
+    name: string().required('This field is required.'),
   }),
   validateOnBlur: false,
   validateOnChange: true,

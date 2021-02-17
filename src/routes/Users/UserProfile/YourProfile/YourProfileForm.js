@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../components/Buttons/Button';
 
 const YourProfileForm = (props) => {
@@ -170,9 +170,9 @@ const YourProfileFormExtended = withFormik({
     location: props.initialValues.location || '',
     bio: props.initialValues.bio || '',
   }),
-  validationSchema: Yup.object().shape({
-    displayName: Yup.string().required('This field is required.'),
-    bio: Yup.string().max(140, 'Please limit your response to 140 characters.'),
+  validationSchema: object().shape({
+    displayName: string().required('This field is required.'),
+    bio: string().max(140, 'Please limit your response to 140 characters.'),
   }),
   validateOnBlur: true,
   validateOnChange: true,

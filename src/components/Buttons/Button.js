@@ -23,24 +23,15 @@ export const ButtonRoundedTheme = {
 };
 
 const Button = ({ action, type, children, text, color, rounded, size, fullWidth, hasIcon }) => {
-  if (fullWidth) {
-    return (
-      <button
-        type={type}
-        className={`relative w-full font-medium group items-center justify-center leading-6 focus:outline-none focus:ring transition duration-150 ease-in-out shadow-sm ${color} ${size} ${rounded}`}
-        onClick={action}>
-        {!!hasIcon && <span className="absolute inset-y-0 left-0 flex items-center pl-3 mr-2">{children}</span>}
-        {text}
-      </button>
-    );
-  }
+  const buttonClasses = `${
+    !!fullWidth ? 'relative w-full' : 'inline-flex'
+  } group font-medium leading-6 focus:outline-none focus:ring items-center justify-center transition duration-150 ease-in-out shadow-sm ${color} ${size} ${rounded}`;
+
+  const iconClasses = `${!!fullWidth ? 'absolute inset-y-0 left-0 flex items-center pl-3' : 'w-5 h-5 -ml-1'} mr-2`;
 
   return (
-    <button
-      type={type}
-      onClick={action}
-      className={`inline-flex group items-center justify-center leading-6 focus:outline-none focus:ring transition duration-150 ease-in-out shadow-sm ${color} ${size} ${rounded}`}>
-      {!!hasIcon && <span className="w-5 h-5 mr-2 -ml-1">{children}</span>}
+    <button type={type} onClick={action} className={buttonClasses}>
+      {!!hasIcon && <span className={iconClasses}>{children}</span>}
       {text}
     </button>
   );

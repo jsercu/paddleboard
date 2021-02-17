@@ -5,11 +5,7 @@ const ParticipantsList = ({ participants }) => {
   const [participantSlideOverConfig, setParticipantSlideOverConfig] = useState({ display: false, participant: null });
 
   const toggleShowParticipantSlideOver = (newParticipant) => {
-    if (newParticipant) {
-      setParticipantSlideOverConfig({ display: true, participant: newParticipant });
-    } else {
-      setParticipantSlideOverConfig({ display: false, participant: null });
-    }
+    setParticipantSlideOverConfig({ display: !!newParticipant, participant: newParticipant || null });
   };
 
   return (

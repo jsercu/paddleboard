@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { string } from 'yup';
 import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
 import Button, {
   ButtonColorTheme,
@@ -20,15 +20,8 @@ const Name = ({ name, boardId, toggleShowBackdrop }) => {
   });
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('This field is required.'),
+    name: string().required('This field is required.'),
   });
-
-  const showFieldLightbox = () => {
-    toggleShowBackdrop();
-    nameInput.current.focus();
-  };
-
-  const clearFieldLightbox = () => {};
 
   const toggleEditMode = () => {
     setEditMode(!editMode);

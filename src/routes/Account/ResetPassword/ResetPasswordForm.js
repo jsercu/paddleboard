@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
 import { ReactComponent as LockIcon } from '../../../assets/img/icons/lock-20.svg';
 
@@ -44,8 +44,7 @@ const ResetPasswordForm = (props) => {
           size={ButtonSizeTheme.medium}
           rounded={ButtonRoundedTheme.tiny}
           fullWidth
-          hasIcon
-          rounded="small">
+          hasIcon>
           <LockIcon
             className="w-5 h-5 text-indigo-500 group-hover:text-indigo-500 transition ease-in-out duration-150"
             title="lock-icon"
@@ -58,8 +57,8 @@ const ResetPasswordForm = (props) => {
 
 const ResetPasswordFormExtended = withFormik({
   mapPropsToValues: () => ({ email: '' }),
-  validationSchema: Yup.object().shape({
-    email: Yup.string().email('Please enter a valid email.').required('This field is required.'),
+  validationSchema: object().shape({
+    email: string().email('Please enter a valid email.').required('This field is required.'),
   }),
   validateOnBlur: true,
   validateOnChange: true,

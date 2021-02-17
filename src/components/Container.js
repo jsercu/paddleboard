@@ -1,25 +1,13 @@
 import React from 'react';
 
 export const ContainerWidthTheme = {
-  small: 'container max-w-2xl mx-auto px-4 sm:px-6 lg:px-8',
-  medium: 'container max-w-3xl mx-auto px-4 sm:px-6 lg:px-8',
-  large: 'container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
+  small: 'max-w-2xl',
+  medium: 'max-w-3xl',
+  large: 'max-w-7xl',
 };
 
 const Container = ({ children, width }) => {
-  // const getSizeStyles = () => {
-  //   switch (width) {
-  //     case 'small':
-  //       return 'container max-w-2xl mx-auto px-4 sm:px-6 lg:px-8';
-  //     case 'medium':
-  //       return 'container max-w-3xl mx-auto px-4 sm:px-6 lg:px-8';
-  //     case 'large':
-  //     default:
-  //       return 'container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
-  //   }
-  // };
-
-  return <div className={`${width}`}>{children}</div>;
+  return <div className={`container mx-auto px-4 sm:px-6 lg:px-8 ${width}`}>{children}</div>;
 };
 
 export default Container;

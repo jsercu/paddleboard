@@ -21,7 +21,6 @@ const App = () => {
           <Route path="/register" component={Register} />
           <Route path="/reset" component={ResetPassword} />
           <PrivateRoute exact path="/*" component={AuthenicatedRoutes} />
-          <Route path="*" component={Login} />
         </Switch>
       </Router>
     </ProvideAuth>
@@ -34,10 +33,10 @@ const AuthenicatedRoutes = () => {
       <div className="h-screen bg-gray-100">
         <Navbar className="sticky top-0" />
         <Switch>
-          <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
-          <PrivateRoute path="/boards" component={Boards}></PrivateRoute>
-          <PrivateRoute path="/tasks" component={Tasks}></PrivateRoute>
-          <PrivateRoute path="/users" component={Users}></PrivateRoute>
+          <Route path="/dashboard" component={Dashboard}></Route>
+          <Route path="/boards" component={Boards}></Route>
+          <Route path="/tasks" component={Tasks}></Route>
+          <Route path="/users" component={Users}></Route>
         </Switch>
       </div>
     </Router>
