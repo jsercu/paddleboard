@@ -13,7 +13,7 @@ import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
 import { ReactComponent as UploadPictureIcon } from '../../../assets/img/icons/upload-picture-48.svg';
 
 const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
     maxFiles: 1,
     accept: 'image/jpeg, image/png',
     onDropAccepted: (files) => {
@@ -163,8 +163,10 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
                 {!isDragReject ? (
                   <div className="text-center">
                     <p>
-                      <span className="font-medium text-indigo-600 hover:underline">Upload a photo </span>or drag and
-                      drop
+                      <button type="button" className="mr-1 font-medium text-indigo-600 hover:underline" onClick={open}>
+                        Upload a photo
+                      </button>
+                      or drag and drop
                     </p>
                     <span className="text-xs">PNG or JPG up to 5MB</span>
                   </div>

@@ -25,7 +25,7 @@ export const ButtonRoundedTheme = {
 const Button = ({ action, type, children, text, color, rounded, size, fullWidth, hasIcon }) => {
   const buttonClasses = `${
     !!fullWidth ? 'relative w-full' : 'inline-flex'
-  } group font-medium leading-6 focus:outline-none focus:ring items-center justify-center transition duration-150 ease-in-out shadow-sm ${color} ${size} ${rounded}`;
+  } group leading-6 focus:outline-none focus:ring items-center justify-center transition duration-150 ease-in-out shadow-sm ${color} ${size} ${rounded}`;
 
   const iconClasses = `${!!fullWidth ? 'absolute inset-y-0 left-0 flex items-center pl-3' : 'w-5 h-5 -ml-1'} mr-2`;
 

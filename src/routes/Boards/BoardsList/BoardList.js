@@ -42,7 +42,7 @@ const BoardList = () => {
         description: description,
         columnOrder: [],
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        author: { displayName: auth.userProfile.displayName, userId: auth.user.uid },
+        author: auth.user.uid,
         status: STATUSES.NOT_STARTED.key,
         deleteStatus: false,
         participants: participants,

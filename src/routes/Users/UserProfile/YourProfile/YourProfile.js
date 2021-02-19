@@ -47,23 +47,23 @@ const YourProfile = ({ user, userId, updateUser }) => {
               <div className="grid grid-cols-12 gap-6">
                 <div className="col-span-6">
                   <span className="text-sm text-gray-500 leading-5">Display Name:</span>
-                  <p className="text-sm text-black">{user.displayName}</p>
+                  <p className="text-sm text-black">{user.displayName || '--'}</p>
                 </div>
                 <div className="col-span-6">
                   <span className="text-sm text-gray-500 leading-5">Location:</span>
-                  <p className="text-sm text-black">{user.location}</p>
+                  <p className="text-sm text-black">{user.location || '--'}</p>
                 </div>
                 <div className="col-span-6">
                   <span className="text-sm text-gray-500 leading-5">Title / Role:</span>
-                  <p className="text-sm text-black">{user.title}</p>
+                  <p className="text-sm text-black">{user.title || '--'}</p>
                 </div>
                 <div className="col-span-6">
                   <span className="text-sm text-gray-500 leading-5">Company / Organization:</span>
-                  <p className="text-sm text-black">{user.company}</p>
+                  <p className="text-sm text-black">{user.company || '--'}</p>
                 </div>
                 <div className="col-span-12">
                   <span className="text-sm text-gray-500 leading-5">Personal Bio:</span>
-                  <p className="text-sm text-black">{user.bio}</p>
+                  <p className="text-sm text-black">{user.bio || '--'}</p>
                 </div>
               </div>
             </div>

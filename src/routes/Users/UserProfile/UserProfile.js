@@ -32,6 +32,8 @@ const UserProfile = () => {
         newParticipant.displayName = displayName;
         newParticipant.title = title;
         newParticipant.company = company;
+        newParticipant.location = location;
+        newParticipant.bio = bio;
         const newParticipants = [
           ...newBoard.participants.filter((participant) => participant.userId != userId),
           newParticipant,
@@ -49,7 +51,7 @@ const UserProfile = () => {
       });
       batch.commit();
     } catch (exception) {
-      console.error(exception.toString());
+      console.error(exception);
     }
   };
 
@@ -90,16 +92,13 @@ const UserProfile = () => {
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300">
                     {auth.userProfile.displayName}
                   </span>
-                  <span className="px-2 mt-1 ml-2 text-xs font-semibold text-gray-800 bg-green-400 rounded-full">
-                    Active
-                  </span>
                 </div>
-                <div className="text-sm">
-                  <div className="flex flex-row items-center">
+                {auth.userProfile.location && (
+                  <div className="flex flex-row items-center text-sm">
                     <LocationIcon className="w-4 h-4 text-gray-500" />
                     <span className="ml-1 font-medium text-gray-400">{auth.userProfile.location}</span>
                   </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="flex lg:ml-4 space-x-2">

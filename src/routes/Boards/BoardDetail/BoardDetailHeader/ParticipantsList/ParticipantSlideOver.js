@@ -5,6 +5,10 @@ import Button, {
   ButtonRoundedTheme,
   ButtonSizeTheme,
 } from '../../../../../components/Buttons/Button';
+import { ReactComponent as LocationIcon } from '../../../../../assets/img/icons/location-24.svg';
+import { ReactComponent as TitleIcon } from '../../../../../assets/img/icons/identification-24.svg';
+import { ReactComponent as CompanyIcon } from '../../../../../assets/img/icons/office-building-24.svg';
+import { ReactComponent as BioIcon } from '../../../../../assets/img/icons/newspaper-24.svg';
 
 const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) => {
   return (
@@ -12,9 +16,9 @@ const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) =
       <div className="relative flex flex-col h-full overflow-y-scroll bg-white shadow-xl space-y-6">
         <div className="px-4 py-16 bg-gradient-to-tr from-indigo-800 to-indigo-600 sm:px-6"></div>
         <div className="flex-1">
-          <div className="absolute flex flex-col items-start top-12">
+          <div className="absolute flex flex-col items-start w-full top-16">
             <div className="px-8">
-              <img src={participant.photoURL} className="w-40 h-40 border-4 border-white rounded-full" />
+              <img src={participant.photoURL} className="w-32 h-32 border-4 border-white rounded-full" />
             </div>
             <div className="w-full mt-2 border-b border-gray-200 text-start">
               <div className="px-8">
@@ -36,22 +40,30 @@ const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) =
                 </div>
               </div>
             </div>
-            <div className="px-8 mt-4 space-y-4">
-              <div>
-                <span className="text-sm text-gray-400 leading-5">Location:</span>
-                <p className="text-sm text-gray-900">{participant.location}</p>
+            <div className="w-full px-8 pt-4 pb-8 border-b border-gray-200 space-y-4">
+              <div className="flex items-center my-3">
+                <LocationIcon className="flex-none w-5 h-5 text-gray-500" />
+                <span className="inline-block ml-2 text-sm text-gray-800 align-baseline">
+                  {participant.location || '--'}
+                </span>
               </div>
-              <div>
-                <span className="text-sm text-gray-400 leading-5">Title:</span>
-                <p className="text-sm text-gray-900">{participant.title}</p>
+              <div className="flex items-center my-3">
+                <TitleIcon className="flex-none w-5 h-5 text-gray-500" />
+                <span className="inline-block ml-2 text-sm text-gray-800 align-baseline">
+                  {participant.title || '--'}
+                </span>
               </div>
-              <div>
-                <span className="text-sm text-gray-400 leading-5">Company / Organization:</span>
-                <p className="text-sm text-gray-900">{participant.company}</p>
+              <div className="flex items-center my-3">
+                <CompanyIcon className="flex-none w-5 h-5 text-gray-500" />
+                <span className="inline-block ml-2 text-sm text-gray-800 align-baseline">
+                  {participant.company || '--'}
+                </span>
               </div>
-              <div>
-                <span className="text-sm text-gray-400 leading-5">Bio:</span>
-                <p className="text-sm text-gray-900">{participant.bio}</p>
+              <div className="flex items-start my-3">
+                <BioIcon className="flex-none w-5 h-5 text-gray-500" />
+                <span className="inline-block ml-2 text-sm text-gray-800 align-baseline">
+                  {participant.bio || '--'}
+                </span>
               </div>
             </div>
           </div>

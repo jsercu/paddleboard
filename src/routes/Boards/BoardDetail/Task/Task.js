@@ -9,20 +9,6 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
   // Format the dueDate propert of the task
   const formattedDueDate = dueDate ? dayjs(dueDate).format('MMM DD YYYY') : null;
 
-  // // const getCategoryStyles = () => {
-  //   switch (category) {
-  //     case 'Product Documentation':
-  //       return 'text-pink-800 bg-pink-100';
-  //     case 'Design':
-  //       return 'text-indigo-800 bg-indigo-100';
-  //     case 'Backend':
-  //       return 'text-amber-800 bg-amber-100';
-  //     case 'Feature Request':
-  //     default:
-  //       return 'text-orange-800 bg-orange-100';
-  //   }
-  // };
-
   const handleDeleteTask = () => {
     deleteTask(id, columnId);
   };
@@ -35,18 +21,18 @@ const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
     <div className="relative bg-white border border-gray-200 rounded-sm cursor-pointer hover:border-gray-300 group shadow-sm">
       <div className="flex flex-col p-3 group-hover:bg-gray-50 group-hover:bg-opacity-50">
         <div className="flex flex-row items-center justify-between">
-          <p className="text-sm font-medium text-gray-800 leading-5">{name}</p>
+          <p className="text-xs font-medium text-gray-800 leading-4">{name}</p>
         </div>
-        <div className="flex flex-row items-center mt-1 align-text-bottom space-x-3">
+        <div className="flex flex-row items-center justify-between mt-2 align-text-bottom space-x-3">
           {description && (
-            <div className="h-4">
-              <DescriptionIcon className="w-4 h-4 text-gray-400" />
+            <div className="h-3">
+              <DescriptionIcon className="w-3 h-3 text-gray-400" />
             </div>
           )}
           {dueDate && (
-            <div className="flex flex-row h-4">
-              <ClockIcon className="w-4 h-4 text-gray-400" />
-              <div className="ml-1 text-xs text-gray-500">{formattedDueDate}</div>
+            <div className="flex flex-row items-center h-3">
+              <ClockIcon className="w-3 h-3 text-gray-400" />
+              <div className="ml-1 text-xs font-light text-gray-400">{formattedDueDate}</div>
             </div>
           )}
         </div>

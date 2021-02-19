@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { firestore } from '../../../../firebase';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../components/Buttons/Button';
@@ -17,6 +18,23 @@ const BoardDetailHeader = ({
   toggleShowDeleteBoardModal,
   toggleShowTaskSlideOver,
 }) => {
+  const [boardAuthor, setBoardAuthor] = useState('');
+
+  useEffect(() => {
+    firestore
+      .collection('users')
+      .doc(board.author)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setBoardAuthor(doc.data());
+        }
+      })
+      .catch((exception) => {
+        console.error(exception);
+      });
+  }, [board.author]);
+
   const owner = board.participants.filter((participant) => participant.isOwner === true)[0];
 
   // Format the createdAt date of the board
@@ -62,7 +80,7 @@ const BoardDetailHeader = ({
             <CalendarIcon className="flex-none w-4 h-4 text-gray-600" />
             <span className="inline-block ml-1 text-xs text-gray-400 mt-0.5">
               Created {createdAt} by
-              <span className="ml-1 font-medium text-indigo-400">{board.author.displayName}</span>
+              <span className="ml-1 font-medium text-indigo-400">{boardAuthor.displayName}</span>
             </span>
           </div>
           <div className="flex items-center mt-1 text-sm text-gray-500 lg:hidden">
