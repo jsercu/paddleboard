@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { ReactComponent as UserCircleIcon } from '../../../../../assets/img/icons/user-circle-24.svg';
-import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
-import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
-import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
+import { ReactComponent as UserCircleIcon } from '../../../../../assets/icons/user-circle-24.svg';
+import { ReactComponent as PencilIcon } from '../../../../../assets/icons/pencil-alt-20.svg';
+import { ReactComponent as SelectorIcon } from '../../../../../assets/icons/selector-20.svg';
+import { ReactComponent as CheckIcon } from '../../../../../assets/icons/check-20.svg';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
 import Button, {

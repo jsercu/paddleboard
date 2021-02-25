@@ -2,7 +2,7 @@ import React from 'react';
 import { withFormik } from 'formik';
 import { object as YupObject, string as YupString } from 'yup';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
-import { ReactComponent as LockIcon } from '../../../assets/img/icons/lock-20.svg';
+import { ReactComponent as LockIcon } from '../../../assets/icons/lock-20.svg';
 
 const ResetPasswordForm = (props) => {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props;

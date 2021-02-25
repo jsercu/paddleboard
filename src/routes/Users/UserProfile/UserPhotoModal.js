@@ -9,8 +9,8 @@ import IconButton, {
   IconButtonSizeTheme,
   IconButtonRoundedTheme,
 } from '../../../components/Buttons/IconButton';
-import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
-import { ReactComponent as UploadPictureIcon } from '../../../assets/img/icons/upload-picture-48.svg';
+import { ReactComponent as XIcon } from '../../../assets/icons/x-24.svg';
+import { ReactComponent as UploadPictureIcon } from '../../../assets/icons/upload-picture-48.svg';
 
 const MAX_FILE_SIZE = 1048576;
 

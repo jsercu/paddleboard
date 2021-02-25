@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
 import Logo, { LogoColorTheme, LogoSizeTheme } from '../../../components/Logo';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
-import { ReactComponent as GoogleIcon } from '../../../assets/img/icons/google-icon.svg';
+import { ReactComponent as GoogleIcon } from '../../../assets/icons/google-icon.svg';
 import { RegisterForm } from './RegisterForm';
 
 const Register = ({ history }) => {

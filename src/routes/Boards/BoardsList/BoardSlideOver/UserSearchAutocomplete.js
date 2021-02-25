@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
 import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '../../../../components/Buttons/Button';
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
-import { ReactComponent as AlgoliaIcon } from '../../../../assets/img/icons/algolia-light-background.svg';
-import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
+import { ReactComponent as AlgoliaIcon } from '../../../../assets/icons/algolia-light-background.svg';
+import { ReactComponent as LockIcon } from '../../../../assets/icons/lock-20.svg';
 
 const Autocomplete = ({ hits, currentRefinement, refine, addParticipant, ownerId }) => {
   // Create a ref that we add to the element for which we want to detect outside clicks

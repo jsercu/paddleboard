@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { firestore } from '../../../../../firebase';
-import { ReactComponent as UsersIcon } from '../../../../../assets/img/icons/users-24.svg';
-import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
-import { ReactComponent as LockIcon } from '../../../../../assets/img/icons/lock-20.svg';
+import { ReactComponent as UsersIcon } from '../../../../../assets/icons/users-24.svg';
+import { ReactComponent as PencilIcon } from '../../../../../assets/icons/pencil-alt-20.svg';
+import { ReactComponent as LockIcon } from '../../../../../assets/icons/lock-20.svg';
 import { Formik } from 'formik';
 import Button, {
   ButtonColorTheme,

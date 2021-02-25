@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as PaddleboardIcon } from '../assets/img/icons/map-24.svg';
+import { ReactComponent as PaddleboardIcon } from '../assets/icons/map-24.svg';
 
 export const LogoColorTheme = {
   white: 'text-white',

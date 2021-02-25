@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Backdrop from './Backdrop';
-import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
+import { ReactComponent as XIcon } from '../../assets/icons/x-24.svg';
 import IconButton, { IconButtonColorTheme, IconButtonRoundedTheme, IconButtonSizeTheme } from '../Buttons/IconButton';
 
 const modalRoot = document.getElementById('modal-root');

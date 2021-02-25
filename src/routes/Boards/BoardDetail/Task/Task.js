@@ -1,8 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import TaskDropdown from './TaskDropdown';
-import { ReactComponent as DescriptionIcon } from '../../../../assets/img/icons/menu-alt-2-20.svg';
-import { ReactComponent as ClockIcon } from '../../../../assets/img/icons/clock-24.svg';
+import { ReactComponent as DescriptionIcon } from '../../../../assets/icons/menu-alt-2-20.svg';
+import { ReactComponent as ClockIcon } from '../../../../assets/icons/clock-24.svg';
 
 const Task = ({ deleteTask, task, toggleShowTaskSlideOver }) => {
   const { name, description, id, columnId, dueDate } = task;

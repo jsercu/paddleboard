@@ -6,7 +6,7 @@ import { object as YupObject, string as YupString } from 'yup';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch } from 'react-instantsearch-dom';
 import UserSearchAutocomplete from './UserSearchAutocomplete';
-import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
+import { ReactComponent as LockIcon } from '../../../../assets/icons/lock-20.svg';
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
 

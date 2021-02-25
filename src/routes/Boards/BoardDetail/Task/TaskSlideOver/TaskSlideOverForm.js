@@ -9,8 +9,8 @@ import Button, {
   ButtonRoundedTheme,
   ButtonSizeTheme,
 } from '../../../../../components/Buttons/Button';
-import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
-import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
+import { ReactComponent as SelectorIcon } from '../../../../../assets/icons/selector-20.svg';
+import { ReactComponent as CheckIcon } from '../../../../../assets/icons/check-20.svg';
 
 const TaskSlideOverForm = (props) => {
   let { boardId } = useParams();

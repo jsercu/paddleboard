@@ -6,8 +6,8 @@ import IconButton, {
   IconButtonRoundedTheme,
   IconButtonSizeTheme,
 } from '../../../components/Buttons/IconButton';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
-import { ReactComponent as FilterIcon } from '../../../assets/img/icons/filter-20.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/icons/plus-24.svg';
+import { ReactComponent as FilterIcon } from '../../../assets/icons/filter-20.svg';
 
 const BoardsListHeader = ({ toggleShowBoardSlideOver }) => {
   return (

@@ -6,10 +6,10 @@ import Button, { ButtonColorTheme, ButtonRoundedTheme, ButtonSizeTheme } from '.
 import StatusBadge from '../../../../components/Status/StatusBadge.js';
 import BoardDetailHeaderDropdown from './BoardDetailHeaderDropdown';
 import ParticipantsList from './ParticipantsList/ParticipantsList';
-import { ReactComponent as PlusIcon } from '../../../../assets/img/icons/plus-24.svg';
-import { ReactComponent as UserCircleIcon } from '../../../../assets/img/icons/user-circle-20.svg';
-import { ReactComponent as CalendarIcon } from '../../../../assets/img/icons/calendar-20.svg';
-import { ReactComponent as UsersIcon } from '../../../../assets/img/icons/users-20.svg';
+import { ReactComponent as PlusIcon } from '../../../../assets/icons/plus-24.svg';
+import { ReactComponent as UserCircleIcon } from '../../../../assets/icons/user-circle-20.svg';
+import { ReactComponent as CalendarIcon } from '../../../../assets/icons/calendar-20.svg';
+import { ReactComponent as UsersIcon } from '../../../../assets/icons/users-20.svg';
 
 const BoardDetailHeader = ({
   board,

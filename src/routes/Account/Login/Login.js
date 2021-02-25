@@ -5,7 +5,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
 import Logo, { LogoColorTheme, LogoSizeTheme } from '../../../components/Logo';
 import { LoginForm } from './LoginForm';
-import { ReactComponent as GoogleIcon } from '../../../assets/img/icons/google-icon.svg';
+import { ReactComponent as GoogleIcon } from '../../../assets/icons/google-icon.svg';
 
 const Login = ({ history }) => {
   const auth = useAuth();

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { ReactComponent as AddColumnIcon } from '../../../../assets/img/icons/view-grid-add-20.svg';
-import { ReactComponent as UsersIcon } from '../../../../assets/img/icons/users-20.svg';
-import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
-import { ReactComponent as CogIcon } from '../../../../assets/img/icons/cog-20.svg';
-import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
+import { ReactComponent as AddColumnIcon } from '../../../../assets/icons/view-grid-add-20.svg';
+import { ReactComponent as TrashIcon } from '../../../../assets/icons/trash-20.svg';
+import { ReactComponent as CogIcon } from '../../../../assets/icons/cog-20.svg';
+import { ReactComponent as ThreeDotsIcon } from '../../../../assets/icons/three-dots-24.svg';
 
 const BoardDetailHeaderDropdown = ({
   toggleShowBoardMenuSlideOver,

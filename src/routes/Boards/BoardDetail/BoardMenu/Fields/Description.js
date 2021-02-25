@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { firestore } from '../../../../../firebase';
-import { ReactComponent as NewspaperIcon } from '../../../../../assets/img/icons/newspaper-24.svg';
-import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
+import { ReactComponent as NewspaperIcon } from '../../../../../assets/icons/newspaper-24.svg';
+import { ReactComponent as PencilIcon } from '../../../../../assets/icons/pencil-alt-20.svg';
 import { Formik } from 'formik';
 import Button, {
   ButtonColorTheme,

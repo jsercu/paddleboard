@@ -1,9 +1,9 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { ReactComponent as ThreeDotsIcon } from '../../../../assets/img/icons/three-dots-24.svg';
-import { ReactComponent as LockIcon } from '../../../../assets/img/icons/lock-20.svg';
-import { ReactComponent as PencilIcon } from '../../../../assets/img/icons/pencil-alt-20.svg';
-import { ReactComponent as TrashIcon } from '../../../../assets/img/icons/trash-20.svg';
+import { ReactComponent as ThreeDotsIcon } from '../../../../assets/icons/three-dots-24.svg';
+import { ReactComponent as LockIcon } from '../../../../assets/icons/lock-20.svg';
+import { ReactComponent as PencilIcon } from '../../../../assets/icons/pencil-alt-20.svg';
+import { ReactComponent as TrashIcon } from '../../../../assets/icons/trash-20.svg';
 
 const TaskDropdown = ({ deleteTask, editTask }) => {
   return (

@@ -3,8 +3,8 @@ import NavItem from './NavItem';
 import NavDropdown from './NavDropdown';
 import Logo, { LogoColorTheme, LogoSizeTheme } from '../Logo';
 import { useAuth } from '../../hooks/useAuth';
-import { ReactComponent as MenuIcon } from '../../assets/img/icons/menu-24.svg';
-import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
+import { ReactComponent as MenuIcon } from '../../assets/icons/menu-24.svg';
+import { ReactComponent as XIcon } from '../../assets/icons/x-24.svg';
 
 const Navbar = () => {
   const auth = useAuth();

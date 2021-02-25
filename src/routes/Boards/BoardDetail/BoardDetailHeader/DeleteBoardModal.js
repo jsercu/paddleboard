@@ -7,7 +7,7 @@ import IconButton, {
   IconButtonRoundedTheme,
 } from '../../../../components/Buttons/IconButton';
 import BgPattern from '../../../../components/BgPattern/BgPattern';
-import { ReactComponent as XIcon } from '../../../../assets/img/icons/x-24.svg';
+import { ReactComponent as XIcon } from '../../../../assets/icons/x-24.svg';
 
 const DeleteBoardModal = ({ toggleShowDeleteBoardModal, deleteBoard, boardId }) => {
   const handleDelete = () => {

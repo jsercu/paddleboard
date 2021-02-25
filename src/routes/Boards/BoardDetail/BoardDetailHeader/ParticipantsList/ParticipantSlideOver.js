@@ -5,10 +5,10 @@ import Button, {
   ButtonRoundedTheme,
   ButtonSizeTheme,
 } from '../../../../../components/Buttons/Button';
-import { ReactComponent as LocationIcon } from '../../../../../assets/img/icons/location-24.svg';
-import { ReactComponent as TitleIcon } from '../../../../../assets/img/icons/identification-24.svg';
-import { ReactComponent as CompanyIcon } from '../../../../../assets/img/icons/office-building-24.svg';
-import { ReactComponent as BioIcon } from '../../../../../assets/img/icons/newspaper-24.svg';
+import { ReactComponent as LocationIcon } from '../../../../../assets/icons/location-24.svg';
+import { ReactComponent as TitleIcon } from '../../../../../assets/icons/identification-24.svg';
+import { ReactComponent as CompanyIcon } from '../../../../../assets/icons/office-building-24.svg';
+import { ReactComponent as BioIcon } from '../../../../../assets/icons/newspaper-24.svg';
 
 const ParticipantSlideOver = ({ participant, toggleShowParticipantSlideOver }) => {
   return (

@@ -5,7 +5,7 @@ import IconButton, {
   IconButtonSizeTheme,
   IconButtonRoundedTheme,
 } from '../../../../../components/Buttons/IconButton';
-import { ReactComponent as XIcon } from '../../../../../assets/img/icons/x-24.svg';
+import { ReactComponent as XIcon } from '../../../../../assets/icons/x-24.svg';
 import ColumnModalForm from './ColumnModalForm';
 
 const ColumnModal = ({ addColumn, editMode, initialValues, toggleShowColumnModal, updateColumn }) => {
@@ -14,6 +14,7 @@ const ColumnModal = ({ addColumn, editMode, initialValues, toggleShowColumnModal
       <div className="relative bg-white">
         <div className="absolute top-0 right-0 p-4">
           <IconButton
+            ariaLabel="Dismiss Column"
             color={IconButtonColorTheme.lightGray}
             size={IconButtonSizeTheme.medium}
             rounded={IconButtonRoundedTheme.full}

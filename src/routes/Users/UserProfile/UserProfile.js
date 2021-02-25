@@ -4,7 +4,7 @@ import { firestore } from '../../../firebase';
 import Container, { ContainerWidthTheme } from '../../../components/Container';
 import Button, { ButtonColorTheme, ButtonSizeTheme, ButtonRoundedTheme } from '../../../components/Buttons/Button';
 import YourProfile from './YourProfile/YourProfile';
-import { ReactComponent as LocationIcon } from '../../../assets/img/icons/location-20.svg';
+import { ReactComponent as LocationIcon } from '../../../assets/icons/location-20.svg';
 import UserPhotoModal from './UserPhotoModal';
 
 const UserProfile = () => {

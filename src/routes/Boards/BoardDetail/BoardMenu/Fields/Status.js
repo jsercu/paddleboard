@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { STATUSES } from '../../../../../components/Status/Status';
 import { Listbox, Transition } from '@headlessui/react';
-import { ReactComponent as StatusIcon } from '../../../../../assets/img/icons/status-online-24.svg';
-import { ReactComponent as PencilIcon } from '../../../../../assets/img/icons/pencil-alt-20.svg';
-import { ReactComponent as SelectorIcon } from '../../../../../assets/img/icons/selector-20.svg';
-import { ReactComponent as CheckIcon } from '../../../../../assets/img/icons/check-20.svg';
+import { ReactComponent as StatusIcon } from '../../../../../assets/icons/status-online-24.svg';
+import { ReactComponent as PencilIcon } from '../../../../../assets/icons/pencil-alt-20.svg';
+import { ReactComponent as SelectorIcon } from '../../../../../assets/icons/selector-20.svg';
+import { ReactComponent as CheckIcon } from '../../../../../assets/icons/check-20.svg';
 import { firestore } from '../../../../../firebase';
 import { Formik } from 'formik';
 import Button, {

@@ -11,7 +11,7 @@ import TaskSlideOver from './Task/TaskSlideOver/TaskSlideOver';
 import Column from './Column/Column';
 import ColumnsEmptyState from './Column/ColumnsEmptyState';
 import { useParams } from 'react-router-dom';
-import { ReactComponent as PlusIcon } from '../../../assets/img/icons/plus-24.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/icons/plus-24.svg';
 
 const BoardDetail = () => {
   let { boardId } = useParams();

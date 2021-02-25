@@ -7,7 +7,7 @@ import Owner from './Fields/Owner';
 import Participants from './Fields/Participants';
 import Status from './Fields/Status';
 import Description from './Fields/Description';
-import { ReactComponent as CalendarIcon } from '../../../../assets/img/icons/calendar-24.svg';
+import { ReactComponent as CalendarIcon } from '../../../../assets/icons/calendar-24.svg';
 
 const BoardMenuSlideOver = ({ toggleShowBoardMenuSlideOver, board, boardId }) => {
   const { name, participants, status, description } = board;
