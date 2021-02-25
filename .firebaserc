@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "react-paddleboard"
+    "prod": "paddleboard-prod",
+    "default": "paddleboard-prod"
   }
 }

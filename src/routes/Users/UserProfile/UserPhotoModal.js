@@ -12,10 +12,23 @@ import IconButton, {
 import { ReactComponent as XIcon } from '../../../assets/img/icons/x-24.svg';
 import { ReactComponent as UploadPictureIcon } from '../../../assets/img/icons/upload-picture-48.svg';
 
+const MAX_FILE_SIZE = 1048576;
+
+const fileSizeValidator = (file) => {
+  if (file.size > MAX_FILE_SIZE) {
+    return {
+      code: 'file-size-too-large',
+      message: `File size is larger than 1mb`,
+    };
+  }
+  return null;
+};
+
 const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
     maxFiles: 1,
     accept: 'image/jpeg, image/png',
+    validator: fileSizeValidator,
     onDropAccepted: (files) => {
       setUploadedImg(
         files.map((file) =>
@@ -168,7 +181,7 @@ const UserPhotoModal = ({ toggleShowUserPhotoModal }) => {
                       </button>
                       or drag and drop
                     </p>
-                    <span className="text-xs">PNG or JPG up to 5MB</span>
+                    <span className="text-xs">PNG or JPG up to 1MB</span>
                   </div>
                 ) : (
                   <div className="text-center text-red-600">

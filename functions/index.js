@@ -1,10 +1,10 @@
 const functions = require('firebase-functions');
 const algoliasearch = require('algoliasearch');
 
-const APP_ID = functions.config().algolia.app;
-const ADMIN_KEY = functions.config().algolia.key;
+const ALGOLIA_APP_ID = functions.config().algolia.app_id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
 
-const client = algoliasearch(APP_ID, ADMIN_KEY);
+const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_ADMIN_KEY);
 const index = client.initIndex('users');
 
 exports.addToIndex = functions.firestore

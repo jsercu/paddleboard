@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Backdrop = ({ children, toggleShowModal }) => {
   return (
@@ -12,6 +13,13 @@ const Backdrop = ({ children, toggleShowModal }) => {
       </div>
     </div>
   );
+};
+
+Backdrop.propTypes = {
+  /**  The content to display over the Backdrop (e.g. Modal, Slideover panel, etc.)  */
+  children: PropTypes.node,
+  /** Provide a function that toggles whether to show/hide the backdrop overlay and modal. */
+  toggleShowModal: PropTypes.func.isRequired,
 };
 
 export default Backdrop;

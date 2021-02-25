@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const IconButtonColorTheme = {
   white:
@@ -28,7 +29,7 @@ export const IconButtonRoundedTheme = {
   full: 'rounded-full',
 };
 
-const IconButton = ({ children, ariaLabel, action, color, size, rounded }) => {
+const IconButton = ({ action, ariaLabel, children, color, rounded, size }) => {
   return (
     <button
       aria-label={ariaLabel}
@@ -37,6 +38,27 @@ const IconButton = ({ children, ariaLabel, action, color, size, rounded }) => {
       {children}
     </button>
   );
+};
+
+IconButton.propTypes = {
+  /** Gets called when the user clicks on the button */
+  action: PropTypes.func.isRequired,
+  /** The color for the button   */
+  ariaLabel: PropTypes.string.isRequired,
+  /** Specify the icon for the button in the parent component  */
+  children: PropTypes.element,
+  /** The color for the button   */
+  color: PropTypes.string,
+  /** The border radius of the button   */
+  rounded: PropTypes.string,
+  /** The size of the button   */
+  size: PropTypes.string,
+};
+
+IconButton.defaultProps = {
+  color: IconButtonColorTheme.white,
+  rounded: IconButtonRoundedTheme.full,
+  size: IconButtonSizeTheme.small,
 };
 
 export default IconButton;

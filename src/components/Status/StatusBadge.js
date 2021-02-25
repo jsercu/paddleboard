@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { STATUSES } from './Status';
 
 const StatusBadgeTheme = {
@@ -15,6 +16,11 @@ const StatusBadge = ({ status }) => {
       {STATUSES[status].title}
     </span>
   );
+};
+
+StatusBadge.propTypes = {
+  /** The status of the badge. The badge text and style are set based on this prop  */
+  status: PropTypes.oneOf(['NOT_STARTED', 'ACTIVE', 'PAUSED', 'COMPLETED', 'CLOSED']),
 };
 
 export default StatusBadge;

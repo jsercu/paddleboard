@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Backdrop from './Backdrop';
 import { ReactComponent as XIcon } from '../../assets/img/icons/x-24.svg';
 import IconButton, { IconButtonColorTheme, IconButtonRoundedTheme, IconButtonSizeTheme } from '../Buttons/IconButton';
@@ -41,6 +42,13 @@ const SlideOver = ({ children, toggleShowSlideOver }) => {
     </Backdrop>,
     elRef.current,
   );
+};
+
+SlideOver.propTypes = {
+  /**  The content to display within the SlidOver panel  */
+  children: PropTypes.node,
+  /** Provide a function that toggles whether to show/hide the SlideOver */
+  toggleShowSlideOver: PropTypes.func.isRequired,
 };
 
 export default SlideOver;

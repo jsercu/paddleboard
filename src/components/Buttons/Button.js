@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const ButtonColorTheme = {
   transparent: 'bg-gray-600 bg-opacity-50 text-white hover:bg-gray-500 hover:bg-opacity-25 focus:ring-gray-300',
@@ -37,6 +38,34 @@ const Button = ({ action, type, children, text, color, rounded, size, fullWidth,
       {text}
     </button>
   );
+};
+
+Button.propTypes = {
+  /** Gets called when the user clicks on the button */
+  action: PropTypes.func,
+  /** The type attribute of the button element */
+  type: PropTypes.oneOf(['submit', 'reset', 'button']),
+  /** Specify the icon for the button in the parent component  */
+  children: PropTypes.element,
+  /** Button label   */
+  text: PropTypes.string.isRequired,
+  /** The color for the button   */
+  color: PropTypes.string,
+  /** The border radius of the button   */
+  rounded: PropTypes.string,
+  /** The size of the button   */
+  size: PropTypes.string,
+  /** Whether the button should expand to fill its container   */
+  fullWidth: PropTypes.bool,
+  /** Whether the button has an icon   */
+  hasIcon: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  type: 'button',
+  color: ButtonColorTheme.primary,
+  rounded: ButtonRoundedTheme.small,
+  size: ButtonSizeTheme.medium,
 };
 
 export default Button;

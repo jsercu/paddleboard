@@ -3,7 +3,6 @@ import firebase, { firestore } from '../../../firebase';
 import { useAuth } from '../../../hooks/useAuth';
 import BoardsListHeader from './BoardsListHeader';
 import BoardsTable from './BoardsTable/BoardsTable';
-import BoardListEmptyState from './BoardListEmptyState';
 import BoardSlideOver from './BoardSlideOver/BoardSlideOver';
 import { STATUSES } from '../../../components/Status/Status';
 

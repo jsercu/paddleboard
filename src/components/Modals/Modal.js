@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import Backdrop from './Backdrop';
-
 const modalRoot = document.getElementById('modal-root');
 
 const Modal = ({ children, toggleShowModal }) => {
@@ -36,6 +36,13 @@ const Modal = ({ children, toggleShowModal }) => {
     </div>,
     elRef.current,
   );
+};
+
+Modal.propTypes = {
+  /** Specify the content to display in this modal in the parent component  */
+  children: PropTypes.node,
+  /** Provide a function that toggles whether to show/hide the backdrop overlay and modal. */
+  toggleShowModal: PropTypes.func.isRequired,
 };
 
 export default Modal;

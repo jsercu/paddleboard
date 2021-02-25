@@ -19,6 +19,7 @@ const DeleteBoardModal = ({ toggleShowDeleteBoardModal, deleteBoard, boardId }) 
       <div className="relative bg-white">
         <div className="absolute top-0 right-0 p-4">
           <IconButton
+            ariaLabel="Dismiss Modal"
             color={IconButtonColorTheme.transparent}
             size={IconButtonSizeTheme.medium}
             rounded={IconButtonRoundedTheme.full}
@@ -26,7 +27,11 @@ const DeleteBoardModal = ({ toggleShowDeleteBoardModal, deleteBoard, boardId }) 
             <XIcon className="w-5 h-5 mx-auto" />
           </IconButton>
         </div>
-        <BgPattern pattern="diagonalStripes" bgColor="bg-red-500">
+        <BgPattern
+          patternVariant="diagonalStripes"
+          patternColor={{ hue: 'red', shade: '600' }}
+          patternOpacity={'0.70'}
+          backgroundColor={{ hue: 'red', shade: '500' }}>
           <div className="px-10 py-8 text-left sm:mt-0">
             <h3 className="text-2xl font-semibold text-white leading-6">Delete this board?</h3>
             <div className="mt-3">

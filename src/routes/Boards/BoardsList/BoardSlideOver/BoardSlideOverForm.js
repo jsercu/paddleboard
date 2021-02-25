@@ -14,10 +14,10 @@ const BoardSlideOverForm = (props) => {
   const auth = useAuth();
   const [participantsStore, setParticipantsStore] = useState([
     {
-      displayName: auth.userProfile.displayName,
-      email: auth.userProfile.email,
-      company: auth.userProfile.company,
-      photoURL: auth.userProfile.photoURL,
+      displayName: auth.userProfile.displayName || '',
+      email: auth.userProfile.email || '',
+      company: auth.userProfile.company || '',
+      photoURL: auth.userProfile.photoURL || '',
       userId: auth.user.uid,
       isOwner: true,
     },
