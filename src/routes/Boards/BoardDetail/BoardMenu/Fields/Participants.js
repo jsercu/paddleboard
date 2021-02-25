@@ -11,7 +11,7 @@ import Button, {
 } from '../../../../../components/Buttons/Button';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectAutoComplete, connectHighlight, connectPoweredBy } from 'react-instantsearch-dom';
-import { ReactComponent as AlgoliaIcon } from '../../../../../assets/img/icons/algolia-light-background.svg';
+import { ReactComponent as AlgoliaIcon } from '../../../../../assets/icons/algolia-light-background.svg';
 import { useOnClickOutside } from '../../../../../hooks/useOnClickOutside';
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
