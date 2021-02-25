@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';
 import { ReactComponent as UserProfileIcon } from '../../assets/icons/user-circle-20.svg';
-import { ReactComponent as LogoutIcon } from '../../assets/img/icons/logout-20.svg';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/logout-20.svg';
 
 const NavDropdown = ({ handleSignOut }) => {
   const auth = useAuth();
