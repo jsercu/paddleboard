@@ -11,6 +11,7 @@ import Dashboard from './routes/Dashboard/Dashboard';
 import Boards from './routes/Boards/Boards';
 import Tasks from './routes/Tasks/Tasks';
 import Users from './routes/Users/Users';
+import PageNotFound404Error from './routes/Errors/PageNotFound404Error';
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const AuthenicatedRoutes = () => {
           <Route path="/boards" component={Boards}></Route>
           <Route path="/tasks" component={Tasks}></Route>
           <Route path="/users" component={Users}></Route>
+          <Route path="*" component={PageNotFound404Error}></Route>
         </Switch>
       </div>
     </Router>
