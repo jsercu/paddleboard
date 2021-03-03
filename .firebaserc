@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "prod": "paddleboard-prod",
-    "default": "paddleboard-prod"
-  }
-}
