@@ -3,6 +3,10 @@
 
 What can I do with Paddleboard? [View Demo](https://paddleboard-prod.web.app/)
 
+:point_right:  Add Columns to your Board...
+
+:point_right:  Then add Tasks to Columns...
+
 :point_right:  Drag and drop to reorder tasks within a column OR move tasks between columns...
 
 ![Paddeboard DEMO GIF - Move Tasks](https://user-images.githubusercontent.com/10010923/109830934-f7932700-7c0c-11eb-83f6-5bc8f84dc043.gif)
