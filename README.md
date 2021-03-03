@@ -5,6 +5,9 @@ What can I do with Paddleboard? [View Demo](https://paddleboard-prod.web.app/)
 
 :point_right:  Add Columns to your Board...
 
+![paddleboard-create-column](https://user-images.githubusercontent.com/10010923/109842137-c2400680-7c17-11eb-88fd-af527458d7d5.gif)
+
+
 :point_right:  Then add Tasks to Columns...
 
 :point_right:  Drag and drop to reorder tasks within a column OR move tasks between columns...
